@@ -10,8 +10,8 @@ RUN apt install libapache2-mod-wsgi-py3 python3 -y
 RUN apt install python3-markdown -y
 
 COPY ./src/etc/apache2 /etc/apache2
-RUN ln -s /etc/apache2/sites-available/myapp.conf /etc/apache2/sites-enabled/myapp.conf
+RUN ln -s /etc/apache2/sites-available/km_demo.conf /etc/apache2/sites-enabled/km_demo.conf
 RUN rm /etc/apache2/sites-enabled/000-default.conf
 COPY ./src/www /var/www
 RUN chown -R www-data:www-data /var/www
-RUN chmod o+x /var/www/html/myapp/myapp.py
+RUN chmod o+x /var/www/html/py_app/hello_world.py
