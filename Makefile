@@ -6,15 +6,22 @@ build: venv
 	bin/makeDockerImage.sh
 
 local: build
-	-docker stop demo
-	-docker rm demo
+	-docker kill demo 2>/dev/null
+	-docker rm demo 2>/dev/null
 	docker run --rm -dit --name demo -p 8080:80 "demo:$$(cat src/www/html/version.txt)"
 	echo "Open: http://localhost:8080/"
 
-localMounted:
-	docker run --rm -dit --name demo -p 8080:80 -v /home/kevin/dev/demo/www:/usr/local/apache2/htdocs "demo:$$(cat src/www/html/version.txt)"
+# Local run with mounted volume:
+localMounted: build
+	-docker kill demo 2>/dev/null
+	-docker rm demo 2>/dev/null
+	docker run -d --rm --name demo -p 8080:80 \
+	    -v /home/kevin/dev/demo/src/www:/var/www \
+	    "demo:$$(cat src/www/html/version.txt)"
+	echo "Open: http://localhost:8080/"
 
-portable:
+
+portable: build
 	-ssh portable docker stop demo
 	# docker container rm demo
 	docker tag demo:latest localhost:5000/demo:latest
@@ -22,16 +29,6 @@ portable:
 	ssh portable docker pull localhost:5000/demo
 	ssh portable docker run --rm -dit --name demo -p 8080:80 localhost:5000/demo
 	echo "Open: http://184.64.118.116/ or http://192.168.1.4:8080/"
-
-# Local run with mounted volume:
-dockerLocal:
-	-docker stop demo
-	-docker rm demo
-	docker run -d -p 8080:80 --restart=always --name demo \
-	-v /home/kevin/dev/demo/src/www/html:/var/www/html \
-	demo
-	echo "Open: http://localhost:8080/"
-
 
 build2: www
 	spd-say -i "-50" "Built"
