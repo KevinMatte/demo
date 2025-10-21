@@ -1,16 +1,21 @@
 
-.PHONY: all www venv build_front stop_container build
+.PHONY: all www venv build_front stop_container build build_static build_front
 
 build_clean:
 	rm -fr build
 	mkdir -p build/var/www
 
 
-build_front: build_clean
+build_static:
+	tar cf - -C src/static . | (cd build; tar xvf -)
+
+build_front:
 	rm -fr build/var/www/html
 	cd src/front; npx vite build --outDir ../../build/var/www/html
 
-build: build_front venv
+build_mounted: build_static build_front
+
+build: build_clean build_static build_front
 
 	# docker container rm demo
 	bin/makeDockerImage.sh
@@ -27,10 +32,11 @@ local: build stop_container
 # Local run with mounted volume:
 localMounted: build stop_container
 	docker run -d --rm --name demo -p 8080:80 \
-	    -v /home/kevin/dev/demo/src/www:/var/www \
+	    -v $(CURDIR)/build/var/www:/var/www \
 	    "demo:$$(cat src/version.txt)"
-	echo "Open: http://localhost:8080/"
-	echo "or Run: docker exec -it demo bash"
+	@echo "Open: http://localhost:8080/"
+	@echo "or Run: docker exec -it demo bash"
+
 
 
 portable: build
