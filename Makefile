@@ -1,24 +1,36 @@
 
-.PHONY: all www venv
+.PHONY: all www venv build_front stop_container build
 
-build: venv
+build_clean:
+	rm -fr build
+	mkdir -p build/var/www
+
+
+build_front: build_clean
+	rm -fr build/var/www/html
+	cd src/front; npx vite build --outDir ../../build/var/www/html
+
+build: build_front venv
+
 	# docker container rm demo
 	bin/makeDockerImage.sh
 
-local: build
-	-docker kill demo 2>/dev/null
-	-docker rm demo 2>/dev/null
-	docker run --rm -dit --name demo -p 8080:80 "demo:$$(cat src/www/html/version.txt)"
+stop_container:
+	-docker kill demo 2>/dev/null || echo "Pass: demo not runing"
+	-docker rm demo 2>/dev/null || echo "Pass: demo image missing"
+
+local: build stop_container
+	docker run --rm -dit --name demo -p 8080:80 "demo:$$(cat src/version.txt)"
 	echo "Open: http://localhost:8080/"
+	echo "or Run: docker exec -it demo bash"
 
 # Local run with mounted volume:
-localMounted: build
-	-docker kill demo 2>/dev/null
-	-docker rm demo 2>/dev/null
+localMounted: build stop_container
 	docker run -d --rm --name demo -p 8080:80 \
 	    -v /home/kevin/dev/demo/src/www:/var/www \
-	    "demo:$$(cat src/www/html/version.txt)"
+	    "demo:$$(cat src/version.txt)"
 	echo "Open: http://localhost:8080/"
+	echo "or Run: docker exec -it demo bash"
 
 
 portable: build
@@ -30,7 +42,7 @@ portable: build
 	ssh portable docker run --rm -dit --name demo -p 8080:80 localhost:5000/demo
 	echo "Open: http://184.64.118.116/ or http://192.168.1.4:8080/"
 
-build2: www
+build2:
 	spd-say -i "-50" "Built"
 
 venv: bin/venv.timestamp

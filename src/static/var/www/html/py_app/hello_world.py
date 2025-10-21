@@ -25,11 +25,13 @@ def application(environ, start_response):
 <body>
 <div style="padding: 25px">
     Hello World: Python WSGI Script
-    <div>
-        <ul>
-            <li><a target="km_demo" href="/">HTML: Hello World</a></li>
-        </ul>
-    </div>
+
+    <h2>Pages</h2>
+    <ul>
+        <li><a target="_self" href="/">HTML: Hello World</a></li>
+        <li><a target="_self" href="/py_app/hello_world.py">Python WSGI: Hello World</a></li>
+        <li><a target="_self" href="/hello_world.php">PHP: Hello World</a></li>
+    </ul>
 </div>
 </body>
 

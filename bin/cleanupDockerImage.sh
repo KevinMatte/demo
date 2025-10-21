@@ -1,9 +1,9 @@
 #!/bin/bash
 
-cd "$(dirname $0)"/.. || exit
+cd "$(dirname "$0")"/.. || exit
 
-# Lazily create src/www/html/version.txt
-[ ! -f src/www/html/version.txt ] && echo "1.0.0" > src/www/html/version.txt
+# Lazily create src/version.txt
+[ ! -f src/version.txt ] && echo "1.0.0" > src/version.txt
 
 latest="$(docker image ls --format "{{.ID}}" demo:latest)"
 # shellcheck disable=SC2046
