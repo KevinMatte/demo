@@ -20,6 +20,13 @@ function App() {
                     <li>Demonstrate my code and abilities.</li>
                 </ul>
             </li>
+            <li>Note: For this study, I'm not using existing frameworks.
+            <ul>
+                <li>A bare-bones React was integrated using bare npx vite commands</li>
+                <li>I wrote my own file monitor to redo builds in a development environment.</li>
+            </ul>
+
+            </li>
         </ul>
 
         <h2>Pages</h2>
