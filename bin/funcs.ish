@@ -1,0 +1,11 @@
+
+# Echo's and if gtts-cli and mpg123 are install, speaks/says the text.
+function say() {
+  echo "$(date): $*"
+  if [ "${can_speak}" == 1 ]; then
+      tmp_file="/tmp/t.$$.mp3"
+      gtts-cli "$*" --output "$tmp_file" && mpg123 -q --gain 40 "$tmp_file"
+      rm -f "$tmp_file"
+  fi
+}
+
