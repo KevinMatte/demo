@@ -1,10 +1,9 @@
-#!/bin/bash
+#!/bin/bash -e
 
 cd "$(dirname $0)/.."
 
-set -x
 while [ 1 = 1 ]; do
-  targets="$(bin/python.sh bin/monitorPath.py -q \
+  targets="$(bin/python.sh bin/fileWatcher.py \
     build_static@src/static:.js,.jsx,.css,.html \
     build_front@src/front:.js,.jsx,.css,.html)
   "
@@ -17,5 +16,8 @@ while [ 1 = 1 ]; do
         done
       fi
       make ${targets} build_done
+      echo "----------------------"
+      date
+      echo "======================"
   fi
 done
