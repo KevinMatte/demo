@@ -18,12 +18,13 @@ available frameworks. I started with an empty project, and added technology a pi
 
 Examples:
 
-* __React__: `npx create-react-app` was run in a separate directory, and integrated into the project.
-* __GNU Makefile__:
+* __React__: `npm create vite@latest demo -- --template react` was run in a separate directory, and the source
+  integrated into the project.
+* __GNU Makefile__: Launching point for most project build/run scripts.
 * __bin/monitorBuild.sh, bin/fileWacher.py__: Redeploys on the dev machine using `make {target}` as I edit the source
   code.
 
-The __bin__ directory contains developer helper scripts. 
+The __bin__ directory contains developer helper scripts.
 
 ## Development Base
 
