@@ -3,5 +3,5 @@
 t.*
 
 # Generate docker compose files
-docker-compose.yaml
+/docker-compose.yaml
 .env

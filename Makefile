@@ -22,14 +22,14 @@ build_done:
 build_mounted: build_static build_front build_done
 
 build: build_clean build_static build_front
-	bin/makeDockerImage.sh
+	bin/docker/makeDemoImage.sh
 
 stop_container:
 	-docker compose kill 2>/dev/null || echo "Pass: demo not runing"
 
 local: build stop_container
-	bin/preprocessDockerCompose.py src/docker-compose.yaml docker-compose.yaml local
-	bin/docker-compose.env.sh .env
+	bin/docker/preprocessDockerCompose.py src/docker/docker-compose.yaml docker-compose.yaml local
+	bin/docker/generateDotEnv.sh .env
 	docker compose up --remove-orphans --detach
 	rm -f tmp/build.locked
 	@echo "Open: http://localhost:8080/"
@@ -37,8 +37,8 @@ local: build stop_container
 
 # Local run with mounted volume:
 localMounted: build stop_container
-	bin/preprocessDockerCompose.py src/docker-compose.yaml docker-compose.yaml mounted
-	bin/docker-compose.env.sh .env
+	bin/docker/preprocessDockerCompose.py src/docker/docker-compose.yaml docker-compose.yaml mounted
+	bin/docker/generateDotEnv.sh .env
 	docker compose up --remove-orphans --detach
 	rm -f tmp/build.locked
 	@echo "Open: http://localhost:8080/"
@@ -47,9 +47,9 @@ localMounted: build stop_container
 
 
 demo_prod: build
-	bin/preprocessDockerCompose.py src/docker-compose.yaml tmp/docker-compose.yaml production
+	bin/docker/preprocessDockerCompose.py src/docker/docker-compose.yaml tmp/docker-compose.yaml production
 	scp tmp/docker-compose.yaml demo_prod:dev/demo
-	scp src/docker-compose.env demo_prod:dev/demo/.env
+	scp src/docker/docker-compose.env demo_prod:dev/demo/.env
 	docker tag demo:latest localhost:5000/demo:latest
 	docker push localhost:5000/demo:latest
 	ssh demo_prod "docker pull localhost:5000/demo"
