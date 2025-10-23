@@ -1,4 +1,4 @@
-#!venv/bin/python
+#!bin/venv/bin/python
 
 """
 Watches a set of directories or files for any change and exits on change.
@@ -196,7 +196,7 @@ def main():
         targets_changed = files_watcher.start()
         print(" ".join(targets_changed))
 
-    exit(0)
 
 if __name__ == "__main__":
     main()
+    exit(0)

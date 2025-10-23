@@ -19,5 +19,4 @@ if [ "$latest" != "$last" ]; then
 	# Rebuild with new version file.
   docker build -t "demo" .
 	docker tag demo:latest "demo:$(cat src/version.txt)"
-	touch bin/demo.docker.timestamp
 fi

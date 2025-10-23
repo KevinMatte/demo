@@ -1,3 +1,7 @@
 /bin/venv/
 /build/
 t.*
+
+# Generate docker compose files
+docker-compose.yaml
+.env
