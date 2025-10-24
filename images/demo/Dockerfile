@@ -1,5 +1,3 @@
-# apache/beam_python3.12_sdk
-
 FROM ubuntu/apache2:edge
 RUN apt update
 RUN apt install -y php libapache2-mod-php

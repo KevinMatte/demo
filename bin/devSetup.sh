@@ -1,6 +1,5 @@
 #!/bin/bash -e
 
-cd "$(dirname "$0")/.." || exit 1
 . bin/funcs.ish
 
 if [ \! -e bin/venv ]; then
@@ -11,7 +10,7 @@ if [ \! -e bin/venv ]; then
     say "Done"
 fi
 
-if [ -z "$(lsof -i :5000 | wc -l)" ]; then
+if [ "$(lsof -i :5000 | wc -l)" = 0 ]; then
   say "Starting 5000:localhost:5000 tunnel"
   ssh -Nf -L 5000:localhost:5000 demo_prod
 else
@@ -27,6 +26,6 @@ else
   fi
 fi
 
-
+bin/monitorBuild.sh
 
 

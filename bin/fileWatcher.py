@@ -129,7 +129,9 @@ class FilesWatcher:
             else:
                 file_extensions = []
 
+            found_path = False
             for path in glob.iglob(path_glob, recursive=True):
+                found_path = True
                 observer = Observer()
                 event_handler = MonitorAnyFileChange(target_name, file_extensions)
                 observer.schedule(event_handler, path, recursive=True)
@@ -142,6 +144,8 @@ class FilesWatcher:
                     exit(1)
                 self.observers.append(observer)
                 self.event_handlers.append(event_handler)
+            if not found_path:
+                print(f"Note: No glob resolution for: {path_glob}")
 
     def start(self) -> set:
         """

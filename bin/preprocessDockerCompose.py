@@ -42,6 +42,7 @@ def process_compose(args, parser):
             flags[flag] = True
 
     re_if = re.compile('^ *# *#if (?P<expr>.*)')
+    re_else = re.compile('^ *# *#else')
     re_endif = re.compile('^ *# *#endif')
     expressions = []
     show = True
@@ -55,6 +56,8 @@ def process_compose(args, parser):
                     expressions.append(show)
                     if show and not new_show:
                         show = False
+                elif re_else.match(line):
+                    show = not show
                 elif re_endif.match(line):
                     show = expressions.pop()
                 elif show:
