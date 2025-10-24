@@ -6,8 +6,8 @@ source bin/funcs.ish
 say "Starting Monitor"
 while [ 1 = 1 ]; do
   targets="$(bin/fileWatcher.py \
-    '-C images/demo build_static@images/demo/src/static:.js,.jsx,.css,.html' \
-    '-C images/demo build_front@images/demo/src/front:.jsx,.css,.html' \
+    '-C images/demo_ui build_static@images/demo_ui/src/static:.js,.jsx,.css,.html' \
+    '-C images/demo_ui build_front@images/demo_ui/src/front:.jsx,.css,.html' \
     )"
   if :; then
       if [ -f tmp/build.locked ]; then

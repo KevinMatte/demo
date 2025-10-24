@@ -6,7 +6,7 @@ function main()
     header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
     header("Pragma: no-cache");
 
-    # Get 'head_content.txt' which contains a standard content for the demo's HTML <head>.
+    # Get 'head_content.txt' which contains a standard content for the demo_ui's HTML <head>.
     $templateDir = "{$_SERVER["DOCUMENT_ROOT"]}/public/templates";
     try {
         $headContentPath = "$templateDir/head_content.txt";

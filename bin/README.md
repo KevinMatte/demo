@@ -1,3 +1,3 @@
 # General
 
-All scripts must be run from the demo repository root, not from bin or elsewhere. 
+All scripts must be run from the demo_ui repository root, not from bin or elsewhere. 

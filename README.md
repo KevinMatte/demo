@@ -2,7 +2,7 @@
 
 Website: [http://184.64.118.116 bluebirdx external]
 
-The planned demo contains:
+The planned demo_ui contains:
 
 * Docker-Compose
 * MySql
@@ -13,12 +13,12 @@ The planned demo contains:
 
 ## Implemntation Notes:
 
-Since this demo is firstly for my own fun, the demo manually builds with implementations that are already supported in
+Since this demo_ui is firstly for my own fun, the demo_ui manually builds with implementations that are already supported in
 available frameworks. I started with an empty project, and added technology a piece at a time.
 
 Examples:
 
-* __React__: `npm create vite@latest demo -- --template react` was run in a separate directory, and the source
+* __React__: `npm create vite@latest demo_ui -- --template react` was run in a separate directory, and the source
   integrated into the project.
 * __GNU Makefile__: Launching point for most project build/run scripts.
 * __bin/monitorBuild.sh, bin/fileWacher.py__: Redeploys on the dev machine using `make {target}` as I edit the source
@@ -30,7 +30,7 @@ The __bin__ directory contains developer helper scripts.
 
 __Host: demo_dev__: Development machine, the localhost for all development activities.
 
-__Host: demo_prod__: A 24/7 running machine. New demo versions are pushed here for the public.
+__Host: demo_prod__: A 24/7 running machine. New demo_ui versions are pushed here for the public.
 
 The following is run manually when I start my dev session:
 

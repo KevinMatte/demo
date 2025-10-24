@@ -1,16 +1,15 @@
 # See https://docs.docker.com/reference/compose-file/
 
 services:
-  demo:
+  demo_ui:
 # #if mounted
     image: ${DEMO_IMAGE}:latest
 # #else
 #    image: localhost:5000/${DEMO_IMAGE}:${DEMO_VERSION}
 # #endif
-    container_name: demo
+    container_name: demo_ui
 # #if mounted or local
-    build:
-      dockerfile: 'images/demo/Dockerfile'
+    build: images/demo_ui
 # #endif
     ports:
       - name: web
