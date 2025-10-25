@@ -2,10 +2,10 @@
 
 services:
   demo_ui:
-# #if mounted
-    image: ${DEMO_IMAGE}:latest
+# #if mounted or local
+    image: ${DEMO_UI_IMAGE}:latest
 # #else
-#    image: localhost:5000/${DEMO_IMAGE}:${DEMO_VERSION}
+#    image: localhost:5000/${DEMO_UI_IMAGE}:${DEMO_UI_VERSION}
 # #endif
     container_name: demo_ui
 # #if mounted or local
@@ -21,18 +21,43 @@ services:
 
 # #if mounted
 #    volumes:
-#      - ${WWW_PATH}:/var/www
+#      - "${DEMO_UI_WWW_PATH}:/var/www"
 # #endif
 
     networks:
       - frontend
       - backend
 
-#  db:
-#    image: mariadb
-#    networks:
-#      - backend
+  demo_mariadb:
+# #if mounted or local
+    image: demo_mariadb:latest
+# #else
+#    image: demo_mariadb:${DEMO_MARIADB_VERSION}
+# #endif
+    container_name: demo_mariadb
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+    volumes:
+      - "${MARIADB_BACKUP_PATH}:/backup"
+      - demo_mariadb_mysql:/var/lib/mysql
+    networks:
+      - backend
+
+  mariadb_admin:
+    image: adminer:${MARIADB_ADMINER_VERSION}
+    container_name: mariadb_admin
+    restart: always
+    ports:
+      - '8090:8080'
+
+    networks:
+      - backend
 
 networks:
   frontend:
   backend:
+
+volumes:
+  demo_mariadb_mysql:
+    name: demo_mariadb_mysql

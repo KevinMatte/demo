@@ -13,4 +13,4 @@ language = 'en'
 myobj = gTTS(text=mytext, lang=language, slow=False)
 myobj.save(file_name)
 # os.system(f"play {file_name} tempo 1.9")
-os.system(f"play {file_name} tempo 1.9")
+os.system(f"play -v 0.3 {file_name} tempo 1.9")

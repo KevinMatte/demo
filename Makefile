@@ -1,20 +1,28 @@
+include .env
+export
 
-
-.PHONY: venv build compose_kill local localMounted
+.PHONY: venv build compose_kill local localMounted update_dot_env build_done
 
 clean:
 	$(MAKE) -C images/demo_ui build_clean
 
-build:
+update_dot_env:
 	bin/generateDotEnv.sh .env
+
+build_done:
+	$(MAKE) -C images/demo_ui build_done
+	$(MAKE) -C images/demo_mariadb build_done
+
+build: update_dot_env
 	$(MAKE) -C images/demo_ui build
+	$(MAKE) -C images/demo_mariadb build
 
 compose_kill:
 	-docker compose kill 2>/dev/null || echo "Pass: services not running"
 
 local: build compose_kill
 	bin/preprocessDockerCompose.py src/docker-compose.yaml docker-compose.yaml local
-	docker compose up --remove-orphans --detach
+	docker compose up --no-build --remove-orphans --detach
 	rm -f tmp/build.locked
 	@echo "Open: http://localhost:8080/"
 	@echo "or Run: docker exec -it demo_ui bash"
@@ -28,10 +36,9 @@ localMounted: build compose_kill
 	@echo "or Run: docker exec -it demo_ui bash"
 
 
-
 publish: build
-	$(MAKE) -C images/demo_ui tag
 	bin/preprocessDockerCompose.py src/docker-compose.yaml tmp/docker-compose.yaml production
+	$(MAKE) -C images/demo_ui tag
 	scp tmp/docker-compose.yaml demo_prod:dev/demo
 	scp .env demo_prod:dev/demo/.env
 	set -x; vers=$$(cat images/demo_ui/src/docker/demo_version.txt); \
@@ -53,4 +60,19 @@ tmp/venv.timestamp: bin/requirements.txt
 	touch tmp/venv.timestamp;
 
 test:
-	bin/preprocessDockerCompose.py src/docker-compose.yaml tmp/docker-compose.yaml production
+	$(MAKE) -C images/demo_mariadb build
+
+backup:
+	docker compose exec demo_mariadb bash -c "rm -fr /backup/*"
+	docker compose exec demo_mariadb ls /backup
+	docker compose exec demo_mariadb mariadb-backup --backup --target-dir=/backup/
+
+restore:
+	-docker compose stop demo_mariadb
+	docker compose run demo_mariadb mariadb-backup --prepare --target-dir=/backup/
+	docker compose run demo_mariadb bash -c "rm -fr /var/lib/mysql/* /var/lib/mysql/.*"
+	docker compose run demo_mariadb mariadb-backup --copy-back --target-dir=/backup/
+	docker compose start demo_mariadb
+
+clean_docker:
+	docker system prune -a

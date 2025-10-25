@@ -85,6 +85,8 @@ class MonitorAnyFileChange(FileSystemEventHandler):
                 if event.src_path.endswith(file_extension):
                     self._files.add(event.src_path)
                     break
+        else:
+            self._files.add(event.src_path)
 
     def on_created(self, event: DirCreatedEvent | FileCreatedEvent) -> None:
         self._handle_event(event)

@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash
 
 cd "$(dirname $0)/.."
 source bin/funcs.ish
@@ -8,6 +8,7 @@ while [ 1 = 1 ]; do
   targets="$(bin/fileWatcher.py \
     '-C images/demo_ui build_static@images/demo_ui/src/static:.js,.jsx,.css,.html' \
     '-C images/demo_ui build_front@images/demo_ui/src/front:.jsx,.css,.html' \
+    'update_dot_env@bin/generateDotEnv.sh' \
     )"
   if :; then
       if [ -f tmp/build.locked ]; then
@@ -18,8 +19,11 @@ while [ 1 = 1 ]; do
         done
       fi
       say "Making $(echo "${targets}" | sed -e 's/-C [^ ]* / /g')"
-      make ${targets} build_done
-      say -w "Done"
+      if make ${targets} build_done; then
+        say -w "Done"
+      else
+        say -w "Error in Makefile"
+      fi
       echo "======================"
   fi
 done

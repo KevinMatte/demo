@@ -5,3 +5,4 @@ t.*
 # Generate docker compose files
 /docker-compose.yaml
 .env
+.secrets.env

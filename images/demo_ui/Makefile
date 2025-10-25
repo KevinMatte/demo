@@ -1,8 +1,6 @@
 
 .PHONY: all www venv build build_static build_front build_done tag
 
-PROJ_ROOT="$$(git rev-parse --show-toplevel)"
-
 build_clean:
 	touch tmp/build.locked
 	rm -fr build
