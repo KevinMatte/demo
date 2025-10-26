@@ -10,6 +10,7 @@ See full details in process_args() below. or running python filesWatcher.py -h
 import glob
 import time
 from argparse import ArgumentParser, Namespace, RawTextHelpFormatter
+from typing import Any
 
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler, DirCreatedEvent, FileCreatedEvent, DirDeletedEvent, \
@@ -24,6 +25,16 @@ def process_args() -> tuple[Namespace, ArgumentParser]:
         Note: globs allowed: **, *, ?
         
         Exit's with 0 if there was a change and 1 if something else caused the exit.
+        
+        Example: Monitor source code in multiple directories.
+         (This example is from a script where the echo'd targets are used in GNU Makefile.)
+        
+           bin/fileWatcher.py \
+             '-C images/demo_ui build_static@images/demo_ui/src/static:.js,.jsx,.css,.html' \
+             '-C images/demo_ui build_front@images/demo_ui/src/front:.jsx,.css,.html' \
+             'update_dot_env@bin/generateDotEnv.sh'
+             
+            
         """
 
     # Help on paths from program's argv
@@ -45,6 +56,7 @@ def process_args() -> tuple[Namespace, ArgumentParser]:
     arg_parser.add_argument('paths', nargs="*", help=help_args_paths)
     arg_parser.add_argument("-v", "--verbose", help=help_opt_verbose, default=False, action='store_true')
     arg_parser.add_argument("-r", "--repeat", help=help_opt_repeat, default=False, action='store_true')
+    arg_parser.add_argument("-e", "--exit_on_error", help=help_opt_repeat, default=False, action='store_true')
     args = arg_parser.parse_args()
 
     if len(args.paths) == 0:
@@ -79,7 +91,11 @@ class MonitorAnyFileChange(FileSystemEventHandler):
         return self._files
 
     def _handle_event(self, event):
-        """Event handler for an Observer."""
+        """Event handler for an Observer.
+
+        If a matching any file extension or no extensions given for the target,
+        records the event's filepath reference.
+        """
         if self._file_extensions:
             for file_extension in self._file_extensions:
                 if event.src_path.endswith(file_extension):
@@ -89,15 +105,19 @@ class MonitorAnyFileChange(FileSystemEventHandler):
             self._files.add(event.src_path)
 
     def on_created(self, event: DirCreatedEvent | FileCreatedEvent) -> None:
+        """@see _handle_event()"""
         self._handle_event(event)
 
     def on_deleted(self, event: DirDeletedEvent | FileDeletedEvent) -> None:
+        """@see _handle_event()"""
         self._handle_event(event)
 
     def on_modified(self, event: DirModifiedEvent | FileModifiedEvent) -> None:
+        """@see _handle_event()"""
         self._handle_event(event)
 
     def on_moved(self, event: DirMovedEvent | FileMovedEvent) -> None:
+        """@see _handle_event()"""
         self._handle_event(event)
 
 
@@ -105,7 +125,6 @@ class FilesWatcher:
     """Main class for this script. See help at top of file."""
 
     def __init__(self, args, parser):
-
         self.args = args
         self.parser = parser
         self.observers = []
@@ -121,11 +140,18 @@ class FilesWatcher:
         if self.args.verbose:
             print("Monitoring:")
         for path_defn in self.args.paths:
+            # Split [{targetname}@]...
             parts = path_defn.split('@')
             target_name = False if len(parts) == 1 else parts.pop(0)
+
+            # Split {path}[:[{extensions}]...]
             parts = parts[0].split(':')
             path_glob = parts.pop(0)
+
+            # Set default value for target_name, if none provided.
             target_name = path_glob if not target_name else target_name
+
+            # Create list of file extensions.
             if parts:
                 file_extensions = parts[0].split(',')
             else:
@@ -134,20 +160,32 @@ class FilesWatcher:
             found_path = False
             for path in glob.iglob(path_glob, recursive=True):
                 found_path = True
-                observer = Observer()
-                event_handler = MonitorAnyFileChange(target_name, file_extensions)
-                observer.schedule(event_handler, path, recursive=True)
-                try:
-                    if self.args.verbose:
-                        print(f"    {target_name}@{path}:{",".join(file_extensions)}")
-                    observer.start()
-                except FileNotFoundError:
-                    print(f"ERROR: File not found: {path}")
-                    exit(1)
-                self.observers.append(observer)
-                self.event_handlers.append(event_handler)
+                self._add_monitor(target_name, path, file_extensions)
+
+            # Tree glob as a non-existent path if glob fails to expand.
             if not found_path:
-                print(f"Note: No glob resolution for: {path_glob}")
+                print(f"ERROR: No glob expansion for: {path_glob}.")
+                if self.args.exit_on_error:
+                    exit(1)
+
+    def _add_monitor(self, target_name: bool | Any, path: str | bytes | Any, file_extensions: list[Any] | Any):
+        """Create and starts a new path Observer."""
+
+        observer = Observer()
+        event_handler = MonitorAnyFileChange(target_name, file_extensions)
+        observer.schedule(event_handler, path, recursive=True)
+        try:
+            if self.args.verbose:
+                print(f"    {target_name}@{path}:{",".join(file_extensions)}")
+            observer.start()
+        except FileNotFoundError:
+            print(f"ERROR: File not found: {path}")
+            if self.args.exit_on_error:
+                exit(1)
+
+        # Add observer and event handler to list.
+        self.observers.append(observer)
+        self.event_handlers.append(event_handler)
 
     def start(self) -> set:
         """
@@ -191,11 +229,14 @@ class FilesWatcher:
 
 def main():
     """main function for direct run of script."""
+
     args, parser = process_args()
     files_watcher = FilesWatcher(args, parser)
     targets_changed = files_watcher.start()
     print(" ".join(targets_changed))
 
+    # If --repeat, re-initialize and start watch again.
+    # Note: re-initializing may pick up globs that didn't previously exist.
     while args.repeat:
         time.sleep(1)
         print("---")

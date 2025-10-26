@@ -40,3 +40,15 @@ Note: Assumes localhost:5000 isn't already in use.
 
 ____bin/monitorBuild.sh__: To rebuild to a mounted docker volume for continuous updates.
 
+## Installs
+
+```shell
+apt install python3.12-venv
+apt-get install sox libsox-fmt-all
+
+NodeJS: See
+https://nodesource.com/products/distributions
+sudo apt-get purge nodejs npm
+apt-get install -y nodejs
+
+```

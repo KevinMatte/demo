@@ -2,39 +2,8 @@
 # Echo's and if gtts-cli and mpg123 are install, speaks/says the text.
 # Option -w says wait until last say is complete.
 function say() {
-  local use_background
-  if [ "x$1" = "x-w" ]; then
-    first_opt="$1"
-    shift
-  else
-    first_opt=""
-  fi
   echo "$(date): $*"
 
-
-#  if [ -z "$funcs_can_speak" ]; then
-#    which gtts-cli mpg123 >/dev/null && funcs_can_speak=1 || funcs_can_speak=0
-#    export funcs_can_speak
-#  fi
-  funcs_tmp_file="/tmp/t.funcs.mp3"
-  export funcs_tmp_file
-  if [ "x$first_opt" = "x-w" ]; then
-    echo "Waiting to speak..."
-    while [ -e "${funcs_tmp_file}" ]; do
-      sleep 1
-    done
-  fi
-  echo $funcs_tmp_file
-#  if [ "${funcs_can_speak}" == 1 ] && [ ! -e "${funcs_tmp_file}" ]; then
-#      touch "${funcs_tmp_file}"
-#      (gtts-cli "$*" --output "$funcs_tmp_file" &&
-#       mpg123 -q --gain 40 "$funcs_tmp_file";
-#       rm -f "$funcs_tmp_file") 2>/dev/null &
-#  fi
-  if [ ! -e "${funcs_tmp_file}" ]; then
-      touch "${funcs_tmp_file}"
-      bin/say.py "${funcs_tmp_file}" "$*" 2>/dev/null
-      rm -f "$funcs_tmp_file"
-  fi
+   bin/say.py " $*" 2>/dev/null
 }
 

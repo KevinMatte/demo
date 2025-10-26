@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Generates project's .env with secrets.
+# Note: this script is monitored by `monitorBuild.sh` and re-run when changes found here
+
+
 # Example secrets.env
 # MARIADB_ROOT_PASSWORD="my_secret password"
 source ./.secrets.env

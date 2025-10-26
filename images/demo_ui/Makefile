@@ -5,6 +5,7 @@ build_clean:
 	touch tmp/build.locked
 	rm -fr build
 	mkdir -p build/var/www
+	cd src/front; npm install
 
 
 build_static:
@@ -32,4 +33,5 @@ clean:
 
 test_make:
 	@pwd
-	@echo "PROJ_ROOT=${PROJ_ROOT}"
+	@npm -v
+	@node -v
