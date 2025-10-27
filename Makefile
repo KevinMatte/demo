@@ -1,56 +1,14 @@
 include .env
 export
 
-.PHONY: venv build compose_kill local localMounted update_dot_env build_done
+.PHONY: venv build local localMounted update_dot_env build_done
 
 clean:
 	$(MAKE) -C images/demo_ui build_clean
 
-update_dot_env:
-	bin/generateDotEnv.sh .env
-
-build_done:
-	$(MAKE) -C images/demo_ui build_done
-	$(MAKE) -C images/demo_mariadb build_done
-
-build: update_dot_env
-	$(MAKE) -C images/demo_ui build
-	$(MAKE) -C images/demo_mariadb build
-
-compose_kill:
-	-docker compose kill 2>/dev/null || echo "Pass: services not running"
-
-local: build compose_kill
-	bin/preprocessDockerCompose.py src/docker-compose.yaml docker-compose.yaml local
-	docker compose up --no-build --remove-orphans --detach
-	rm -f tmp/build.locked
-	@echo "Open: http://localhost:8080/"
-	@echo "or Run: docker exec -it demo_ui bash"
-
-# Local run with mounted volume:
-localMounted: build compose_kill
-	bin/preprocessDockerCompose.py src/docker-compose.yaml docker-compose.yaml mounted
-	docker compose up --remove-orphans --detach
-	rm -f tmp/build.locked
-	@echo "Open: http://localhost:8080/"
-	@echo "or Run: docker exec -it demo_ui bash"
-
-
-publish: build
-	bin/preprocessDockerCompose.py src/docker-compose.yaml tmp/docker-compose.yaml production
-	$(MAKE) -C images/demo_ui tag
-	scp tmp/docker-compose.yaml demo_prod:dev/demo
-	scp .env demo_prod:dev/demo/.env
-	set -x; vers=$$(cat images/demo_ui/src/docker/demo_version.txt); \
-	docker tag demo_ui:$${vers} localhost:5000/demo_ui:$${vers}; \
-	docker push localhost:5000/demo_ui:$${vers}; \
-	ssh demo_prod "docker pull localhost:5000/demo_ui:$${vers}"
-	ssh demo_prod "cd dev/demo; docker compose up  --remove-orphans --detach"
-	rm -f tmp/build.locked
-	@echo "Open: http://184.64.118.116/ or http://192.168.1.4:8080/"
-
-venv: tmp/venv.timestamp
-
+# ---------------------------
+# Build framework targets
+# ---------------------------
 tmp/venv.timestamp: bin/requirements.txt
 	if [ \! -d bin/venv ]; then \
 	   python3 -m venv bin/venv; \
@@ -59,20 +17,61 @@ tmp/venv.timestamp: bin/requirements.txt
 	   pip install -r bin/requirements.txt;
 	touch tmp/venv.timestamp;
 
-test:
+.env: bin/generateDotEnv.sh
+	bin/generateDotEnv.sh .env
+
+# ---------------------------
+# Build targets
+# ---------------------------
+build: tmp/venv.timestamp .env
+	$(MAKE) -C images/demo_ui build
 	$(MAKE) -C images/demo_mariadb build
 
-backup:
-	docker compose exec demo_mariadb bash -c "rm -fr /backup/*"
-	docker compose exec demo_mariadb ls /backup
-	docker compose exec demo_mariadb mariadb-backup --backup --target-dir=/backup/
+# Finalizes/cleans up build.
+build_done:
+	$(MAKE) -C images/demo_ui build_done
+	$(MAKE) -C images/demo_mariadb build_done
 
-restore:
-	-docker compose stop demo_mariadb
-	docker compose run demo_mariadb mariadb-backup --prepare --target-dir=/backup/
-	docker compose run demo_mariadb bash -c "rm -fr /var/lib/mysql/* /var/lib/mysql/.*"
-	docker compose run demo_mariadb mariadb-backup --copy-back --target-dir=/backup/
-	docker compose start demo_mariadb
+# ---------------------------
+# Development targets
+# ---------------------------
 
-clean_docker:
-	docker system prune -a
+local: build
+	-docker compose kill 2>/dev/null || echo "Pass: services not running"
+	bin/preprocessDockerCompose.py src/docker-compose.yaml docker-compose.yaml local
+	docker compose up --no-build --remove-orphans --detach
+	rm -f tmp/build.locked
+	@echo "Open: http://localhost:8080/"
+	@echo "or Run: docker exec -it demo_ui bash"
+
+# Local run with mounted volume:
+localMounted: build
+	-docker compose kill 2>/dev/null || echo "Pass: services not running"
+	bin/preprocessDockerCompose.py src/docker-compose.yaml docker-compose.yaml mounted
+	docker compose up --remove-orphans --detach
+	rm -f tmp/build.locked
+	@echo "Open: http://localhost:8080/"
+	@echo "or Run: docker exec -it demo_ui bash"
+
+
+# ---------------------------
+# Publish to public target
+# ---------------------------
+
+publish: build
+	bin/preprocessDockerCompose.py src/docker-compose.yaml tmp/docker-compose.yaml production
+	$(MAKE) -C images/demo_ui tag
+	ssh demo_prod mkdir -p dev/demo.prod
+	scp tmp/docker-compose.yaml src/common.Makefile src/publish/Makefile demo_prod:dev/demo.prod
+	scp .env demo_prod:dev/demo.prod/.env
+	set -x; vers=$$(cat images/demo_ui/src/docker/demo_version.txt); \
+	docker tag demo_ui:$${vers} localhost:5000/demo_ui:$${vers}; \
+	docker push localhost:5000/demo_ui:$${vers}; \
+	ssh demo_prod "docker pull localhost:5000/demo_ui:$${vers}"
+	# TBD: The docker pull line may not be needed. docker compose up should get it.
+
+	ssh demo_prod "cd dev/demo.prod; docker compose up  --remove-orphans --detach"
+	rm -f tmp/build.locked
+	@echo "Open: http://184.64.118.116/ or http://192.168.1.4:8080/"
+
+

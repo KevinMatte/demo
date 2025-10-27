@@ -52,3 +52,9 @@ sudo apt-get purge nodejs npm
 apt-get install -y nodejs
 
 ```
+
+## Video Recording (Ubuntu)
+
+* Using OBS Studio (Ubuntu application install)
+* Added plugin: https://obsproject.com/forum/resources/background-removal-virtual-green-screen-low-light-enhance.1260/
+* Using https://github.com/pacstall/pacstall `https://github.com/pacstall/pacstall`

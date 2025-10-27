@@ -8,7 +8,7 @@ while [ 1 = 1 ]; do
   targets="$(bin/fileWatcher.py \
     '-C images/demo_ui build_static@images/demo_ui/src/static:.js,.jsx,.css,.html' \
     '-C images/demo_ui build_front@images/demo_ui/src/front:.jsx,.css,.html' \
-    'update_dot_env@bin/generateDotEnv.sh' \
+    '.env@bin/generateDotEnv.sh' \
     )"
   if :; then
       if [ -f tmp/build.locked ]; then
