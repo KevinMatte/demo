@@ -3,7 +3,7 @@
 . bin/funcs.ish
 
 if [ \! -e bin/venv ]; then
-    say "Building bin/venv"
+    echo "Building bin/venv"
     python3 -m venv bin/venv
     . bin/venv/bin/activate
     pip install -r bin/requirements.txt
@@ -12,6 +12,7 @@ fi
 
 if [ "$(lsof -i :5000 | wc -l)" = 0 ]; then
   say "Starting 5000:localhost:5000 tunnel"
+  set -x
   ssh -Nf -L 5000:localhost:5000 demo_prod
 else
   pids="$(lsof -i :5000  | tail -n -2 | sed -e 's/  */,/g' | cut -d, -f2 | sort -u)"
