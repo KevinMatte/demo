@@ -5,6 +5,7 @@ export
 
 clean:
 	$(MAKE) -C images/demo_ui build_clean
+	$(MAKE) -C images/demo_cpp build_clean
 
 # ---------------------------
 # Build framework targets
@@ -25,11 +26,12 @@ tmp/venv.timestamp: bin/requirements.txt
 # ---------------------------
 build: tmp/venv.timestamp .env
 	$(MAKE) -C images/demo_ui build
+	$(MAKE) -C images/demo_cpp build
 	$(MAKE) -C images/demo_mariadb build
 
 # Finalizes/cleans up build.
 build_done:
-	$(MAKE) -C images/demo_ui build_done
+	$(MAKE) -C images/demo_cpp build_done
 	$(MAKE) -C images/demo_mariadb build_done
 
 # ---------------------------
@@ -42,7 +44,6 @@ local: build
 	docker compose up --no-build --remove-orphans --detach
 	rm -f tmp/build.locked
 	@echo "Open: http://localhost:8080/"
-	@echo "or Run: docker exec -it demo_ui bash"
 
 # Local run with mounted volume:
 localMounted: build
@@ -51,7 +52,6 @@ localMounted: build
 	docker compose up --remove-orphans --detach
 	rm -f tmp/build.locked
 	@echo "Open: http://localhost:8080/"
-	@echo "or Run: docker exec -it demo_ui bash"
 
 
 # ---------------------------
@@ -66,8 +66,11 @@ publish: build
 	scp .env demo_prod:dev/demo.prod/.env
 	set -x; vers=$$(cat images/demo_ui/src/docker/demo_version.txt); \
 	docker tag demo_ui:$${vers} localhost:5000/demo_ui:$${vers}; \
+	docker tag demo_cpp:$${vers} localhost:5000/demo_cpp:$${vers}; \
 	docker push localhost:5000/demo_ui:$${vers}; \
-	ssh demo_prod "docker pull localhost:5000/demo_ui:$${vers}"
+	docker push localhost:5000/demo_cpp:$${vers}; \
+	ssh demo_prod "docker pull localhost:5000/demo_ui:$${vers}" \
+	ssh demo_prod "docker pull localhost:5000/demo_cpp:$${vers}"
 	# TBD: The docker pull line may not be needed. docker compose up should get it.
 
 	ssh demo_prod "cd dev/demo.prod; docker compose up  --remove-orphans --detach"

@@ -15,6 +15,9 @@ DEMO_UI_IMAGE=demo_ui
 DEMO_UI_VERSION=$(cat images/demo_ui/src/docker/demo_version.txt)
 DEMO_UI_WWW_PATH=$(pwd)/images/demo_ui/build/var/www
 
+DEMO_CPP_IMAGE=demo_cpp
+DEMO_CPP_VERSION=$(cat images/demo_ui/src/docker/demo_version.txt)
+
 MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
 MARIADB_ADMINER_VERSION=5.4.1
 MARIADB_BACKUP_PATH=$(pwd)/images/demo_mariadb/backup

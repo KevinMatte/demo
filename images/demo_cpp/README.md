@@ -1,3 +1,6 @@
-# DEMO MariaDB
+# CPP Demo
 
-See [hub.docker.com MariaDB](https://hub.docker.com/_/mariadb/) for configuration.
+## Notes
+
+* Using Qt Creator for debugging.
+* The Makefile run's cmake to generate the build directory.

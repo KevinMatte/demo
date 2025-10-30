@@ -1,19 +1,19 @@
 
-.PHONY: all www venv build build_static build_front build_done tag
+.PHONY: all www venv build build_static build_front build_done build_init tag
 
-build_clean:
+build_init:
 	touch $(PROJ_ROOT)/tmp/build.locked
+
+build_clean: build_init
 	rm -fr build
 	mkdir -p build/var/www
 	cd src/front; npm install
 
 
-build_static:
-	touch $(PROJ_ROOT)/tmp/build.locked
+build_static: build_init
 	tar cf - -C src/static . | (cd build; tar xvf -)
 
-build_front:
-	touch $(PROJ_ROOT)/tmp/build.locked
+build_front: build_init
 	cd src/front; npx vite build --outDir ../../build/var/www/html
 
 build_done:

@@ -44,6 +44,17 @@ services:
     networks:
       - backend
 
+  demo_cpp:
+    # #if mounted or local
+    image: ${DEMO_CPP_IMAGE}:latest
+    # #else
+    #    image: localhost:5000/${DEMO_CPP_IMAGE}:${DEMO_CPP_VERSION}
+    # #endif
+    container_name: demo_cpp
+    restart: always
+    networks:
+      - backend
+
   mariadb_admin:
     image: adminer:${MARIADB_ADMINER_VERSION}
     container_name: mariadb_admin

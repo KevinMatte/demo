@@ -8,12 +8,10 @@ fi
 PROJ_ROOT="$(git rev-parse --show-toplevel)"
 . "${PROJ_ROOT}/.env"
 
-rm -fr build
-mkdir -p build/root
-mkdir -p backup
-
-cat > build/root/.my.cnf <<EOF
+mkdir -p build
+cat > build/.my.cnf <<EOF
 [client]
 user=root
 password=${MARIADB_ROOT_PASSWORD}
 EOF
+chmod go-rw build/.my.cnf

@@ -1,10 +1,9 @@
-FROM gcc:15
+FROM ubuntu:24.04
 
 RUN useradd -m -d /home/kevin kevin
-COPY src/ /
+COPY build/ /home/kevin
 RUN chown -R kevin:kevin /home/kevin
 USER kevin
 WORKDIR /home/kevin
-RUN make -C server/src server
-WORKDIR /home/kevin
-CMD ["server/build/server"]
+CMD ["/usr/bin/sleep", "1000"]
+# CMD ["./demo_cpp"]
