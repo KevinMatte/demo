@@ -11,6 +11,8 @@
       <excludeFolder url="file://$MODULE_DIR$/images/demo_ui/src/front/src/assets" />
       <excludeFolder url="file://$MODULE_DIR$/images/demo_mariadb/build" />
       <excludeFolder url="file://$MODULE_DIR$/images/demo_cpp/src/home/kevin/server/build" />
+      <excludeFolder url="file://$MODULE_DIR$/images/demo_cpp/cmake_build" />
+      <excludeFolder url="file://$MODULE_DIR$/images/demo_cpp/tmp" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

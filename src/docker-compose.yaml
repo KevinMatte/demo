@@ -37,7 +37,7 @@ services:
     container_name: demo_mariadb
     restart: always
     environment:
-      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MARIADB_ROOT_PASSWORD: "${MARIADB_ROOT_PASSWORD}"
     volumes:
       - "${MARIADB_BACKUP_PATH}:/backup"
       - demo_mariadb_mysql:/var/lib/mysql
@@ -55,7 +55,16 @@ services:
     networks:
       - backend
     ports:
-      - '18080:8080'
+      - '18080:${DEMO_CPP_PORT}'
+    environment:
+      DEMO_CPP_IMAGE: "${DEMO_CPP_IMAGE}"
+      DEMO_CPP_VERSION: "${DEMO_CPP_VERSION}"
+      DEMO_CPP_PORT: "${DEMO_CPP_PORT}"
+      DEMO_CPP_USER_NAME: "${DEMO_CPP_USER_NAME}"
+      DEMO_CPP_USER_ID: "${DEMO_CPP_USER_ID}"
+      DEMO_CPP_GROUP_NAME: "${DEMO_CPP_GROUP_NAME}"
+      DEMO_CPP_GROUP_ID: "${DEMO_CPP_GROUP_ID}"
+
 
   mariadb_admin:
     image: adminer:${MARIADB_ADMINER_VERSION}

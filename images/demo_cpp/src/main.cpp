@@ -1,4 +1,5 @@
 #include "crow.h"
+#include <cstdlib>
 #include <nlohmann/json.hpp>
 using json = nlohmann::json;
 
@@ -9,14 +10,14 @@ int main()
     crow::SimpleApp app;
 
     /*
-        curl localhost:18080
+        curl localhost:8080
      */
     CROW_ROUTE(app, "/")([](){
         return "Hello, world!";
     });
 
     /*
-        curl localhost:18080/add/5/90
+        curl localhost:8080/add/5/90
      */
     CROW_ROUTE(app, "/add/<int>/<int>")([](int a, int b){
         return crow::response(std::to_string(a + b));
@@ -25,7 +26,7 @@ int main()
     /*
         curl -X POST -H "Content-Type: application/json" \
              -d '{"username":"admin","password":"admin"}' \
-             localhost:18080/api/echo
+             localhost:8080/api/echo
      */
     CROW_ROUTE(app, "/api/echo").methods("POST"_method)
         ([](const crow::request& req){
@@ -38,10 +39,12 @@ int main()
             }
         });
 
-    std::cout << "Listening on port 8080\n";
+    char *strPort = std::getenv("DEMO_CPP_PORT");
+    int port = strPort ? std::stoi(strPort) : 8080;
+    std::cout << "Listening on port " << port << "\n";
     std::cout.flush();
-    app.port(8080).multithreaded().run();
-    std::cout << "Finished Run\n";
+    app.port(port).multithreaded().run();
+    std::cout << "Finished run\n";
     std::cout.flush();
     exit(0);
 }

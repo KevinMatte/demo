@@ -8,20 +8,23 @@ build_init:
 build_clean: build_init
 	rm -fr build tmp
 
-build_dir: build_init
+build_dir:
 	bin/build.sh
 
 SRC=$(wildcard src/*.cpp)
 OBJ=$(patsubst %.cpp,%.o,$(SRC))
 
-build_cmake: build_init
-	mkdir -p build
-	cmake -B tmp -DCMAKE_BUILD_TYPE:STRING=Debug
-	cmake --build tmp --target all
-	cp tmp/demo_cpp build/demo_cpp
+build_cmake:
+	mkdir -p build/home/_user_
+	mkdir -p cmake_build
+	cmake -B cmake_build -DCMAKE_BUILD_TYPE:STRING=Debug
+	cmake --build cmake_build --target all
 
 build: build_dir build_cmake
 	. ${PROJ_ROOT}/.env; docker build -t "demo_cpp" .
+
+local: build
+	docker run --name ppp --rm -it demo_cpp bash
 
 build_done:
 	rm -f tmp/build.locked
