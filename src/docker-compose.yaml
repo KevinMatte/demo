@@ -54,6 +54,8 @@ services:
     restart: always
     networks:
       - backend
+    ports:
+      - '18080:8080'
 
   mariadb_admin:
     image: adminer:${MARIADB_ADMINER_VERSION}

@@ -19,9 +19,8 @@ build_cmake: build_init
 	cmake -B tmp -DCMAKE_BUILD_TYPE:STRING=Debug
 	cmake --build tmp --target all
 	cp tmp/demo_cpp build/demo_cpp
-	build/demo_cpp
 
-build: build_clean build_dir build_cmake
+build: build_dir build_cmake
 	. ${PROJ_ROOT}/.env; docker build -t "demo_cpp" .
 
 build_done:

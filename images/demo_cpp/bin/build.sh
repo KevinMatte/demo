@@ -13,5 +13,6 @@ cat > build/.my.cnf <<EOF
 [client]
 user=root
 password=${MARIADB_ROOT_PASSWORD}
+host=demo_mariadb
 EOF
 chmod go-rw build/.my.cnf

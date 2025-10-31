@@ -23,6 +23,12 @@ sudo apt install -y qtcreator qtbase5-dev qt5-qmake cmake build-essential gdb g+
 
 sudo apt purge -y qtcreator qtbase5-dev qt5-qmake
 
+# cpprestsdk
+sudo apt-get install g++ git libboost-atomic-dev libboost-thread-dev libboost-system-dev libboost-date-time-dev libboost-regex-dev libboost-filesystem-dev libboost-random-dev libboost-chrono-dev libboost-serialization-dev libwebsocketpp-dev openssl libssl-dev ninja-build
+apt install libssl-dev libcrypto++-dev
+apt install libboost-all-dev libasio-dev
+
+
 
 
 
