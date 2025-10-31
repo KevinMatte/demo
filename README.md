@@ -1,60 +1,51 @@
 # Demo Project
 
-Website: [http://184.64.118.116 bluebirdx external]
+__Hosted Websites__:
+  * [http://184.64.118.116](http://184.64.118.116): Forwarded to Home Computer
+  * [kevinmatte.xyz](https://kevinmatte.xyz/): My resume with a __Demo__ menu item that links to the above.
+    * Hosted by: [HostPapa](https://www.hostpapa.ca/)
+    * Content generated with: [WordPress](https://wordpress.com/)
 
-The planned demo_ui contains:
+__Project's tech-architecture so far__:
 
-* Docker-Compose
-* MySql
-* Apache2
-    * WSGI
-* Python 3
-* ...
+* __Project Framework and Source__: See git [demo project](https://github.com/KevinMatte/demo).
+  * Docker container directories [images](images) may become subprojects when convenient and desirable.
+* __Docker-Compose__: YAML and .env that are built with:
+  * [Makefile](Makefile)
+  * [bin/generateDotEnv.sh](bin/generateDotEnv.sh)
+  * [bin/preprocessDockerCompose.py](bin/preprocessDockerCompose.py)
+  * [src/docker-compose.yaml](src/docker-compose.yaml)
+* __Docker Containers__:
+  * [__demo_ui__](images/demo_ui): Hosting WebPages with: Apache2, WSGI, PHP, Python3  
+  * [__demo_mariadb__](images/demo_mariadb): mariadb:11.8
+  * [__demo_cpp__](images/demo_cpp): With C++ using [Crow](https://github.com/CrowCpp/Crow) which is a fast and easy to use microframework for the web.
+    * See [CMakeLists.txt](images/demo_cpp/CMakeLists.txt) for build details.
+* __Development IDE's__:
+  * [Qt Creator](https://doc.qt.io/qtcreator/) community version: C++ and Non-Qt application.
+  * [IntelliJ IDEA](https://lp.jetbrains.com/intellij-idea-promo/?source=google&medium=cpc&campaign=AMER_en_CA_IDEA_Branded&term=intellij&content=693349187730&gad_source=1&gad_campaignid=9736964566&gbraid=0AAAAADloJziWCXmF9C2JjxmXI5bvH0jzq&gclid=Cj0KCQjwvJHIBhCgARIsAEQnWlCL-PVMKW_4T1Iy0MB7le3GVHoYtiCcmhlxbGJVUf2CynHhIUUIX5waAutcEALw_wcB): 
+    Python, PHP, JavaScript, etc
+* __Software Used__: See [installPackages.sh](bin/installPackages.sh)
 
-## Implemntation Notes:
+## Implementation Notes:
 
 Since this demo_ui is firstly for my own fun, the demo_ui manually builds with implementations that are already supported in
-available frameworks. I started with an empty project, and added technology a piece at a time.
+available frameworks. I started with an empty project, and incrementally added technology.
 
-Examples:
-
-* __React__: `npm create vite@latest demo_ui -- --template react` was run in a separate directory, and the source
-  integrated into the project.
-* __GNU Makefile__: Launching point for most project build/run scripts.
-* __bin/monitorBuild.sh, bin/fileWacher.py__: Redeploys on the dev machine using `make {target}` as I edit the source
-  code.
-
-The __bin__ directory contains developer helper scripts.
 
 ## Development Base
 
-__Host: demo_dev__: Development machine, the localhost for all development activities.
-
-__Host: demo_prod__: A 24/7 running machine. New demo_ui versions are pushed here for the public.
-
-The following is run manually when I start my dev session:
-
-__bin/initDevEnv.sh__: \
-Sets up python's bin/venv Run on __demo_dev__ to provide docker repository access to __demo_prod_. \
+* __Hosts__:
+  * __demo_dev 1 and 2__: Development machines for all development activities.
+  * __demo_prod__: A 24/7 running latest docker build.
+* __Development Notes__:
+  * __bin/initDevEnv.sh__: Manually run on every new development install. \
+Sets up python's bin/venv Run on __demo_dev__ to provide docker repository access to __demo_prod__(24/7 Host). \
 Note: Assumes localhost:5000 isn't already in use.
-
-____bin/monitorBuild.sh__: To rebuild to a mounted docker volume for continuous updates.
-
-## Installs
-
-```shell
-apt install python3.12-venv
-apt-get install sox libsox-fmt-all
-
-NodeJS: See
-https://nodesource.com/products/distributions
-sudo apt-get purge nodejs npm
-apt-get install -y nodejs
-
-```
+  * __bin/monitorBuild.sh__: Manually run on every new development session. \
+To rebuild to a mounted docker volume for continuous updates.
 
 ## Video Recording (Ubuntu)
 
 * Using OBS Studio (Ubuntu application install)
-* Added plugin: https://obsproject.com/forum/resources/background-removal-virtual-green-screen-low-light-enhance.1260/
-* Using https://github.com/pacstall/pacstall `https://github.com/pacstall/pacstall`
+* Added [OBS Background Removal plugin](https://obsproject.com/forum/resources/background-removal-virtual-green-screen-low-light-enhance.1260/)
+  using [pacstall](https://github.com/pacstall/pacstall)
