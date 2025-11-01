@@ -18,13 +18,13 @@ tmp/venv.timestamp: bin/requirements.txt
 	   pip install -r bin/requirements.txt;
 	touch tmp/venv.timestamp;
 
-.env: bin/generateDotEnv.sh
+update_dot_env: bin/generateDotEnv.sh
 	bin/generateDotEnv.sh .env
 
 # ---------------------------
 # Build targets
 # ---------------------------
-build: tmp/venv.timestamp .env
+build: tmp/venv.timestamp update_dot_env
 	$(MAKE) -C images/demo_ui build
 	$(MAKE) -C images/demo_cpp build
 	$(MAKE) -C images/demo_mariadb build
@@ -58,19 +58,26 @@ localMounted: build
 # Publish to public target
 # ---------------------------
 
+publish_remove_images:
+	ssh demo_prod "docker image rm $$(docker image ls | grep localhost | sed -e 's/  */:/g' | cut -d':' -f1,2,3)"
+
 publish: build
+	# bin/bumpVersion.sh
 	bin/preprocessDockerCompose.py src/docker-compose.yaml tmp/docker-compose.yaml production
 	$(MAKE) -C images/demo_ui tag
 	ssh demo_prod mkdir -p dev/demo.prod
-	scp tmp/docker-compose.yaml src/common.Makefile src/publish/Makefile demo_prod:dev/demo.prod
+	scp tmp/docker-compose.yaml demo_prod:dev/demo.prod
 	scp .env demo_prod:dev/demo.prod/.env
-	set -x; vers=$$(cat images/demo_ui/src/docker/demo_version.txt); \
-	docker tag demo_ui:$${vers} localhost:5000/demo_ui:$${vers}; \
-	docker tag demo_cpp:$${vers} localhost:5000/demo_cpp:$${vers}; \
+	set -x; vers=$$(cat src/docker/demo_version.txt); \
+	docker tag demo_ui:latest localhost:5000/demo_ui:$${vers}; \
+	docker tag demo_cpp:latest localhost:5000/demo_cpp:$${vers}; \
+	docker tag demo_mariadb:latest localhost:5000/demo_mariadb:$${vers}; \
 	docker push localhost:5000/demo_ui:$${vers}; \
 	docker push localhost:5000/demo_cpp:$${vers}; \
-	ssh demo_prod "docker pull localhost:5000/demo_ui:$${vers}" \
-	ssh demo_prod "docker pull localhost:5000/demo_cpp:$${vers}"
+	docker push localhost:5000/demo_mariadb:$${vers}; \
+	ssh demo_prod "docker pull localhost:5000/demo_ui:$${vers}"; \
+	ssh demo_prod "docker pull localhost:5000/demo_cpp:$${vers}"; \
+	ssh demo_prod "docker pull localhost:5000/demo_mariadb:$${vers}"
 	# TBD: The docker pull line may not be needed. docker compose up should get it.
 
 	ssh demo_prod "cd dev/demo.prod; docker compose up  --remove-orphans --detach"

@@ -32,7 +32,7 @@ services:
 # #if mounted or local
     image: demo_mariadb:latest
 # #else
-#    image: demo_mariadb:${DEMO_MARIADB_VERSION}
+#    image: localhost:5000/demo_mariadb:${DEMO_MARIADB_VERSION}
 # #endif
     container_name: demo_mariadb
     restart: always
@@ -45,11 +45,11 @@ services:
       - backend
 
   demo_cpp:
-    # #if mounted or local
+# #if mounted or local
     image: ${DEMO_CPP_IMAGE}:latest
-    # #else
-    #    image: localhost:5000/${DEMO_CPP_IMAGE}:${DEMO_CPP_VERSION}
-    # #endif
+# #else
+#    image: localhost:5000/${DEMO_CPP_IMAGE}:${DEMO_CPP_VERSION}
+# #endif
     container_name: demo_cpp
     restart: always
     networks:

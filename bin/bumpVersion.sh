@@ -11,5 +11,4 @@ if [ "$latest" != "$last" ]; then
   printf "%s.%s" \
     "$(cat src/docker/demo_version.txt | cut -d. -f1-"$n")" \
     "$(($(cat src/docker/demo_version.txt | cut -d. -f"$((n + 1))") + 1))" > src/docker/demo_version.txt
-  cp src/docker/demo_version.txt build/var/www/html/
 fi

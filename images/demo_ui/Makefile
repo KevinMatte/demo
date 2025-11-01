@@ -24,10 +24,6 @@ build_mounted: build_static build_front build_done
 build: build_clean build_static build_front
 	docker build -t "demo_ui" .
 
-tag:
-	bin/bumpVersion.sh
-	docker tag demo_ui:latest "demo_ui:$$(cat src/docker/demo_version.txt)"
-
 clean:
 	rm -fr bin/venv tmp/*
 
