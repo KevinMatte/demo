@@ -74,10 +74,10 @@ publish: build
 	docker tag demo_mariadb:latest localhost:5000/demo_mariadb:$${vers}; \
 	docker push localhost:5000/demo_ui:$${vers}; \
 	docker push localhost:5000/demo_cpp:$${vers}; \
-	docker push localhost:5000/demo_mariadb:$${vers}; \
-	ssh demo_prod "docker pull localhost:5000/demo_ui:$${vers}"; \
-	ssh demo_prod "docker pull localhost:5000/demo_cpp:$${vers}"; \
-	ssh demo_prod "docker pull localhost:5000/demo_mariadb:$${vers}"
+	docker push localhost:5000/demo_mariadb:$${vers};
+	#	ssh demo_prod "docker pull localhost:5000/demo_ui:$${vers}"; \
+	#	ssh demo_prod "docker pull localhost:5000/demo_cpp:$${vers}"; \
+	#	ssh demo_prod "docker pull localhost:5000/demo_mariadb:$${vers}"
 	# TBD: The docker pull line may not be needed. docker compose up should get it.
 
 	ssh demo_prod "cd dev/demo.prod; docker compose up  --remove-orphans --detach"

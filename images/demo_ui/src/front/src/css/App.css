@@ -4,8 +4,23 @@
   padding: 2rem;
 }
 
+html, body, #root, .container {
+  min-height: 100% !important;
+  min-width: 100% !important;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
 #root > div {
-    padding: 25px;
+    padding: 10px;
+}
+
+h1 {
+  padding: 10px 5px 10px 5px;
+  margin: 0;
 }
 
 h2, h3 {
@@ -52,3 +67,4 @@ ul {
 .read-the-docs {
   color: #888;
 }
+

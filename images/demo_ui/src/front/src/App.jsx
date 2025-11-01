@@ -1,59 +1,37 @@
-import React, { useState } from 'react';
-import './css/App.css'
-import './css/styles.css'
+import React, {useState} from 'react';
+import "./css/App.css";
+import appCSS from "./css/App.module.css";
 import Purpose from './Purpose.jsx';
 import Menu from './Menu.jsx';
+import Calc from './Calc.jsx';
 
 function App() {
     const [page, setPage] = useState('purpose');
-    const [data, setData] = useState(null);
-    const [error, setError] = useState(null);
 
-    const handleClick = async () => {
-        setLoading(true);
-        setError(null); // Clear previous errors
-        try {
-            const response = await fetch('http://127.0.0.1:28080/api/math/ops_a_b/5/20'); // Replace with your API endpoint
-            if (response.ok) {
-                const jsonData = await response.json();
-                setData(jsonData);
-            } else
-                setError(`HTTP error! status: ${response.status}`);
-        } catch (err) {
-            setError(err.message);
-        } finally {
-            setLoading(false);
-        }
-    }
     const menuHandler = (item) => {
         setPage(item);
     }
 
-    let results = '';
-    if (error)
-        results = error;
-    else if (data)
-        results = (<pre>{JSON.stringify(data, null, 2)}</pre>);
-
     return (
-    <div>
-        <h1>Playground/Demo Project</h1>
+        <div className={appCSS.app}>
+            <Menu handler={menuHandler}/>
+            <h1>Playground/Demo Project</h1>
 
-        <p><b>Project Location</b>: <a target="km_github" href="https://github.com/KevinMatte/demo">https://github.com/KevinMatte/demo</a></p>
+            <div style={{padding: '30px'}}>
+                <h2>Note: Do a hard reset to get latest UI version.</h2>
+                <ul>
+                    <li>Chrome: Shift-Ctrl-R</li>
+                </ul>
+            </div>
 
-        <Menu handler={menuHandler}/>
-        {page === 'purpose' && <Purpose/>}
+            <p><b>Project Location</b>: <a target="km_github"
+                                           href="https://github.com/KevinMatte/demo">https://github.com/KevinMatte/demo</a>
+            </p>
 
-        <div>
-            <button onClick={handleClick}>
-                Click Me
-            </button>
+            {page === 'purpose' && <Purpose/>}
+            {page === 'cpp_calc' && <Calc/>}
         </div>
-        <div>
-            {results}
-        </div>
-    </div>
-  )
+    )
 }
 
 export default App

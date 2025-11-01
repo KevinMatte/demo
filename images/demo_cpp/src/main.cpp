@@ -1,7 +1,7 @@
 #include "crow.h"
 #include <cstdlib>
-#include <string>
 #include <nlohmann/json.hpp>
+#include <string>
 using json = nlohmann::json;
 
 class MainApp {
@@ -27,28 +27,28 @@ private:
 
     static crow::response return_json(json &data) {
         crow::response response{data.dump()};
-        response.add_header("Access-Control-Allow-Origin", "*");
+        // response.add_header("Access-Control-Allow-Origin", "*");
+        response.add_header("Cache-Control", "content=\"no-cache, no-store, must-revalidate\"");
         return response;
     }
 
     static crow::response failed_response(std::string message) {
-        json response =
-            {
-             {"status", "failed"},
-             {"message", message},
-             };
+        json response = {
+            {"status", "failed"},
+            {"message", message},
+            };
         return return_json(response);
     }
 
     void setup_routes() {
         /*
-          curl localhost:8080
-       */
+curl localhost:8080
+*/
         CROW_ROUTE(app, "/")([]() { return "Hello, world!"; });
 
         /*
-          curl localhost:8080/add/5/90
-       */
+curl localhost:8080/add/5/90
+*/
         CROW_ROUTE(app, "/api/math/ops_a_b/<int>/<int>")
         ([](int a, int b) {
             json response = get_api_add(a, b);
@@ -57,10 +57,10 @@ private:
         });
 
         /*
-          curl -X POST -H "Content-Type: application/json" \
-               -d '{"username":"admin","password":"admin"}' \
-               localhost:8080/api/echo
-       */
+curl -X POST -H "Content-Type: application/json" \
+-d '{"username":"admin","password":"admin"}' \
+localhost:8080/api/echo
+*/
         CROW_ROUTE(app, "/api/math/ops_a_b")
             .methods("POST"_method)([](const crow::request &req) {
                 try {
@@ -84,29 +84,32 @@ private:
                     return failed_response("Invalid JSON");
                 }
             });
-
     }
 
 public:
     int main() {
         setup_routes();
 
-        char *strPort = std::getenv("DEMO_CPP_PORT");
-        int port = strPort ? std::stoi(strPort) : 8080;
+        int port = 8080;
+
+        try {
+            char *strPort = std::getenv("DEMO_CPP_PORT");
+            port = (strPort && strlen(strPort)) ? std::stoi(strPort) : 8080;
+        } catch (...) {
+            ;
+        }
+
         std::cout << "Listening on port " << port << "\n";
         std::cout.flush();
         app.port(port).multithreaded().run();
         std::cout << "Finished run\n";
         std::cout.flush();
 
-        return 0;
-}
+    return 0;
+    }
 };
 
-int main()
-{
+int main() {
     MainApp main_app;
     return main_app.main();
 }
-
-
