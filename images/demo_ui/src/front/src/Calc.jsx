@@ -14,19 +14,31 @@ export default function Calc() {
     {
         console.log(`Is !== 80: ${window.location}`);
         relUrl = `${window.location.hostname}:${window.location.port}/api/demo_cpp`;
-    }
-    else {
+    } else {
         console.log(`Is === 80: ${window.location}`);
         relUrl = `${window.location.hostname}/api/demo_cpp`;
     }
     console.log(`relUrl2=${relUrl}`);
 
 
-    const handleMathRequest = async () => {
+    const handleReset = () => {
+        setData(null);
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        // Read the form data
+        const form = e.target;
+        const formData = new FormData(form);
+        const method = form.method;
+        const body = JSON.stringify(Object.fromEntries(formData));
         setLoading(true);
         setError(null); // Clear previous errors
         try {
-            const response = await fetch(`http://${relUrl}/api/math/ops_a_b/5/20`);
+            console.log(`relUrl3=${relUrl}`);
+            const response = await fetch(`http://${relUrl}/api/math/ops_a_b`, {method, body}
+            );
             if (response.ok) {
                 const jsonData = await response.json();
                 setData(jsonData);
@@ -43,19 +55,56 @@ export default function Calc() {
     if (error)
         results = error;
     else if (data)
-        results = (<pre>{JSON.stringify(data, null, 2)}</pre>);
+        results = (
+            <div>
+                <table>
+                    <tbody>
+                    <tr>
+                        <th>Added:</th>
+                        <td>{data.add}</td>
+                        <th>Deleted:</th>
+                        <td>{data.delete}</td>
+                    </tr>
+                    <tr>
+                        <th>Divided:</th>
+                        <td>{data.divide}</td>
+                        <th>Multiplied:</th>
+                        <td>{data.multiply}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <hr/>
+            </div>
+        );
 
     return (
-      <div>
-          <h2>Calc Stub</h2>
-          <p><b>WIP: Testing demo_ui using demo_cpp microservices.</b></p>
-          {loading && <p>Loading</p>}
-          <button onClick={() => handleMathRequest()}>
-              Perform +, -, *, / calculations
-          </button>
-          <div>
-              {results}
-          </div>
-      </div>
+        <div>
+            {loading && <p>Loading</p>}
+            <div>
+                {results}
+            </div>
+
+            <form method="post" onSubmit={handleSubmit} onReset={handleReset}>
+                <b>Enter: </b>
+                <label>
+                    Operand 1: <input name="a" defaultValue="12"/>
+                </label>
+                <label>
+                    Operand 2: <input name="b" defaultValue="10"/>
+                </label>
+                <hr/>
+                <button type="reset">Reset form</button>
+                <button type="submit">Perform +, -, *, / calculations</button>
+            </form>
+            <h2>Data Flow:</h2>
+            <ul>
+                <li><b>UI (demo_ui container):</b> Posts form data as JSON to URL "/api/demo_cpp/api/math/ops_a_b" to
+                    ...
+                </li>
+                <li><b>Apache Web Host (demo_ui container)</b>: Uses &lt;ProxyPass&gt; to redirect to..</li>
+                <li><b>C++ Microservices (demo_cpp container)</b>: Processes request and returns JSON response</li>
+                <li><b>UI (demo_ui container):</b> 'React UI' redisplays with state changes.</li>
+            </ul>
+        </div>
     );
 }

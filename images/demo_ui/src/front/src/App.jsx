@@ -14,22 +14,27 @@ function App() {
 
     return (
         <div className={appCSS.app}>
-            <AppMenu handler={menuHandler}/>
             <h1>Playground/Demo Project</h1>
-
-            <div style={{padding: '30px'}}>
-                <h2>Note: Do a hard reset to get latest UI version.</h2>
+            <AppMenu handler={menuHandler}/>
+            <div className={appCSS.appBody}>
+                <hr/>
+                <br/>
+                <div className={appCSS.appPage}>
+                    {page === 'purpose' && <Purpose/>}
+                    {page === 'cpp_calc' && <Calc/>}
+                </div>
+            </div>
+            <div style={{padding: '0 30px'}}>
+                <h2>Notes:</h2>
                 <ul>
-                    <li>Chrome: Shift-Ctrl-R</li>
+                    <li>
+                        <b>Project Location</b>:
+                        <a target="km_github" href="https://github.com/KevinMatte/demo">
+                            https://github.com/KevinMatte/demo
+                        </a>
+                    </li>
                 </ul>
             </div>
-
-            <p><b>Project Location</b>: <a target="km_github"
-                                           href="https://github.com/KevinMatte/demo">https://github.com/KevinMatte/demo</a>
-            </p>
-
-            {page === 'purpose' && <Purpose/>}
-            {page === 'cpp_calc' && <Calc/>}
         </div>
     )
 }

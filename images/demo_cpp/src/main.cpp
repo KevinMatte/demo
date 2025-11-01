@@ -13,11 +13,15 @@ private:
     crow::SimpleApp app;
     bool byPassCORS = false;
 
-    static json get_api_add(int a, int b) {
+    static json get_api_add(float a, float b) {
+        double div = b ? a / b : 0;
+        std::stringstream ss;
+        ss << std::fixed << std::setprecision(4) << div;
+
         json response = {
             {"status", "ok"},          {"add", a + b},
             {"delete", a - b},         {"multiply", a * b},
-            {"divide", b ? a / b : 0},
+            {"divide", ss.str()},
     };
         if (b == 0) {
             response["status"] = "warning";
@@ -72,14 +76,20 @@ localhost:8080/api/echo
             .methods("POST"_method)([](const crow::request &req) {
                 try {
                     auto body = json::parse(req.body);
-                    int a, b;
+                    float a, b;
                     try {
-                        a = body["a"];
+                        if (body["a"].is_string())
+                            a = stof(body["a"].get<std::string>());
+                        else
+                            a = body["a"].get<float>();
                     } catch (...) {
-                        return main_app->failed_response("'a' must be an integer");
+                        return main_app->failed_response("'a' Must be an integer");
                     }
                     try {
-                        b = body["b"];
+                        if (body["b"].is_string())
+                            b = stof(body["b"].get<std::string>());
+                        else
+                            b = body["b"].get<float>();
                     } catch (...) {
                         return main_app->failed_response("'b' must be an integer");
                     }
