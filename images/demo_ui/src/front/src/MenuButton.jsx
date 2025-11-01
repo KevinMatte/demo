@@ -7,7 +7,7 @@ export default function MenuButton({handler, label, name, selected, url}) {
         handler(name);
     }
     return (
-        <button className={name === selected ? menuCss.selected : ""} onClick={() => handleClick("purpose")}>
+        <button className={name === selected ? menuCss.selected : ""} onClick={() => handleClick(name)}>
             {label}
         </button>
     )

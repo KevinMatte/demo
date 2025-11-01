@@ -2,13 +2,13 @@ import menuCss from "./css/Menu.module.css";
 import {useState} from "react";
 import MenuButton from "./MenuButton.jsx";
 
-export default function Menu({handler}) {
+export default function AppMenu({handler}) {
     const [page, setPage] = useState('purpose');
 
-    const handleClick = (item) => {
-        console.log(item);
-        setPage(item);
-        handler(item);
+    const handleClick = (buttonName) => {
+        console.log(buttonName);
+        setPage(buttonName);
+        handler(buttonName);
     }
     return (
         <div>

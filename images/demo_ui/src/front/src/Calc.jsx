@@ -11,9 +11,14 @@ export default function Calc() {
         relUrl = "localhost:8080";
     else if (window.location.port !== 80)
         // Handle docker mode with apach2 ProxyPass setup.
-        relUrl = `localhost:${window.location.port}`;
-    else
-        relUrl = "localhost";
+    {
+        console.log(`Is !== 80: ${window.location}`);
+        relUrl = `${window.location.hostname}:${window.location.port}`;
+    }
+    else {
+        console.log(`Is === 80: ${window.location}`);
+        relUrl = `${window.location.hostname}`;
+    }
     console.log(`relUrl2=${relUrl}`);
 
 

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import "./css/App.css";
 import appCSS from "./css/App.module.css";
 import Purpose from './Purpose.jsx';
-import Menu from './Menu.jsx';
+import AppMenu from './AppMenu.jsx';
 import Calc from './Calc.jsx';
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
 
     return (
         <div className={appCSS.app}>
-            <Menu handler={menuHandler}/>
+            <AppMenu handler={menuHandler}/>
             <h1>Playground/Demo Project</h1>
 
             <div style={{padding: '30px'}}>

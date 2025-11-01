@@ -1,7 +1,7 @@
 include .env
 export
 
-.PHONY: venv build local localMounted update_dot_env build_done
+.PHONY: venv build local localMounted update_dot_env build_done version_bump
 
 clean:
 	$(MAKE) -C images/demo_ui build_clean
@@ -61,8 +61,11 @@ localMounted: build
 publish_remove_images:
 	ssh demo_prod "docker image rm $$(docker image ls | grep localhost | sed -e 's/  */:/g' | cut -d':' -f1,2,3)"
 
-publish: build
-	# bin/bumpVersion.sh
+version_bump:
+	bin/bumpVersion.sh
+	bin/generateDotEnv.sh
+
+publish: version_bump build
 	bin/preprocessDockerCompose.py src/docker-compose.yaml tmp/docker-compose.yaml production
 	$(MAKE) -C images/demo_ui tag
 	ssh demo_prod mkdir -p dev/demo.prod
