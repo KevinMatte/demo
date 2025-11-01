@@ -1,4 +1,4 @@
-#!/bin/bash -ex
+#!/bin/bash -e
 
 DEMO_CPP_USER_NAME="${DEMO_CPP_USER_NAME:-kevin}"
 DEMO_CPP_USER_ID="${DEMO_CPP_USER_ID:-2000}"
@@ -10,6 +10,7 @@ if [ \! -d /home/${DEMO_CPP_USER_NAME} ]; then
   cat >>/etc/profile <<EOF
 
 export DEMO_CPP_PORT=${DEMO_CPP_PORT}
+export NO_CORS=${NO_CORS}
 EOF
 
   groupadd -g ${DEMO_CPP_GROUP_ID} ${DEMO_CPP_GROUP_NAME}

@@ -8,16 +8,16 @@ export default function Calc() {
     let relUrl;
     if (window.location.host === 'localhost:5173')
         // Handle vite dev mode.
-        relUrl = "localhost:8080";
+        relUrl = "localhost:8181";
     else if (window.location.port !== 80)
         // Handle docker mode with apach2 ProxyPass setup.
     {
         console.log(`Is !== 80: ${window.location}`);
-        relUrl = `${window.location.hostname}:${window.location.port}`;
+        relUrl = `${window.location.hostname}:${window.location.port}/api/demo_cpp`;
     }
     else {
         console.log(`Is === 80: ${window.location}`);
-        relUrl = `${window.location.hostname}`;
+        relUrl = `${window.location.hostname}/api/demo_cpp`;
     }
     console.log(`relUrl2=${relUrl}`);
 
@@ -26,7 +26,7 @@ export default function Calc() {
         setLoading(true);
         setError(null); // Clear previous errors
         try {
-            const response = await fetch(`http://${relUrl}/api/demo_cpp/api/math/ops_a_b/5/20`);
+            const response = await fetch(`http://${relUrl}/api/math/ops_a_b/5/20`);
             if (response.ok) {
                 const jsonData = await response.json();
                 setData(jsonData);

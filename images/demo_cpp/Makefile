@@ -24,7 +24,7 @@ build: build_dir build_cmake
 	. ${PROJ_ROOT}/.env; docker build -t "demo_cpp" .
 
 local: build
-	docker run -e DEMO_CPP_PORT="8181" --name ppp --rm demo_cpp
+	docker run -e NO_CORS=1 -p 8181:8080 --name ppp --rm demo_cpp
 
 build_done:
 	rm -f tmp/build.locked

@@ -4,10 +4,14 @@
 #include <string>
 using json = nlohmann::json;
 
+class MainApp;
+MainApp *main_app;
+
 class MainApp {
 
 private:
     crow::SimpleApp app;
+    bool byPassCORS = false;
 
     static json get_api_add(int a, int b) {
         json response = {
@@ -25,14 +29,20 @@ private:
         return response;
     }
 
-    static crow::response return_json(json &data) {
-        crow::response response{data.dump()};
-        // response.add_header("Access-Control-Allow-Origin", "*");
+    crow::response return_response(std::string str) {
+        crow::response response(str);
         response.add_header("Cache-Control", "content=\"no-cache, no-store, must-revalidate\"");
+        if (byPassCORS)
+            response.add_header("Access-Control-Allow-Origin", "*");
+
         return response;
     }
 
-    static crow::response failed_response(std::string message) {
+    crow::response return_json(json &data) {
+        return return_response(data.dump());
+    }
+
+    crow::response failed_response(std::string message) {
         json response = {
             {"status", "failed"},
             {"message", message},
@@ -41,19 +51,16 @@ private:
     }
 
     void setup_routes() {
-        /*
-curl localhost:8080
-*/
-        CROW_ROUTE(app, "/")([]() { return "Hello, world!"; });
 
-        /*
-curl localhost:8080/add/5/90
-*/
+        /* curl localhost:8080 */
+        CROW_ROUTE(app, "/")([]() { return main_app->return_response("Hello, world!"); });
+
+        /* curl localhost:8080/add/5/90 */
         CROW_ROUTE(app, "/api/math/ops_a_b/<int>/<int>")
         ([](int a, int b) {
             json response = get_api_add(a, b);
 
-            return return_json(response);
+            return main_app->return_json(response);
         });
 
         /*
@@ -69,19 +76,19 @@ localhost:8080/api/echo
                     try {
                         a = body["a"];
                     } catch (...) {
-                        return failed_response("'a' must be an integer");
+                        return main_app->failed_response("'a' must be an integer");
                     }
                     try {
                         b = body["b"];
                     } catch (...) {
-                        return failed_response("'b' must be an integer");
+                        return main_app->failed_response("'b' must be an integer");
                     }
 
                     json response = get_api_add(a, b);
 
-                    return return_json(response);
+                    return main_app->return_json(response);
                 } catch (...) {
-                    return failed_response("Invalid JSON");
+                    return main_app->failed_response("Invalid JSON");
                 }
             });
     }
@@ -99,6 +106,16 @@ public:
             ;
         }
 
+        try {
+            char *strByPassCORS = std::getenv("NO_CORS");
+            byPassCORS = (strByPassCORS == NULL) || (strcmp(strByPassCORS, "1") == 0);
+        } catch (...) {
+            ;
+        }
+        if (byPassCORS)
+            std::cout << (byPassCORS ? "Bypassing CORS.\n" : "NOT Bypassing CORS.\n");
+
+
         std::cout << "Listening on port " << port << "\n";
         std::cout.flush();
         app.port(port).multithreaded().run();
@@ -110,6 +127,6 @@ public:
 };
 
 int main() {
-    MainApp main_app;
-    return main_app.main();
+    main_app = new MainApp();
+    return main_app->main();
 }
