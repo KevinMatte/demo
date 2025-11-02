@@ -7,16 +7,26 @@ using json = nlohmann::json;
 
 class MainApp;
 
-MainApp *mainApp;
+MainApp *pMainApp = nullptr;
 
 double getDouble(json::reference &reference, bool &failed);
 
 class MainApp {
 
 private:
+    /** A microservice server. **/
     crow::SimpleApp app;
+
+    /** If the environment variable NO_CORS is "1", CORS is disabled in all results. **/
     bool byPassCORS = false;
 
+    /**
+     * The one and only microservice implementation, besides returning "Hello World" on /.
+     *
+     * @param fOp1 Operand 1
+     * @param fOp2 Operand 2
+     * @return Returns a structure with +, -, * and / results.
+     */
     static json getApiMath(double fOp1, double fOp2) {
         double fDivResult = (fOp2 != 0) ? fOp1 / fOp2 : 0;
         std::stringstream ssDivResult;
@@ -39,6 +49,13 @@ private:
         return response;
     }
 
+    /**
+     * Creates a response with the common headers set.
+     *
+     * @param strBody The text to return as a JSON string.
+     *
+     * @return The microservice response.
+     */
     [[nodiscard]] crow::response returnResponse(const char *strBody) const {
         crow::response response(strBody);
         response.add_header("Content-Type", "application/json");
@@ -49,10 +66,21 @@ private:
         return response;
     }
 
+    /**
+     * Wraps #returnResponse to return crow::json instances.
+     *
+     * @param jsonBody The response content instationated as crow::json.
+     * @return
+     */
     crow::response returnJson(json &jsonBody) {
         return returnResponse(jsonBody.dump().c_str());
     }
 
+    /**
+     * Returns a standard failure response.
+     * @param strMessage A message identifying the failure.
+     * @return {"status": failed, "message" : strMessage}.
+     */
     crow::response failedResponse(std::string strMessage) {
         json response = {
                 {"status",  "failed"},
@@ -61,24 +89,27 @@ private:
         return returnJson(response);
     }
 
+    /**
+     * Sets up the GET and POST route assignments.
+     */
     void setupRoutes() {
 
         /* curl localhost:8080 */
-        CROW_ROUTE(app, "/")([]() { return mainApp->returnResponse("Hello, world!"); });
+        CROW_ROUTE(app, "/")([]() { return pMainApp->returnResponse("Hello, world!"); });
 
-        /* curl localhost:8080/add/5/90 */
+        /* Test: curl localhost:8080/add/5/90 */
         CROW_ROUTE(app, "/api/math/ops_a_b/<double>/<double>")
                 ([](double fOp1, double fOp2) {
                     json response = getApiMath(fOp1, fOp2);
 
-                    return mainApp->returnJson(response);
+                    return pMainApp->returnJson(response);
                 });
 
         /*
-curl -X POST -H "Content-Type: application/json" \
--d '{"username":"admin","password":"admin"}' \
-localhost:8080/api/echo
-*/
+        Test: curl -X POST -H "Content-Type: application/json" \
+                -d '{"op1":"1.5","op2":"0.5"}' \
+                localhost:8080/api/math/ops_a_b
+        */
         CROW_ROUTE(app, "/api/math/ops_a_b")
                 .methods("POST"_method)([](const crow::request &req) {
                     try {
@@ -90,18 +121,20 @@ localhost:8080/api/echo
                         fOp1 = getDouble(jsonBody["op1"], failed);
                         fOp2 = getDouble(jsonBody["op2"], failed);
                         if (failed)
-                            return mainApp->failedResponse("ERROR: Operands not parsed as doubles.");
+                            return pMainApp->failedResponse("ERROR: Operands not parsed as doubles.");
 
                         json response = getApiMath(fOp1, fOp2);
 
-                        return mainApp->returnJson(response);
+                        return pMainApp->returnJson(response);
                     } catch (...) {
-                        return mainApp->failedResponse("Invalid JSON");
+                        return pMainApp->failedResponse("Invalid JSON");
                     }
                 });
     }
 
 public:
+
+    /** main entry for program launched below in main() function. **/
     int main() {
         setupRoutes();
 
@@ -118,10 +151,10 @@ public:
         try {
             char *strByPassCORS = std::getenv("NO_CORS");
             byPassCORS = (strByPassCORS == nullptr) || (strcmp(strByPassCORS, "1") == 0);
-        } catch (...) { }
-         std::cout << (byPassCORS ? "Bypassing CORS.\n" : "NOT Bypassing CORS.\n");
+        } catch (...) {}
+        std::cout << (byPassCORS ? "Bypassing CORS.\n" : "NOT Bypassing CORS.\n");
 
-
+        // Get up and running.
         std::cout << "Listening on port " << port << "\n";
         std::cout.flush();
         app.port(port).multithreaded().run();
@@ -133,13 +166,13 @@ public:
 };
 
 double getDouble(json::reference &reference, bool &failed) {
-    float fOp1;
+    double fOp1;
 
     try {
         if (reference.is_string())
             fOp1 = stof(reference.get<std::string>());
         else
-            fOp1 = (double)reference.get<double>();
+            fOp1 = reference.get<double>();
     } catch (...) {
         failed = true;
     }
@@ -148,6 +181,6 @@ double getDouble(json::reference &reference, bool &failed) {
 }
 
 int main() {
-    mainApp = new MainApp();
-    return mainApp->main();
+    pMainApp = new MainApp();
+    return pMainApp->main();
 }
