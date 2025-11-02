@@ -87,14 +87,14 @@ export default function Calc() {
             <form method="post" onSubmit={handleSubmit} onReset={handleReset}>
                 <b>Enter: </b>
                 <label>
-                    Operand 1: <input name="a" defaultValue="12"/>
+                    Operand 1: <input name="op1" defaultValue="12"/>
                 </label>
                 <label>
-                    Operand 2: <input name="b" defaultValue="10"/>
+                    Operand 2: <input name="op2" defaultValue="10"/>
                 </label>
                 <hr/>
-                <button type="reset">Reset form</button>
                 <button type="submit">Perform +, -, *, / calculations</button>
+                {data && <button type="reset">Reset form</button>}
             </form>
             <h2>Data Flow:</h2>
             <ul>

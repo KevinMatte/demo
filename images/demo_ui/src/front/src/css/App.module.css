@@ -1,3 +1,6 @@
+.appBody {
+  display: inline-block;
+}
 .appBody button {
   background-color: green;
   color: white;
