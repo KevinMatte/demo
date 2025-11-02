@@ -25,13 +25,6 @@ def application(environ, start_response):
 <body>
 <div style="padding: 25px">
     Hello World: Python WSGI Script
-
-    <h2>Pages</h2>
-    <ul>
-        <li><a target="_self" href="/">React (HTML/TypeScript): Hello World</a></li>
-        <li><a target="_self" href="/py_app/hello_world.py">Python WSGI: Hello World</a></li>
-        <li><a target="_self" href="/hello_world.php">PHP: Hello World</a></li>
-    </ul>
 </div>
 </body>
 

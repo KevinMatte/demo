@@ -3,7 +3,7 @@
     <link rel="icon" href="/public/images/cropped-KevinImage-192x192.jpg" sizes="192x192">
     <link rel="apple-touch-icon" href="/public/images/cropped-KevinImage-180x180.jpg">
     <meta name="msapplication-TileImage" content="/public/images/cropped-KevinImage-270x270.jpg">
-    <link rel="stylesheet" href="/css/App.css">
+    <link rel="stylesheet" href="./css/App.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="Cache-Control" content="no-cache, no-store, must-revalidate"/>
