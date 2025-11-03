@@ -27,4 +27,6 @@ MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
 MARIADB_ADMINER_VERSION=5.4.1
 MARIADB_BACKUP_PATH=$(pwd)/images/demo_mariadb/backup
 DEMO_MARIADB_VERSION=$(cat src/docker/demo_version.txt)
+
+DEMO_JAVA_VERSION=$(cat src/docker/demo_version.txt)
 EOF

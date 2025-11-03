@@ -18,6 +18,7 @@ __Project's tech-architecture so far__:
 * __Docker Containers__:
   * [__demo_ui__](images/demo_ui): Hosting WebPages with: Apache2, WSGI, PHP, Python3  
   * [__demo_mariadb__](images/demo_mariadb): mariadb:11.8
+  * [__demo_java__](images/demo_mariadb): Tomcat / Java
   * [__demo_cpp__](images/demo_cpp): With C++ using [Crow](https://github.com/CrowCpp/Crow) which is a fast and easy to use microframework for the web.
     * See [CMakeLists.txt](images/demo_cpp/CMakeLists.txt) for build details.
     * See [Crow API Reference](https://crowcpp.org/1.2.1/reference/index.html)

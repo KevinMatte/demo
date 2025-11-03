@@ -44,6 +44,20 @@ services:
     networks:
       - backend
 
+  demo_java:
+# #if mounted or local
+    image: demo_java:latest
+# #else
+#    image: localhost:5000/demo_mariadb:${DEMO_JAVA_VERSION}
+# #endif
+    container_name: demo_java
+    restart: always
+    ports:
+      - '38080:8080'
+    networks:
+      - frontend
+      - backend
+
   demo_cpp:
 # #if mounted or local
     image: ${DEMO_CPP_IMAGE}:latest
