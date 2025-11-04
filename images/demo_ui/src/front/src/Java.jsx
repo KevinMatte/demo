@@ -12,8 +12,13 @@ export const toolDocs = (
                     <li>React UI</li>
                     <li>Javascript Fetch</li>
                     <li>Apache</li>
-                    <li>Apache: libapache2-mod-wsgi-py3 python3</li>
+                    <li>Apache Proxy</li>
                     <li>PHP: hello_world.py</li>
+                </ul>
+                <li>demo_java: docker container</li>
+                <ul>
+                    <li>Tomcat: tomcat:jre25-temurin-noble</li>
+                    <li>Java Servlet: Hello World copied sample</li>
                 </ul>
             </ul>
         </ul>
