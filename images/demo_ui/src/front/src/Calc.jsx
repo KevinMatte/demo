@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import DemoAnchor, {GitHubAnchor, Anchor, WebServerLI} from "./DemoAnchor.jsx";
 
-export const toolDocs = (
+const toolDocs = (
     <div>
         <h2>Tech Stack:</h2>
         <ul>
@@ -10,7 +10,7 @@ export const toolDocs = (
                 <li><DemoAnchor path="images/demo_ui/Dockerfile"/></li>
                 <ul>
                     <li><DemoAnchor title="React Component" path="images/demo_ui/src/front/src/Calc.jsx"/></li>
-                    <li>{WebServerLI}</li>
+                    {WebServerLI}
                     <li><Anchor title="Apache" path="https://httpd.apache.org/docs/current/mod/mod_proxy.html">MOD
                         PROXY</Anchor></li>
                     <ul>
@@ -34,6 +34,10 @@ export const toolDocs = (
         </ul>
     </div>
 );
+export const toolDefn = {
+    "title": "C++ Program running as Microservices",
+    "toolDocs": toolDocs,
+};
 
 export default function Calc() {
     const [loading, setLoading] = useState(false);
@@ -131,3 +135,4 @@ export default function Calc() {
         </div>
     );
 }
+

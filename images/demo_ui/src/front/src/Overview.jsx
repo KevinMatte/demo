@@ -2,29 +2,36 @@ import DemoAnchor, {Anchor, WebServerLI} from "./DemoAnchor.jsx";
 import React from "react";
 import menuCss from "./css/Menu.module.css";
 
-function Overview(menu) {
+export const toolDefn = {
+    "title": "Summary of this demo",
+    "toolDocs": null,
+};
 
-    const rMenu = menu.menu.map(item =>
-        (
-            <li style={{height: "35px"}}><span
-                className={menuCss.menuButton}>{item.label}</span>: {item.title}</li>
-        )
+function Overview({menu}) {
+
+    const rMenu = Object.keys(menu).map(name => {
+            let item = menu[name];
+            console.log(name);
+            return (
+                <li style={{height: "35px"}} key={name}>
+                    <span className={menuCss.menuButton}>{item.label}</span>: {item.toolDefn.title}</li>
+            );
+        }
     );
 
     return (
         <div>
             <h2>Purpose</h2>
             <ul>
-                <li>For myself:
-                    <ul>
-                        <li>Progressively review and exercise a selection of technologies from my resume.</li>
-                    </ul>
-                </li>
+                <li>For myself:</li>
+                <ul>
+                    <li>Progressively review and exercise a selection of technologies from my resume.</li>
+                </ul>
                 <li>For others:
-                    <ul>
-                        <li>Demonstrate my code and abilities.</li>
-                    </ul>
                 </li>
+                <ul>
+                    <li>Demonstrate my code and abilities.</li>
+                </ul>
                 <li>Note: For this study, I'm not using existing frameworks.
                     <ul>
                         <li>A bare-bones React was integrated using bare npx vite commands</li>
@@ -65,7 +72,7 @@ function Overview(menu) {
             <ul>
                 <li><DemoAnchor title="demo_ui" path="images/demo_ui/Dockerfile"></DemoAnchor></li>
                 <ul>
-                    <li>{WebServerLI}</li>
+                    {WebServerLI}
                     <li><Anchor title="Apache" path="https://httpd.apache.org/docs/current/mod/mod_proxy.html">MOD
                         PROXY</Anchor></li>
                     <li><Anchor title="Apache" path="https://packages.debian.org/sid/httpd/libapache2-mod-wsgi-py3">MOD

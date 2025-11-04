@@ -15,7 +15,6 @@ export default function IFrameTool({url}) {
 
     return (
         <div>
-            <h2>Embedded &lt;iframe src="{fullUrl}"/&gt;</h2>
             <iframe src={fullUrl} width={300} height={100} style={{background: "white"}}>
             </iframe>
         </div>

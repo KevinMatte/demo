@@ -32,6 +32,18 @@ sudo apt install -y libasio-dev
 #     STD CPP Help: https://www.creatis.insa-lyon.fr/~grenier/?p=273
 #        Save at /opt/qt/cppreference-doc-en-cpp.qch
 
+
+
+# =======================
+# For Video recording
+# -------------
+# From Ubuntu Applications: Install OBS Studio
+# For background removal
+# apt install flatpak
+# flatpak remote-add flathub https://flathub.org/repo/flathub.flatpakrepo
+# flatpak install flathub com.obsproject.Studio
+
+
 # =======================
 # The following were installed on dev1, but not dev2, so they are probably not needed:
 # -------------
@@ -42,6 +54,8 @@ sudo apt install -y libasio-dev
 #sudo apt install -y libwebsocketpp-dev openssl libssl-dev
 #sudo apt install libssl-dev libcrypto++-dev
 #sydo apt install libboost-all-dev
+
+
 
 
 

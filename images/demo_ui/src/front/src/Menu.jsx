@@ -10,18 +10,19 @@ export default function Menu({menu, handler}) {
         handler(buttonName);
     }
 
-    // <MenuButton handler={handleClick} label="{item.label}" name="{item.name}" selected={page}></MenuButton>
-    const rMenu = menu.map(item =>
-        (<MenuButton
-            handler={handleClick}
-            name={item.name}
-            key={item.name}
-            selected={page}
-            title={item.title}
-        >
-            {item.label}
-        </MenuButton>)
-    );
+    const rMenu = Object.keys(menu).map(name => {
+            let item = menu[name];
+            return (<MenuButton
+                handler={handleClick}
+                name={name}
+                key={name}
+                selected={page}
+                title={item.toolDefn.title}
+            >
+                {item.label}
+            </MenuButton>);
+        }
+    )
     return (
         <div>
             <div className={menuCss.menu}>

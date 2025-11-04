@@ -11,7 +11,7 @@ export const toolDocs = (
                 <li><DemoAnchor path="images/demo_ui/Dockerfile"/></li>
                 <ul>
                     <li><DemoAnchor title="React Component" path="images/demo_ui/src/front/src/Java.jsx"/></li>
-                    <li>{WebServerLI}</li>
+                    {WebServerLI}
                     <li><Anchor title="Apache" path="https://httpd.apache.org/docs/current/mod/mod_proxy.html">MOD
                         PROXY</Anchor></li>
                     <ul>
@@ -41,6 +41,13 @@ export const toolDocs = (
     </div>
 );
 
+
 export default function Java() {
     return (<IFrameTool url="/api/demo_java/MyApp/HelloWorld"/>);
 }
+
+export const toolDefn = {
+    "title": "Java Servlet example.",
+    "toolDocs": toolDocs,
+};
+
