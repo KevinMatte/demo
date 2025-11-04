@@ -2,8 +2,6 @@ import os
 
 def application(environ, start_response):
     """Just handling a simple response for now.
-
-    TODO: If I do more, I'll use one of the templating languages like moustache.
     """
     status = '200 OK'
 

@@ -1,5 +1,6 @@
 import React from "react";
 import IFrameTool from "./IFrameTool.jsx";
+import DemoAnchor, {Anchor, WebServerLI} from "./DemoAnchor.jsx";
 
 export const toolDocs = (
     <div>
@@ -7,13 +8,20 @@ export const toolDocs = (
         <ul>
             <li>Docker Compose</li>
             <ul>
-                <li>demo_ui: docker container</li>
+                <li><DemoAnchor path="images/demo_ui/Dockerfile"/></li>
                 <ul>
-                    <li>React UI</li>
-                    <li>Javascript Fetch</li>
-                    <li>Apache</li>
-                    <li>Apache: libapache2-mod-wsgi-py3</li>
-                    <li>Python3: hello_world.py</li>
+                    <li><DemoAnchor title="React Component" path="images/demo_ui/src/front/src/Python.jsx"/></li>
+                    <li>{WebServerLI}</li>
+                    <li><Anchor title="Apache" path="https://packages.debian.org/sid/httpd/libapache2-mod-wsgi-py3">MOD WSGI</Anchor></li>
+                    <ul>
+                        <li><DemoAnchor title="Image Setup" path="images/demo_ui/Dockerfile"/></li>
+                        <DemoAnchor title="URL Proxy for /py_app"
+                                    path="images/demo_ui/src/static/etc/apache2/sites-available/000-default.conf"
+                                    label="apache site: 000-default.conf"
+                        />
+                    </ul>
+
+                    <li>Python: <DemoAnchor path="images/demo_ui/src/static/var/www/html/py_app/hello_world.py"/></li>
                 </ul>
             </ul>
         </ul>

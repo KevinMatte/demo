@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import DemoAnchor, {GitHubAnchor, Anchor, WebServerLI} from "./DemoAnchor.jsx";
 
 export const toolDocs = (
     <div>
@@ -6,17 +7,28 @@ export const toolDocs = (
         <ul>
             <li>Docker Compose</li>
             <ul>
-                <li>demo_ui: docker container</li>
+                <li><DemoAnchor path="images/demo_ui/Dockerfile"/></li>
                 <ul>
-                    <li>React UI</li>
-                    <li>Javascript Fetch</li>
-                    <li>Apache Proxy</li>
+                    <li><DemoAnchor title="React Component" path="images/demo_ui/src/front/src/Calc.jsx"/></li>
+                    <li>{WebServerLI}</li>
+                    <li><Anchor title="Apache" path="https://httpd.apache.org/docs/current/mod/mod_proxy.html">MOD
+                        PROXY</Anchor></li>
+                    <ul>
+                        <li>
+                            <DemoAnchor title="Configuration"
+                                        path="images/demo_ui/src/static/etc/apache2/sites-available/000-default.conf"
+                                        label="apache site: 000-default.conf"
+                            />
+                            <br/>Redirecting:<code>/api/demo_cpp/</code> in docker network
+                            to <code>http://demo_cpp:8080/</code>
+                        </li>
+                    </ul>
                 </ul>
-                <li>demo_cpp: docker container</li>
+                <li><DemoAnchor path="images/demo_cpp/Dockerfile"/></li>
                 <ul>
-                    <li>C++ Microservices: https://github.com/CrowCpp/Crow.git</li>
-                    <li>JSON Library: https://github.com/nlohmann/json.git</li>
-                    <li>C++ Service</li>
+                    <li><GitHubAnchor title="C++ Microservices" path="CrowCpp/Crow"/></li>
+                    <li><GitHubAnchor title="JSON Library" path="/nlohmann/json"/></li>
+                    <li><DemoAnchor title="C++ Service" path="images/demo_cpp/src/main.cpp"/></li>
                 </ul>
             </ul>
         </ul>

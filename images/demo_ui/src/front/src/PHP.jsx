@@ -1,5 +1,6 @@
 import React from "react";
 import IFrameTool from "./IFrameTool.jsx";
+import DemoAnchor, {WebServerLI, Anchor} from "./DemoAnchor.jsx";
 
 export const toolDocs = (
     <div>
@@ -7,13 +8,12 @@ export const toolDocs = (
         <ul>
             <li>Docker Compose</li>
             <ul>
-                <li>demo_ui: docker container</li>
+                <li><DemoAnchor path="images/demo_ui/Dockerfile"/></li>
                 <ul>
-                    <li>React UI</li>
-                    <li>Javascript Fetch</li>
-                    <li>Apache</li>
-                    <li>Apache: libapache2-mod-wsgi-py3 python3</li>
-                    <li>PHP: hello_world.py</li>
+                    <li><DemoAnchor title="React Component" path="images/demo_ui/src/front/src/Python.jsx"/></li>
+                    <li>{WebServerLI}</li>
+                    <li><Anchor title="Apache" path="https://packages.debian.org/sid/httpd/libapache2-mod-php">libapache2-mod-php</Anchor></li>
+                    <li><DemoAnchor title="JSX" path="images/demo_ui/src/static/var/www/html/hello_world.php"/></li>
                 </ul>
             </ul>
         </ul>

@@ -6,14 +6,21 @@ export default function Menu({menu, handler}) {
     const [page, setPage] = useState('purpose');
 
     const handleClick = (buttonName) => {
-        console.log(buttonName);
         setPage(buttonName);
         handler(buttonName);
     }
 
     // <MenuButton handler={handleClick} label="{item.label}" name="{item.name}" selected={page}></MenuButton>
     const rMenu = menu.map(item =>
-        <MenuButton handler={handleClick} label={item.label} name={item.name} selected={page}></MenuButton>
+        (<MenuButton
+            handler={handleClick}
+            name={item.name}
+            key={item.name}
+            selected={page}
+            title={item.title}
+        >
+            {item.label}
+        </MenuButton>)
     );
     return (
         <div>

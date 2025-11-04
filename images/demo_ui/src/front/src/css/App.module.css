@@ -18,3 +18,7 @@
   background: #dddddd;
 }
 
+.code {
+  background: rgba(244, 255, 55, 0.78);
+  font-family: monospace;
+}

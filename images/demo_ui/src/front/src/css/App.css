@@ -18,13 +18,21 @@ h1 {
   margin: 0;
 }
 
-h2, h3 {
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
   font-size: 1em;
 }
 
 ul {
   margin-top: 5px;
   margin-bottom: 5px;
+}
+
+code {
+  background: #dddddd;
 }
 
 .logo {
