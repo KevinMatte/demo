@@ -48,12 +48,13 @@ services:
 # #if mounted or local
     image: demo_java:latest
 # #else
-#    image: localhost:5000/demo_mariadb:${DEMO_JAVA_VERSION}
+#    image: localhost:5000/demo_java:${DEMO_JAVA_VERSION}
 # #endif
     container_name: demo_java
+    hostname: demojava
     restart: always
     ports:
-      - '38080:8080'
+      - '8888:8080'
     networks:
       - frontend
       - backend

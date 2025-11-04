@@ -29,4 +29,8 @@ MARIADB_BACKUP_PATH=$(pwd)/images/demo_mariadb/backup
 DEMO_MARIADB_VERSION=$(cat src/docker/demo_version.txt)
 
 DEMO_JAVA_VERSION=$(cat src/docker/demo_version.txt)
+DEMO_JAVA_TOMCAT_ADMIN=admin
+DEMO_JAVA_TOMCAT_MANAGER=manager
+DEMO_JAVA_TOMCAT_MANAGER_PASSWORD=${DEMO_JAVA_TOMCAT_MANAGER_PASSWORD}
+
 EOF

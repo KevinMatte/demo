@@ -3,8 +3,10 @@ import "./css/App.css";
 import appCSS from "./css/App.module.css";
 import Purpose from './Purpose.jsx';
 import Menu from './Menu.jsx';
-import Calc from './Calc.jsx';
-import IFrameTool from './IFrameTool.jsx';
+import Calc, {toolDocs as calcToolDocs} from './Calc.jsx';
+import Python, {toolDocs as pythonToolDocs} from './Python.jsx';
+import PHP, {toolDocs as phpToolDocs} from './PHP.jsx';
+import Java, {toolDocs as javaToolDocs} from './Java.jsx';
 
 function App() {
     const [page, setPage] = useState('purpose');
@@ -14,12 +16,21 @@ function App() {
     }
     const menu = [
         {"label": "Purpose", "name": "purpose"},
-        {"label": "C++ Calc", "name": "cpp_calc"},
-        {"label": "Python Hello", "name": "python_hello"},
-        {"label": "PHP Hello", "name": "php_hello"},
+        {"label": "C++", "name": "cpp_calc", calcToolDocs},
+        {"label": "Python", "name": "python_hello", pythonToolDocs},
+        {"label": "PHP", "name": "php_hello"},
+        {"label": "Java", "name": "java_hello"},
     ];
 
+    let pages = {
+        'purpose': {'page': (<Purpose/>)},
+        'cpp_calc': {'page': (<Calc/>), 'toolDocs': calcToolDocs},
+        'python_hello': {'page': (<Python/>), 'toolDocs': pythonToolDocs},
+        'php_hello': {'page': (<PHP/>), 'toolDocs': phpToolDocs},
+        'java_hello': {'page': (<Java/>), 'toolDocs': javaToolDocs},
+    };
 
+    let pageDefn = pages[page];
     return (
         <div className={appCSS.app}>
             <h1>Playground/Demo Project</h1>
@@ -28,12 +39,10 @@ function App() {
                 <hr/>
                 <br/>
                 <div className={appCSS.appPage}>
-                    {page === 'purpose' && <Purpose/>}
-                    {page === 'cpp_calc' && <Calc/>}
-                    {page === 'python_hello' && <IFrameTool  url="/py_app/hello_world.py"/>}
-                    {page === 'php_hello' && <IFrameTool  url="/hello_world.php"/>}
+                    {pageDefn.page}
                 </div>
             </div>
+            {pages[page].toolDocs}
             <div style={{padding: '0 30px'}}>
                 <h2>Notes:</h2>
                 <ul>

@@ -1,5 +1,28 @@
 import React, {useState} from "react";
 
+export const toolDocs = (
+    <div>
+        <h2>Tech Stack:</h2>
+        <ul>
+            <li>Docker Compose</li>
+            <ul>
+                <li>demo_ui: docker container</li>
+                <ul>
+                    <li>React UI</li>
+                    <li>Javascript Fetch</li>
+                    <li>Apache Proxy</li>
+                </ul>
+                <li>demo_cpp: docker container</li>
+                <ul>
+                    <li>C++ Microservices: https://github.com/CrowCpp/Crow.git</li>
+                    <li>JSON Library: https://github.com/nlohmann/json.git</li>
+                    <li>C++ Service</li>
+                </ul>
+            </ul>
+        </ul>
+    </div>
+);
+
 export default function Calc() {
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState(null);
@@ -80,10 +103,12 @@ export default function Calc() {
             </div>
 
             <form method="post" onSubmit={handleSubmit} onReset={handleReset}>
-                <b>Enter: </b>
+                <b>Enter:</b>
+                <br/>
                 <label>
                     Operand 1: <input name="op1" defaultValue="12"/>
                 </label>
+                <br/>
                 <label>
                     Operand 2: <input name="op2" defaultValue="10"/>
                 </label>
@@ -91,15 +116,6 @@ export default function Calc() {
                 <button type="submit">Perform +, -, *, / calculations</button>
                 {data && <button type="reset">Reset form</button>}
             </form>
-            <h2>Data Flow:</h2>
-            <ul>
-                <li><b>UI (demo_ui container):</b> Posts form data as JSON to URL "/api/demo_cpp/api/math/ops_a_b" to
-                    ...
-                </li>
-                <li><b>Apache Web Host (demo_ui container)</b>: Uses &lt;ProxyPass&gt; to redirect to..</li>
-                <li><b>C++ Microservices (demo_cpp container)</b>: Processes request and returns JSON response</li>
-                <li><b>UI (demo_ui container):</b> 'React UI' redisplays with state changes.</li>
-            </ul>
         </div>
     );
 }
