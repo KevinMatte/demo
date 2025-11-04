@@ -13,7 +13,6 @@ export const toolDocs = (
                     <li>Javascript Fetch</li>
                     <li>Apache</li>
                     <li>Apache Proxy</li>
-                    <li>PHP: hello_world.py</li>
                 </ul>
                 <li>demo_java: docker container</li>
                 <ul>
