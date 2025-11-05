@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import "./css/App.css";
 import appCSS from "./css/App.module.css";
-import Menu from './Menu.jsx';
-import Overview, {toolDefn as overviewToolDefn} from './Overview.jsx';
-import Calc, {toolDefn as calcToolDefn} from './Calc.jsx';
-import Python, {toolDefn as pythonToolDefn} from './Python.jsx';
-import PHP, {toolDefn as phpToolDefn} from './PHP.jsx';
-import Java, {toolDefn as javaToolDefn} from './Java.jsx';
-import DemoAnchor from "./DemoAnchor.jsx";
+import Menu from './lib/Menu.jsx';
+import Overview, {toolDefn as overviewToolDefn} from './pages/Overview.jsx';
+import Calc, {toolDefn as calcToolDefn} from './pages/Calc.jsx';
+import Python, {toolDefn as pythonToolDefn} from './pages/Python.jsx';
+import PHP, {toolDefn as phpToolDefn} from './pages/PHP.jsx';
+import Java, {toolDefn as javaToolDefn} from './pages/Java.jsx';
+import DemoAnchor from "./lib/Anchors.jsx";
 
 function App() {
     const [pageName, setPageName] = useState('purpose');

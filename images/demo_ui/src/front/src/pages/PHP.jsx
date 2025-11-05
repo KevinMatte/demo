@@ -1,6 +1,6 @@
 import React from "react";
-import IFrameTool from "./IFrameTool.jsx";
-import DemoAnchor, {WebServerLI, Anchor} from "./DemoAnchor.jsx";
+import IFrameTool from "./lib/IFrameTool.jsx";
+import DemoAnchor, {WebServerLI, Anchor} from "../lib/Anchors.jsx";
 
 export const toolDocs = (
     <div>

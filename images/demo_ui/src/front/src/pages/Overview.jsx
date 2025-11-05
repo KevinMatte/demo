@@ -1,6 +1,6 @@
-import DemoAnchor, {Anchor, WebServerLI} from "./DemoAnchor.jsx";
+import DemoAnchor, {Anchor, WebServerLI} from "../lib/Anchors.jsx";
 import React from "react";
-import menuCss from "./css/Menu.module.css";
+import menuCss from "../lib/css/Menu.module.css";
 
 export const toolDefn = {
     "title": "Summary of this demo",
@@ -8,19 +8,6 @@ export const toolDefn = {
 };
 
 function Overview({menu}) {
-
-    const rMenu = Object.keys(menu).map(name => {
-            let item = menu[name];
-            return (
-                <div style={{display: "table-row"}}>
-                    <div style={{display: "table-cell"}}>
-                            <span style={{float: "right", margin: "2px"}} className={menuCss.menuButton}>{item.label}</span>
-                    </div>
-                    <div style={{display: "table-cell", verticalAlign: "middle"}}>{item.toolDefn.title}</div>
-                </div>
-            );
-        }
-    );
 
     return (
         <div>
@@ -47,7 +34,18 @@ function Overview({menu}) {
             <h2>Menu</h2>
             <ul>
                 <div style={{display: "table"}}>
-                {rMenu}
+                {Object.keys(menu).map(name => {
+                        let item = menu[name];
+                        return (
+                            <div style={{display: "table-row"}}>
+                                <div style={{display: "table-cell"}}>
+                                    <span style={{float: "right", margin: "2px"}} className={menuCss.menuButton}>{item.label}</span>
+                                </div>
+                                <div style={{display: "table-cell", verticalAlign: "middle"}}>{item.toolDefn.title}</div>
+                            </div>
+                        );
+                    }
+                )}
                 </div>
             </ul>
 

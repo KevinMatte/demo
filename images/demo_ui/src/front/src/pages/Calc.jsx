@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import DemoAnchor, {GitHubAnchor, Anchor, WebServerLI} from "./DemoAnchor.jsx";
+import DemoAnchor, {GitHubAnchor, Anchor, WebServerLI} from "../lib/Anchors.jsx";
 
 const toolDocs = (
     <div>
