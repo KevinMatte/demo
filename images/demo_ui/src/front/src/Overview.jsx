@@ -11,10 +11,13 @@ function Overview({menu}) {
 
     const rMenu = Object.keys(menu).map(name => {
             let item = menu[name];
-            console.log(name);
             return (
-                <li style={{height: "35px"}} key={name}>
-                    <span className={menuCss.menuButton}>{item.label}</span>: {item.toolDefn.title}</li>
+                <div style={{display: "table-row"}}>
+                    <div style={{display: "table-cell"}}>
+                            <span style={{float: "right", margin: "2px"}} className={menuCss.menuButton}>{item.label}</span>
+                    </div>
+                    <div style={{display: "table-cell", verticalAlign: "middle"}}>{item.toolDefn.title}</div>
+                </div>
             );
         }
     );
@@ -43,7 +46,9 @@ function Overview({menu}) {
 
             <h2>Menu</h2>
             <ul>
+                <div style={{display: "table"}}>
                 {rMenu}
+                </div>
             </ul>
 
             <h2>Architecture Overview</h2>
