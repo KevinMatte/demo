@@ -8,6 +8,7 @@ import Python, {toolDefn as pythonToolDefn} from './pages/Python.jsx';
 import PHP, {toolDefn as phpToolDefn} from './pages/PHP.jsx';
 import Java, {toolDefn as javaToolDefn} from './pages/Java.jsx';
 import DemoAnchor from "./lib/Anchors.jsx";
+import DockerCompose, {toolDefn as dockerComposeToolDefn} from './pages/DockerCompose.jsx';
 
 function App() {
     const [pageName, setPageName] = useState('purpose');
@@ -18,6 +19,7 @@ function App() {
 
     const menu = {
         "purpose": {"label": "Overview", 'toolDefn': overviewToolDefn, 'page': null },
+        "dockercompose": {"label": "Containers", 'toolDefn': dockerComposeToolDefn, 'page': (<DockerCompose/>)},
         "cpp_calc": {"label": "C++", 'toolDefn': calcToolDefn, 'page': (<Calc/>)},
         "python_hello": {"label": "Python", 'toolDefn': pythonToolDefn, 'page': (<Python/>)},
         "php_hello": {"label": "PHP", 'toolDefn': phpToolDefn, 'page': (<PHP/>)},

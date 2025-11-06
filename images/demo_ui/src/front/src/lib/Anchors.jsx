@@ -5,8 +5,10 @@ export default function DemoAnchor({path, title, label, startAt, children}) {
     let childrenTitle = "";
     if (children && title)
         childrenTitle = (<span><b>{title}</b>: </span>)
-    else if (label && title)
+    else if (label && title) {
         childrenTitle = (<span><b>{title}</b>: {label}</span>)
+        label = " ";
+    }
 
     if (!label && !children && path.startsWith('images/')) {
         label = path.substring('images/'.length);
@@ -15,7 +17,7 @@ export default function DemoAnchor({path, title, label, startAt, children}) {
         if (labelPath[0] === '/')
             labelPath = labelPath.substring(1);
         if (title)
-            label = (<span><i>{proj}:</i> <b>{title}</b>: {labelPath}</span>);
+            label = (<span><b>{title}</b>: {labelPath}</span>);
         else
             label = (<span><b>{proj}</b>: {labelPath}</span>);
     }
@@ -56,4 +58,4 @@ export function Anchor({path, title, label, children}) {
     );
 }
 
-export const WebServerLI = (<li><Anchor title="Web Server" path="https://httpd.apache.org/">Apache: HTTP Server Project</Anchor></li>)
+export const WebServerLI = (<Anchor title="Apache" path="https://httpd.apache.org/">Apache: HTTP Server Project</Anchor>)

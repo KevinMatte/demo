@@ -1,45 +1,35 @@
 import React from "react";
 import IFrameTool from "./lib/IFrameTool.jsx";
-import DemoAnchor, {Anchor, WebServerLI} from "../lib/Anchors.jsx";
+import DemoAnchor, {Anchor} from "../lib/Anchors.jsx";
 
-export const toolDocs = (
-    <div>
-        <h2>Tech Stack:</h2>
-        <ul>
-            <li>Docker Compose</li>
+const toolDocs =
+    (
+        <div>
+            <h2>Tech Stack:</h2>
             <ul>
-                <li><DemoAnchor path="images/demo_ui/Dockerfile"/></li>
+                <li><b>Main Code</b></li>
                 <ul>
-                    <li><DemoAnchor title="React Component" path="images/demo_ui/src/front/src/Java.jsx"/></li>
-                    {WebServerLI}
-                    <li><Anchor title="Apache" path="https://httpd.apache.org/docs/current/mod/mod_proxy.html">MOD
-                        PROXY</Anchor></li>
-                    <ul>
-                        <li>
-                            <DemoAnchor title="ProxyPass Configuration"
-                                        path="images/demo_ui/src/static/etc/apache2/sites-available/000-default.conf"
-                                        label="apache site: 000-default.conf"
-                            />
-                            <br/><code>/api/demo_java/</code> redirected to <code>http://demo_java:8080/</code>
-                        </li>
-                    </ul>
+                    <li><DemoAnchor title="Client" path="images/demo_ui/src/front/src/Java.jsx"/></li>
+                    <li><DemoAnchor title="Server" path="images/demo_java/src/HelloWorld.java"/></li>
                 </ul>
-                <li><DemoAnchor path="images/demo_java/Dockerfile"/></li>
+                <li><b>Configuration</b></li>
                 <ul>
-                    <li><Anchor title="Tomcat" label="tomcat:jre25-temurin-noble" path="https://hub.docker.com/_/tomcat/tags?name=jre25-temurin-noble"/> </li>
-                    <ul>
-                        <li><DemoAnchor title="Java Servlet" path="images/demo_java/src/HelloWorld.java">
-                            Hello World copied example from Tomcat
-                        </DemoAnchor>
-                        </li>
-                        <li><DemoAnchor title="Tomcat Servlet Config" label="webapps/MyApp"
-                                        path="images/demo_java/mount/usr/local/tomcat/webapps/MyApp"/></li>
-                    </ul>
+                    <li>
+                        <li><Anchor title="/api/demo_java/ URL Proxy"
+                                    path="https://httpd.apache.org/docs/current/mod/mod_proxy.html">MOD
+                            PROXY</Anchor></li>
+                        <DemoAnchor title="/api/demo_java/ URL Proxy"
+                                    path="images/demo_ui/src/static/etc/apache2/sites-available/000-default.conf"
+                                    label='&lt;Location "/api/demo_java/>"&gt;'
+                        />
+                    </li>
+                    <li><DemoAnchor title="Tomcat Servlet Config" label="webapps/MyApp"
+                                    path="images/demo_java/mount/usr/local/tomcat/webapps/MyApp"/></li>
                 </ul>
+
             </ul>
-        </ul>
-    </div>
-);
+        </div>
+    );
 
 
 export default function Java() {

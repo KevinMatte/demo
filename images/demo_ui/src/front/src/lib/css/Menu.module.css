@@ -1,24 +1,27 @@
 .menu button {
   background-color: blue;
+  font-size: 0.8em;
   color: white;
   padding: 5px 7px;
   border-width: 2px;
   border-style: solid;
   border-color: black;
-  margin: 5px 3px;
+  margin: 3px 1px;
   border-radius: 5px;
   cursor: pointer;
 }
 
 .menuButton {
   background-color: blue;
+  font-size: 0.8em;
   color: white;
   padding: 5px 7px;
   border-width: 2px;
   border-style: solid;
   border-color: black;
+  margin: 3px 1px;
   border-radius: 5px;
-  /*height: 15px !important;*/
+  /*cursor: pointer;*/
 }
 
 
@@ -29,8 +32,8 @@
 
 .menu {
   border-width: 2px;
-  border-style: solid;
+  border-style: none;
   border-color: black;
-  padding: 10px;
+  padding: 0;
   display: inline;
 }

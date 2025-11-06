@@ -1,42 +1,41 @@
 import React, {useState} from "react";
-import DemoAnchor, {GitHubAnchor, Anchor, WebServerLI} from "../lib/Anchors.jsx";
+import DemoAnchor, {Anchor} from "../lib/Anchors.jsx";
 
-const toolDocs = (
-    <div>
-        <h2>Tech Stack:</h2>
-        <ul>
-            <li>Docker Compose</li>
+const toolDocs =
+    (
+        <div>
+            <h2>Tech Stack:</h2>
             <ul>
-                <li><DemoAnchor path="images/demo_ui/Dockerfile"/></li>
+                <li>
+                    <b>Main Code</b>:
+                </li>
                 <ul>
-                    <li><DemoAnchor title="React Component" path="images/demo_ui/src/front/src/Calc.jsx"/></li>
-                    {WebServerLI}
-                    <li><Anchor title="Apache" path="https://httpd.apache.org/docs/current/mod/mod_proxy.html">MOD
+                    <li><DemoAnchor title="Client" path="images/demo_ui/src/front/src/Calc.jsx"/></li>
+                    <li><DemoAnchor title="Server" path="images/demo_cpp/src/main.cpp"/></li>
+                </ul>
+                <li><b>Configuration</b></li>
+                <ul>
+                    <li><Anchor title="/api/demo_cpp URL Proxy"
+                                path="https://httpd.apache.org/docs/current/mod/mod_proxy.html">MOD
                         PROXY</Anchor></li>
-                    <ul>
-                        <li>
-                            <DemoAnchor title="Configuration"
-                                        path="images/demo_ui/src/static/etc/apache2/sites-available/000-default.conf"
-                                        label="apache site: 000-default.conf"
-                            />
-                            <br/>Redirecting:<code>/api/demo_cpp/</code> in docker network
-                            to <code>http://demo_cpp:8080/</code>
-                        </li>
-                    </ul>
+                    <li>
+                        <DemoAnchor title="/api/demo_cpp URL Proxy"
+                                    path="images/demo_ui/src/static/etc/apache2/sites-available/000-default.conf"
+                                    label='&lt;Location "/api/demo_cpp/>"&gt;'
+                        />
+                    </li>
+
                 </ul>
-                <li><DemoAnchor path="images/demo_cpp/Dockerfile"/></li>
-                <ul>
-                    <li><GitHubAnchor title="C++ Microservices" path="CrowCpp/Crow"/></li>
-                    <li><GitHubAnchor title="JSON Library" path="/nlohmann/json"/></li>
-                    <li><DemoAnchor title="C++ Service" path="images/demo_cpp/src/main.cpp"/></li>
-                </ul>
+
             </ul>
-        </ul>
-    </div>
-);
+        </div>
+    )
+;
 export const toolDefn = {
-    "title": "C++ Program running as Microservices",
-    "toolDocs": toolDocs,
+    "title":
+        "C++ Program running as Microservices",
+    "toolDocs":
+    toolDocs,
 };
 
 export default function Calc() {
