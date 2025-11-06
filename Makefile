@@ -1,7 +1,7 @@
 include .env
 export
 
-.PHONY: venv build local localMounted update_dot_env build_done generate_dotEnv version_bump
+.PHONY: venv build pre_build local localMounted update_dot_env build_done generate_dotEnv version_bump
 
 clean:
 	$(MAKE) -C images/demo_ui build_clean
@@ -10,6 +10,9 @@ clean:
 # ---------------------------
 # Build framework targets
 # ---------------------------
+pre_build:
+	bin/checkJSXReferences.sh
+
 tmp/venv.timestamp: bin/requirements.txt
 	if [ \! -d bin/venv ]; then \
 	   python3 -m venv bin/venv; \
@@ -24,7 +27,7 @@ update_dot_env: bin/generateDotEnv.sh
 # ---------------------------
 # Build targets
 # ---------------------------
-build: tmp/venv.timestamp update_dot_env
+build: pre_build tmp/venv.timestamp update_dot_env
 	$(MAKE) -C images/demo_ui build
 	$(MAKE) -C images/demo_cpp build
 	$(MAKE) -C images/demo_mariadb build

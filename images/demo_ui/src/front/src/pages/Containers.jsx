@@ -21,7 +21,7 @@ function Containers() {
                 <li><DemoAnchor path="bin/generateDotEnv.sh"/>: <br/>
                     Creates <code>.env</code> for Dockerfiles and GNU Makefiles
                 </li>
-                <li><DemoAnchor path="preprocessDockerCompose.py"/>: <br/>
+                <li><DemoAnchor path="bin/preprocessDockerCompose.py"/>: <br/>
                     Generates target based <code>docker-compose.yaml</code> files by pre-processing:<br/>
                     <DemoAnchor path="src/docker-compose.yaml"/>
                 </li>
