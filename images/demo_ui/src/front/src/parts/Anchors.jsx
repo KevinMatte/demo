@@ -3,7 +3,9 @@ import React from "react";
 export const gitHubURL = "https://github.com";
 export const gitProjectURL = gitHubURL + "/KevinMatte/demo";
 
-export default function DemoAnchor({path, title, label, startAt, children}) {
+export default function DemoAnchor(props) {
+    let {path, title, label, startAt, children, ...anchorProps} = props;
+
     let subject = (<span>{title}{title ? ":" : ""}</span>);
 
     let childrenTitle = "";
@@ -28,12 +30,19 @@ export default function DemoAnchor({path, title, label, startAt, children}) {
 
     return (
         <span>
-            &nbsp;{subject}<a href={gitProjectURL + "/blob/main/" + path} target="km_demo">{childrenTitle}{children || label || path}</a>
+            &nbsp;{subject}
+            <a href={gitProjectURL + "/blob/main/" + path}
+               target="km_demo"
+               {...anchorProps}
+            >
+                {childrenTitle}{children || label || path}
+            </a>
         </span>
     );
 }
 
-export function GitHubAnchor({path, title, label, children}) {
+export function GitHubAnchor(props) {
+    let {path, title, label, children, ...anchorProps} = props;
     if (path[0] !== '/')
         path = "/" + path;
     if (!label && !children)
@@ -42,12 +51,19 @@ export function GitHubAnchor({path, title, label, children}) {
 
     return (
         <span>
-            &nbsp;<a href={gitHubURL + path} target="km_github">{title} {children || label || path}</a>
+            &nbsp;
+            <a href={gitHubURL + path}
+               target="km_github"
+               {...anchorProps}
+            >
+                {title} {children || label || path}
+            </a>
         </span>
     );
 }
 
-export function Anchor({path, title, label, children}) {
+export function Anchor(props) {
+    let {path, title, label, children, ...anchorProps} = props;
     if (!label && !children)
         label = path.substring(1);
     if (title)
@@ -55,7 +71,13 @@ export function Anchor({path, title, label, children}) {
 
     return (
         <span>
-            &nbsp;{title} <a href={path} target="km_github">{children || label || path}</a>
+            &nbsp;{title}
+            <a href={path}
+               target="km_github"
+               {...anchorProps}
+            >
+                {children || label || path}
+            </a>
         </span>
     );
 }
