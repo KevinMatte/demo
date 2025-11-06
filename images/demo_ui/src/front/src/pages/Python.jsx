@@ -22,9 +22,9 @@ export const toolDocs = (
                 </li>
                 <li>
                     <DemoAnchor title="/py_app URL Proxy"
-                                path="images/demo_ui/src/static/etc/apache2/sites-available/000-default.conf#L24"
-                                label='&lt;Diretory "/var/www/html/py_app"&gt;'
-                    />
+                                path="images/demo_ui/src/static/etc/apache2/sites-available/000-default.conf">
+                        &lt;Diretory "/var/www/html/py_app"&gt;
+                    </DemoAnchor>
                 </li>
             </ul>
         </ul>

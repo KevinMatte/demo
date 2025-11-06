@@ -15,6 +15,7 @@ function App() {
 
     const menuHandler = (item) => {
         setPageName(item);
+        console.log(item);
     }
 
     const menu = {
@@ -25,32 +26,23 @@ function App() {
         "php_hello": {"label": "PHP", 'toolDefn': phpToolDefn, 'page': (<PHP/>)},
         "java_hello": {"label": "Java", 'toolDefn': javaToolDefn, 'page': (<Java/>)},
     };
-    menu.purpose.page = (<Overview menu={menu}/>);
+    menu.purpose.page = (<Overview menu={menu} handleClick={menuHandler}/>);
 
     let pageDefn = menu[pageName];
     let pageTitle = (<h2>{pageDefn.toolDefn.title}</h2>);
     return (
         <div className={appCSS.app}>
             <h1>Playground/Demo Project</h1>
-            <Menu handler={menuHandler} menu={menu}/>
+            <Menu handler={menuHandler} menu={menu} selectedMenuName={pageName}/>
+            <DemoAnchor path="" label="GitHub Source KevinMatte / demo"/><br/>
             <div className={appCSS.appBody}>
                 <hr/>
-                <br/>
                 <div className={appCSS.appPage}>
                     {pageTitle}
                     {pageDefn.page}
                 </div>
             </div>
             {pageDefn.toolDefn.toolDocs}
-            <div style={{padding: '0 30px'}}>
-                <h2>Notes:</h2>
-                <ul>
-                    <li>
-                        <b>Project Location</b>:
-                        <DemoAnchor path="" label="GitHub KevinMatte / demo"/>
-                    </li>
-                </ul>
-            </div>
         </div>
     )
 }

@@ -1,4 +1,4 @@
-import DemoAnchor, {Anchor, GitHubAnchor, WebServerLI} from "../lib/Anchors.jsx";
+import DemoAnchor, {Anchor, GitHubAnchor} from "../lib/Anchors.jsx";
 import React from "react";
 
 export const toolDefn = {
@@ -30,7 +30,7 @@ function DockerCompose() {
             <h3>Docker UI Container</h3>
             <ul>
                 <li><DemoAnchor title="Build" path="images/demo_ui/Dockerfile"/></li>
-                <li>{WebServerLI}</li>
+                <li><Anchor title="Apache" path="https://httpd.apache.org/">Apache: HTTP Server Project</Anchor></li>
                 <li><DemoAnchor title="PHP Client" path="images/demo_ui/src/front/src/Python.jsx"/></li>
                 <li><DemoAnchor title="PHP Server" path="images/demo_ui/src/static/var/www/html/hello_world.php"/></li>
                 <li><DemoAnchor title="Python Client" path="images/demo_ui/src/front/src/Python.jsx"/></li>

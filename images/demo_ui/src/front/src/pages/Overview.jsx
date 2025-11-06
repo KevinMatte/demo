@@ -1,16 +1,16 @@
 import React from "react";
 import menuCss from "../lib/css/Menu.module.css";
+import MenuButton from "../lib/MenuButton.jsx";
 
 export const toolDefn = {
     "title": "Summary of this demo",
     "toolDocs": null,
 };
 
-function Overview({menu}) {
-
+function Overview({menu, handleClick}) {
     return (
         <div>
-            <h2>Purpose</h2>
+            <h2>Purpose {menuCss.menuButton}</h2>
             <ul>
                 <li>For myself:</li>
                 <ul>
@@ -36,9 +36,20 @@ function Overview({menu}) {
                 {Object.keys(menu).map(name => {
                         let item = menu[name];
                         return (
-                            <div style={{display: "table-row"}}>
+                            <div style={{display: "table-row"}} key={name}  className={menuCss.menu}>
                                 <div style={{display: "table-cell"}}>
-                                    <span style={{float: "right", margin: "2px"}} className={menuCss.menuButton}>{item.label}</span>
+                                    <div style={{float: "right", margin: "2px"}}>
+                                        <MenuButton
+                                            handler={() => handleClick(name)}
+                                            name={name}
+                                            key={name}
+                                            title={item.toolDefn.title}
+                                            selected={name === 'purpose'}
+                                        >
+                                            {item.label}
+                                        </MenuButton>
+
+                                    </div>
                                 </div>
                                 <div style={{display: "table-cell", verticalAlign: "middle"}}>{item.toolDefn.title}</div>
                             </div>

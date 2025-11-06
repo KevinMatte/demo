@@ -15,14 +15,17 @@ const toolDocs =
                 </ul>
                 <li><b>Configuration</b></li>
                 <ul>
-                    <li><Anchor title="/api/demo_cpp URL Proxy"
-                                path="https://httpd.apache.org/docs/current/mod/mod_proxy.html">MOD
-                        PROXY</Anchor></li>
+                    <li>
+                        <Anchor title="/api/demo_cpp URL Proxy"
+                                path="https://httpd.apache.org/docs/current/mod/mod_proxy.html">
+                            MOD PROXY
+                        </Anchor>
+                    </li>
                     <li>
                         <DemoAnchor title="/api/demo_cpp URL Proxy"
                                     path="images/demo_ui/src/static/etc/apache2/sites-available/000-default.conf"
-                                    label='&lt;Location "/api/demo_cpp/>"&gt;'
                         />
+                        &lt;Location "/api/demo_cpp/"&gt;
                     </li>
 
                 </ul>

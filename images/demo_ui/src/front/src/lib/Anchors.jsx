@@ -2,6 +2,8 @@ import React from "react";
 import {gitProjectURL, gitHubURL} from "./common.jsx";
 
 export default function DemoAnchor({path, title, label, startAt, children}) {
+    let subject = (<span>{title}: </span>);
+
     let childrenTitle = "";
     if (children && title)
         childrenTitle = (<span><b>{title}</b>: </span>)
@@ -16,17 +18,15 @@ export default function DemoAnchor({path, title, label, startAt, children}) {
         let labelPath = label.substring(proj.length);
         if (labelPath[0] === '/')
             labelPath = labelPath.substring(1);
-        if (title)
-            label = (<span><b>{title}</b>: {labelPath}</span>);
-        else
-            label = (<span><b>{proj}</b>: {labelPath}</span>);
+        label = (<span>{labelPath}</span>);
+        subject = (<span>{title || proj}: </span>);
     }
     if (startAt && !label && !children)
         label = "..." + path.substring(path.indexOf(`/${startAt}/`));
 
     return (
         <span>
-            &nbsp;<a href={gitProjectURL + "/blob/main/" + path} target="km_demo">{childrenTitle}{children || label || path}</a>
+            &nbsp;{subject}<a href={gitProjectURL + "/blob/main/" + path} target="km_demo">{childrenTitle}{children || label || path}</a>
         </span>
     );
 }
@@ -49,13 +49,11 @@ export function Anchor({path, title, label, children}) {
     if (!label && !children)
         label = path.substring(1);
     if (title)
-        title = (<span><b>{title}</b>: </span>)
+        title = (<span>{title}: </span>)
 
     return (
         <span>
-            &nbsp;<a href={path} target="km_github">{title}{children || label || path}</a>
+            &nbsp;{title} <a href={path} target="km_github">{children || label || path}</a>
         </span>
     );
 }
-
-export const WebServerLI = (<Anchor title="Apache" path="https://httpd.apache.org/">Apache: HTTP Server Project</Anchor>)
