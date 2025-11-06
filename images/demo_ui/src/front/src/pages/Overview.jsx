@@ -3,7 +3,7 @@ import menuCss from "../lib/css/Menu.module.css";
 import MenuButton from "../lib/MenuButton.jsx";
 
 export const toolDefn = {
-    "title": "Summary of this demo",
+    "title": "Documentation: Overview of this web page.",
     "toolDocs": null,
 };
 
@@ -44,7 +44,7 @@ function Overview({menu, handleClick}) {
                                             name={name}
                                             key={name}
                                             title={item.toolDefn.title}
-                                            selected={name === 'purpose'}
+                                            selected={name === 'overview'}
                                         >
                                             {item.label}
                                         </MenuButton>

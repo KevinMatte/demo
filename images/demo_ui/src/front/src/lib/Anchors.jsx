@@ -2,7 +2,7 @@ import React from "react";
 import {gitProjectURL, gitHubURL} from "./common.jsx";
 
 export default function DemoAnchor({path, title, label, startAt, children}) {
-    let subject = (<span>{title}: </span>);
+    let subject = (<span>{title}{title ? ":" : ""}</span>);
 
     let childrenTitle = "";
     if (children && title)

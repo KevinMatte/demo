@@ -31,7 +31,7 @@ export const toolDocs = (
     </div>
 );
 export const toolDefn = {
-    "title": "WSGI Python example.",
+    "title": "Demo: WSGI Python example.",
     "toolDocs": toolDocs,
 };
 

@@ -3,30 +3,29 @@ import "./css/App.css";
 import appCSS from "./css/App.module.css";
 import Menu from './lib/Menu.jsx';
 import Overview, {toolDefn as overviewToolDefn} from './pages/Overview.jsx';
-import Calc, {toolDefn as calcToolDefn} from './pages/Calc.jsx';
+import CPP, {toolDefn as cppToolDefn} from './pages/CPP.jsx';
 import Python, {toolDefn as pythonToolDefn} from './pages/Python.jsx';
 import PHP, {toolDefn as phpToolDefn} from './pages/PHP.jsx';
 import Java, {toolDefn as javaToolDefn} from './pages/Java.jsx';
 import DemoAnchor from "./lib/Anchors.jsx";
-import DockerCompose, {toolDefn as dockerComposeToolDefn} from './pages/DockerCompose.jsx';
+import Containers, {toolDefn as dockerComposeToolDefn} from './pages/Containers.jsx';
 
 function App() {
-    const [pageName, setPageName] = useState('purpose');
+    const [pageName, setPageName] = useState('overview');
 
     const menuHandler = (item) => {
         setPageName(item);
-        console.log(item);
     }
 
     const menu = {
-        "purpose": {"label": "Overview", 'toolDefn': overviewToolDefn, 'page': null },
-        "dockercompose": {"label": "Containers", 'toolDefn': dockerComposeToolDefn, 'page': (<DockerCompose/>)},
-        "cpp_calc": {"label": "C++", 'toolDefn': calcToolDefn, 'page': (<Calc/>)},
+        "overview": {"label": "Overview", 'toolDefn': overviewToolDefn, 'page': null },
+        "containers": {"label": "Containers", 'toolDefn': dockerComposeToolDefn, 'page': (<Containers/>)},
+        "cpp_hello": {"label": "C++", 'toolDefn': cppToolDefn, 'page': (<CPP/>)},
         "python_hello": {"label": "Python", 'toolDefn': pythonToolDefn, 'page': (<Python/>)},
         "php_hello": {"label": "PHP", 'toolDefn': phpToolDefn, 'page': (<PHP/>)},
         "java_hello": {"label": "Java", 'toolDefn': javaToolDefn, 'page': (<Java/>)},
     };
-    menu.purpose.page = (<Overview menu={menu} handleClick={menuHandler}/>);
+    menu.overview.page = (<Overview menu={menu} handleClick={menuHandler}/>);
 
     let pageDefn = menu[pageName];
     let pageTitle = (<h2>{pageDefn.toolDefn.title}</h2>);

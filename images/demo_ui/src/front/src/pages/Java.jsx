@@ -14,15 +14,13 @@ const toolDocs =
                 </ul>
                 <li><b>Configuration</b></li>
                 <ul>
-                    <li>
-                        <li><Anchor title="/api/demo_java/ URL Proxy"
-                                    path="https://httpd.apache.org/docs/current/mod/mod_proxy.html">MOD
-                            PROXY</Anchor></li>
-                        <DemoAnchor title="/api/demo_java/ URL Proxy"
-                                    path="images/demo_ui/src/static/etc/apache2/sites-available/000-default.conf"
-                                    label='&lt;Location "/api/demo_java/>"&gt;'
-                        />
-                    </li>
+                    <li><Anchor title="/api/demo_java/ URL Proxy"
+                                path="https://httpd.apache.org/docs/current/mod/mod_proxy.html">MOD
+                        PROXY</Anchor></li>
+                    <DemoAnchor title="/api/demo_java/ URL Proxy"
+                                path="images/demo_ui/src/static/etc/apache2/sites-available/000-default.conf"
+                                label='&lt;Location "/api/demo_java/>"&gt;'
+                    />
                     <li><DemoAnchor title="Tomcat Servlet Config" label="webapps/MyApp"
                                     path="images/demo_java/mount/usr/local/tomcat/webapps/MyApp"/></li>
                 </ul>
@@ -37,7 +35,7 @@ export default function Java() {
 }
 
 export const toolDefn = {
-    "title": "Java Servlet example.",
+    "title": "Demo: Java Servlet example.",
     "toolDocs": toolDocs,
 };
 

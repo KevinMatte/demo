@@ -2,15 +2,15 @@ import DemoAnchor, {Anchor, GitHubAnchor} from "../lib/Anchors.jsx";
 import React from "react";
 
 export const toolDefn = {
-    "title": "Containers: Docker Compose",
+    "title": "Documentation: Docker Compose usage.",
     "toolDocs": null,
 };
 
-function DockerCompose() {
+function Containers() {
 
     return (
         <div>
-            <h3>Project Build</h3>
+            <h3>Generation of: docker-compose.yaml</h3>
             <ul>
                 <li><DemoAnchor path="Makefile"/>: Top Level GNU Makefile with targets like:</li>
                 <ul>
@@ -40,7 +40,7 @@ function DockerCompose() {
                 <li><b>Source Code</b></li>
                 <ul>
                     <li><DemoAnchor title="Java Client" path="images/demo_ui/src/front/src/Java.jsx"/></li>
-                    <li><DemoAnchor title="CPP Client" path="images/demo_ui/src/front/src/Calc.jsx"/></li>
+                    <li><DemoAnchor title="CPP Client" path="images/demo_ui/src/front/src/CPP.jsx"/></li>
                 </ul>
             </ul>
 
@@ -80,4 +80,4 @@ function DockerCompose() {
     )
 }
 
-export default DockerCompose;
+export default Containers;

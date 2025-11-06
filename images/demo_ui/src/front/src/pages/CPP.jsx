@@ -10,7 +10,7 @@ const toolDocs =
                     <b>Main Code</b>:
                 </li>
                 <ul>
-                    <li><DemoAnchor title="Client" path="images/demo_ui/src/front/src/Calc.jsx"/></li>
+                    <li><DemoAnchor title="Client" path="images/demo_ui/src/front/src/CPP.jsx"/></li>
                     <li><DemoAnchor title="Server" path="images/demo_cpp/src/main.cpp"/></li>
                 </ul>
                 <li><b>Configuration</b></li>
@@ -36,12 +36,12 @@ const toolDocs =
 ;
 export const toolDefn = {
     "title":
-        "C++ Program running as Microservices",
+        "Demo: C++ Microservices example.",
     "toolDocs":
     toolDocs,
 };
 
-export default function Calc() {
+export default function CPP() {
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState(null);
     const [error, setError] = useState(null);
