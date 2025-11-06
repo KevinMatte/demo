@@ -1,6 +1,6 @@
 import React from "react";
 import IFrameTool from "./lib/IFrameTool.jsx";
-import DemoAnchor, {Anchor} from "../lib/Anchors.jsx";
+import DemoAnchor, {Anchor} from "../parts/Anchors.jsx";
 
 const toolDocs =
     (
@@ -9,7 +9,7 @@ const toolDocs =
             <ul>
                 <li><b>Main Code</b></li>
                 <ul>
-                    <li><DemoAnchor title="Client" path="images/demo_ui/src/front/src/Java.jsx"/></li>
+                    <li><DemoAnchor title="Client" path="images/demo_ui/src/front/src/pages/Java.jsx"/></li>
                     <li><DemoAnchor title="Server" path="images/demo_java/src/HelloWorld.java"/></li>
                 </ul>
                 <li><b>Configuration</b></li>

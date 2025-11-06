@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import "./css/App.css";
 import appCSS from "./css/App.module.css";
-import Menu from './lib/Menu.jsx';
+import Menu from './parts/Menu.jsx';
 import Overview, {toolDefn as overviewToolDefn} from './pages/Overview.jsx';
 import CPP, {toolDefn as cppToolDefn} from './pages/CPP.jsx';
 import Python, {toolDefn as pythonToolDefn} from './pages/Python.jsx';
 import PHP, {toolDefn as phpToolDefn} from './pages/PHP.jsx';
 import Java, {toolDefn as javaToolDefn} from './pages/Java.jsx';
-import DemoAnchor from "./lib/Anchors.jsx";
+import DemoAnchor from "./parts/Anchors.jsx";
 import Containers, {toolDefn as dockerComposeToolDefn} from './pages/Containers.jsx';
 
 function App() {

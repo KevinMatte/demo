@@ -1,5 +1,7 @@
 import React from "react";
-import {gitProjectURL, gitHubURL} from "./common.jsx";
+
+export const gitHubURL = "https://github.com";
+export const gitProjectURL = gitHubURL + "/KevinMatte/demo";
 
 export default function DemoAnchor({path, title, label, startAt, children}) {
     let subject = (<span>{title}{title ? ":" : ""}</span>);

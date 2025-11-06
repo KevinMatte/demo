@@ -1,6 +1,7 @@
 import React from "react";
-import menuCss from "../lib/css/Menu.module.css";
-import MenuButton from "../lib/MenuButton.jsx";
+import menuCss from "../parts/css/Menu.module.css";
+import MenuButton from "../parts/MenuButton.jsx";
+import DemoAnchor from "../parts/Anchors.jsx";
 
 export const toolDefn = {
     "title": "Documentation: Demo Overview",
@@ -25,7 +26,7 @@ function Overview({menu, handleClick}) {
                 </ul>
             </ul>
 
-            <p><b>Note:</b> This UI is fully <b>ReactJS</b>, my favorite UI environment.</p>
+            <p><b>Note:</b> This UI(<DemoAnchor label="App.jsx" path="images/demo_ui/src/front/src/App.jsx"/>) is fully <b>ReactJS</b>, my favorite UI environment.</p>
 
             <h2>Menu</h2>
             <ul>
