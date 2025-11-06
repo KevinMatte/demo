@@ -3,13 +3,15 @@ import menuCss from "../lib/css/Menu.module.css";
 import MenuButton from "../lib/MenuButton.jsx";
 
 export const toolDefn = {
-    "title": "Documentation: Overview of this web page.",
+    "title": "Documentation: Demo Overview",
     "toolDocs": null,
 };
 
 function Overview({menu, handleClick}) {
     return (
         <div>
+
+
             <h2>Purpose {menuCss.menuButton}</h2>
             <ul>
                 <li>For myself:</li>
@@ -21,14 +23,9 @@ function Overview({menu, handleClick}) {
                 <ul>
                     <li>Demonstrate my code and abilities.</li>
                 </ul>
-                <li>Note: For this study, I'm not using existing frameworks.
-                    <ul>
-                        <li>A bare-bones React was integrated using bare npx vite commands</li>
-                        <li>I wrote my own file monitor to redo builds in a development environment.</li>
-                    </ul>
-
-                </li>
             </ul>
+
+            <p><b>Note:</b> This UI is fully <b>ReactJS</b>, my favorite UI environment.</p>
 
             <h2>Menu</h2>
             <ul>

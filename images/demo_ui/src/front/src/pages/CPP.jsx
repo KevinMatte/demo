@@ -35,10 +35,8 @@ const toolDocs =
     )
 ;
 export const toolDefn = {
-    "title":
-        "Demo: C++ Microservices example.",
-    "toolDocs":
-    toolDocs,
+    "title": "Demo: C++ Microservices Example",
+    "toolDocs": toolDocs,
 };
 
 export default function CPP() {

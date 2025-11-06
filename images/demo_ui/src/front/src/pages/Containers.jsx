@@ -2,7 +2,7 @@ import DemoAnchor, {Anchor, GitHubAnchor} from "../lib/Anchors.jsx";
 import React from "react";
 
 export const toolDefn = {
-    "title": "Documentation: Docker Compose usage.",
+    "title": "Documentation: Docker Compose Usage",
     "toolDocs": null,
 };
 

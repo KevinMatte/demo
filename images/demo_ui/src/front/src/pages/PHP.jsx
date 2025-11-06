@@ -21,7 +21,7 @@ export const toolDocs = (
     </div>
 );
 export const toolDefn = {
-    "title": "Demo: Apache PHP example.",
+    "title": "Demo: Apache PHP Example",
     "toolDocs": toolDocs,
 };
 

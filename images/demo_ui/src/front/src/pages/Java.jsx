@@ -35,7 +35,7 @@ export default function Java() {
 }
 
 export const toolDefn = {
-    "title": "Demo: Java Servlet example.",
+    "title": "Demo: Java Servlet Example",
     "toolDocs": toolDocs,
 };
 
