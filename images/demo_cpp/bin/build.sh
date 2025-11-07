@@ -9,6 +9,7 @@ PROJ_ROOT="$(git rev-parse --show-toplevel)"
 . "${PROJ_ROOT}/.env"
 
 mkdir -p build/home/_user_
+echo ${DEMO_CPP_VERSION} > build/home/_user_/version.txt
 cat > build/home/_user_/.my.cnf <<EOF
 [client]
 user=root

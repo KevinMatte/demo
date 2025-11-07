@@ -1,4 +1,3 @@
-import React from "react";
 import menuCss from "../parts/css/Menu.module.css";
 import MenuButton from "../parts/MenuButton.jsx";
 import DemoAnchor from "../parts/Anchors.jsx";

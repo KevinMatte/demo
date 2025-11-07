@@ -1,5 +1,5 @@
 import DemoAnchor, {Anchor, GitHubAnchor} from "../parts/Anchors.jsx";
-import React from "react";
+import React, {useEffect, useState} from "react";
 
 export const toolDefn = {
     "title": "Documentation: Docker Compose Usage",
@@ -7,9 +7,31 @@ export const toolDefn = {
 };
 
 function Containers() {
+    const [data, setData] = useState(null);
+    const [error, setError] = useState(null);
+    const handleSubmit = async () => {
+        // Read the form data
+        try {
+            const response = await fetch(`/py_app/get_versions.py`);
+            if (response.ok) {
+                const jsonData = await response.json();
+                setData(jsonData);
+            } else {
+                console.log("err1");
+                setError(`HTTP error! status: ${response.status}</br>`);
+            }
+        } catch (err) {
+            setError(`HTTP error! status: ${err}</br>`);
+        }
+    }
+    useEffect(() => {
+        handleSubmit()
+    }, []);
+
 
     return (
         <div>
+            {error}
             <h3>Generation of: docker-compose.yaml</h3>
             <ul>
                 <li><DemoAnchor path="Makefile"/>: Top Level GNU Makefile with targets like:</li>
@@ -27,7 +49,7 @@ function Containers() {
                 </li>
             </ul>
 
-            <h3>Docker UI Container</h3>
+            <h3>Docker UI Container {data && data['DEMO_UI_DATE']} {data && data['DEMO_UI_VERSION']}</h3>
             <ul>
                 <li><DemoAnchor title="Build" path="images/demo_ui/Dockerfile"/></li>
                 <li><Anchor title="Apache" path="https://httpd.apache.org/">Apache: HTTP Server Project</Anchor></li>
@@ -44,7 +66,7 @@ function Containers() {
                 </ul>
             </ul>
 
-            <h3>Docker Java Container</h3>
+            <h3>Docker Java Container {data && data['DEMO_JAVA_DATE']} {data && data['DEMO_JAVA_VERSION']}</h3>
             <ul>
                 <li><DemoAnchor title="Build" path="images/demo_java/Dockerfile"/></li>
                 <li><Anchor title="Tomcat" label="tomcat:jre25-temurin-noble"
@@ -58,7 +80,7 @@ function Containers() {
                 </ul>
             </ul>
 
-            <h3>Docker CPP Container</h3>
+            <h3>Docker CPP Container {data && data['DEMO_CPP_DATE']} {data && data['DEMO_CPP_VERSION']}</h3>
             <ul>
                 <li><DemoAnchor title="Build" path="images/demo_cpp/Dockerfile"/></li>
                 <li><GitHubAnchor title="Library: C++ Microservices" path="CrowCpp/Crow"/></li>
@@ -69,7 +91,7 @@ function Containers() {
                 </ul>
             </ul>
 
-            <h3>Docker MariaDB Container</h3>
+            <h3>Docker MariaDB Container {data && data['DEMO_MARIADB_DATE']} {data && data['DEMO_MARIADB_VERSION']}</h3>
             <ul>
                 <li><DemoAnchor title="demo_mariadb" path="images/demo_mariadb/Dockerfile"></DemoAnchor></li>
                 <li><Anchor title="MariaDB MySQL Server" label="mariadb:11.8"

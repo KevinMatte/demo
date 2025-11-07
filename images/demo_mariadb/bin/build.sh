@@ -10,6 +10,7 @@ PROJ_ROOT="$(git rev-parse --show-toplevel)"
 
 rm -fr build
 mkdir -p build/root
+echo ${DEMO_MARIADB_VERSION} > build/root/version.txt
 mkdir -p backup
 
 cat > build/root/.my.cnf <<EOF

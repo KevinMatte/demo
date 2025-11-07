@@ -17,6 +17,8 @@ if [ \! -f jars/serlet-api.jar ]; then
 fi
 
 rm -fr build
+mkdir -p build/var/www/html
+echo ${DEMO_JAVA_VERSION} > build/var/www/html/version.txt
 mkdir -p mount/usr/local/tomcat/conf
 cat <<EOF >mount/usr/local/tomcat/conf/tomcat-users.xml
 <?xml version="1.0" encoding="UTF-8"?>

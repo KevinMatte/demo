@@ -70,7 +70,6 @@ export default function CPP() {
         setLoading(true);
         setError(null); // Clear previous errors
         try {
-            console.log(`relUrl3=${relUrl}`);
             const response = await fetch(`http://${relUrl}/api/math/ops_a_b`, {method, body}
             );
             if (response.ok) {

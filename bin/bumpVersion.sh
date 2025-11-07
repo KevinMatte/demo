@@ -4,15 +4,17 @@ cd $(dirname "$0")/.. || exit 0
 
 # Bump all image versions.
 bumpVersions() {
-  [ ! -f src/docker/demo_version.txt ] && touch src/docker/demo_version.txt
+  [ ! -f src/docker/image_versions.ish ] && touch src/docker/image_versions.ish
 
-  rm -f "tmp/demo_version.txt"
-  touch "tmp/demo_version.txt"
+  rm -f "tmp/image_versions.ish"
+  touch "tmp/image_versions.ish"
   for image in $(cd images && ls); do
     versionVar="${image^^}_VERSION"
-    versionLine="$(grep "^${versionVar}" src/docker/demo_version.txt)" || versionLine="${versionVar}=1.0.0 #0"
+    dateVar="${image^^}_DATE"
+    versionLine="$(grep "^${versionVar}" src/docker/image_versions.ish)" || versionLine="${versionVar}=1.0.0 #0#0"
     lastVersion="$(echo $versionLine | cut -d= -f2 | cut -d' ' -f1)"
     lastID="$(echo $versionLine | cut -d= -f2 | cut -d'#' -f2)"
+    lastDate="$(echo $versionLine | cut -d= -f2 | cut -d'#' -f3)"
     latestID="$(docker image ls --format "{{.ID}}" ${image}:latest)"
 
     if [ "$latestID" != "$lastID" ]; then
@@ -21,14 +23,20 @@ bumpVersions() {
       minorPart="$(echo "${lastVersion}" | cut -d. -f"$((n + 1))")"
       minorPart="$((minorPart + 1))"
       version="${majorPart}.${minorPart}"
-      printf "%s=%s #%s\n" "${versionVar}" "${version}" "${latestID}" >> tmp/demo_version.txt
+      now="$(date +'%Y/%m/%d %H:%M:%S')"
+      printf "%s=%s #%s#%s\n" "${versionVar}" "${version}" "${latestID}" "${now}" >> tmp/image_versions.ish
+      echo "${dateVar}='${now}'" >> tmp/image_versions.ish
     else
-      echo "${versionLine}" >> tmp/demo_version.txt
+      echo "${versionLine}" >> tmp/image_versions.ish
+      echo "${dateVar}='${lastDate}'" >> tmp/image_versions.ish
       version="${lastVersion}"
+      now="${lastDate}"
     fi
     eval "export ${versionVar}=${version}"
+    eval "export ${dateVar}=${version}"
+
   done
-  mv "tmp/demo_version.txt" "src/docker/demo_version.txt"
+  mv "tmp/image_versions.ish" "src/docker/image_versions.ish"
 }
 
 bumpVersions

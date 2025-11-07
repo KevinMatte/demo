@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="JS Demo" type="JavascriptDebugType" uri="http://localhost:5173/">
+  <configuration default="false" name="JS Demo Vite" type="JavascriptDebugType" uri="http://localhost:5173/">
     <mapping url="http://localhost:5173" local-file="$PROJECT_DIR$/images/demo_ui/src/front/src/pages" />
     <method v="2" />
   </configuration>

@@ -6,7 +6,8 @@ source bin/funcs.ish
 say "Starting Monitor"
 while [ 1 = 1 ]; do
   targets="$(bin/fileWatcher.py \
-    '-C images/demo_ui build_static@images/demo_ui/src/static:.js,.jsx,.css,.html' \
+    '-C images/demo_ui build_static@images/demo_ui/src/static:.js,.jsx,.css,.html,.py,.php' \
+    '-C images/demo_ui build_static@.env' \
     '-C images/demo_ui build_front@images/demo_ui/src/front:.jsx,.css,.html' \
     '.env@bin/generateDotEnv.sh' \
     )"
