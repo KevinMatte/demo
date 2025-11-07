@@ -73,7 +73,7 @@ function Containers() {
                             path="https://hub.docker.com/_/tomcat/tags?name=jre25-temurin-noble"/></li>
                 <li><b>Source Code</b></li>
                 <ul>
-                    <li><DemoAnchor title="Server" path="images/demo_java/src/HelloWorld.java">
+                    <li><DemoAnchor title="Server" path="images/demo_java/src/MyApp/HelloWorld.java">
                         Hello World copied example from Tomcat
                     </DemoAnchor>
                     </li>

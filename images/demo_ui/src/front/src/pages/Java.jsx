@@ -10,7 +10,7 @@ const toolDocs =
                 <li><b>Main Code</b></li>
                 <ul>
                     <li><DemoAnchor title="Client" path="images/demo_ui/src/front/src/pages/Java.jsx"/></li>
-                    <li><DemoAnchor title="Server" path="images/demo_java/src/HelloWorld.java"/></li>
+                    <li><DemoAnchor title="Server" path="images/demo_java/src/MyApp/HelloWorld.java"/></li>
                 </ul>
                 <li><b>Configuration</b></li>
                 <ul>
@@ -22,7 +22,7 @@ const toolDocs =
                                 label='&lt;Location "/api/demo_java/>"&gt;'
                     />
                     <li><DemoAnchor title="Tomcat Servlet Config" label="webapps/MyApp"
-                                    path="images/demo_java/mount/usr/local/tomcat/webapps/MyApp"/></li>
+                                    path="images/demo_java/src/MyApp"/></li>
                 </ul>
 
             </ul>

@@ -8,8 +8,10 @@ cd $(dirname $0)/..
 # Note: this script is monitored by `monitorBuild.sh` and re-run when changes found here
 
 # Example secrets.env
-# MARIADB_ROOT_PASSWORD="my_secret password"
-source ./.secrets.env
+# MARIADB_ROOT_PASSWORD="...password..."
+# DEMO_JAVA_TOMCAT_MANAGER_PASSWORD="...password..."
+# DEMO_JAVA_TOMCAT_MANAGER="...password..."
+# DEMO_JAVA_TOMCAT_ADMIN="...password..."
 
 cat <<EOF >${1:-.env}
 PROJ_ROOT=$(git rev-parse --show-toplevel)
@@ -31,6 +33,8 @@ MARIADB_BACKUP_PATH=$(pwd)/images/demo_mariadb/backup
 DEMO_JAVA_TOMCAT_ADMIN=admin
 DEMO_JAVA_TOMCAT_MANAGER=manager
 DEMO_JAVA_TOMCAT_MANAGER_PASSWORD=${DEMO_JAVA_TOMCAT_MANAGER_PASSWORD}
+
+$(cat ./.secrets.env)
 
 $(cat src/docker/image_versions.ish | sed -e 's/ #.*//')
 EOF

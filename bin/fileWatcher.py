@@ -9,6 +9,7 @@ See full details in process_args() below. or running python filesWatcher.py -h
 
 import glob
 import time
+import re
 from argparse import ArgumentParser, Namespace, RawTextHelpFormatter
 from typing import Any
 
@@ -40,10 +41,11 @@ def process_args() -> tuple[Namespace, ArgumentParser]:
     # Help on paths from program's argv
     help_args_paths = """One or more glob/wildcard paths to monitor.
         
-        [{target_name}@]{path}[,{filter}]... A list of paths with optional suffix filters.
+        [{commands}@]{path}[,{filter}]... A list of build targets and directory paths with optional suffix filters.
         Example: build_mounted:src,.js,.jsx,.css,.html
         
-        - target_name is optional. 'path' is used if it's not provided. The script will print this string when
+        - commands is a list of commands to execute.
+         The 'path' is used if it's not provided. The script will echo this string when
           the first file hit is found.
         
         """
@@ -69,19 +71,20 @@ def process_args() -> tuple[Namespace, ArgumentParser]:
 
 class MonitorAnyFileChange(FileSystemEventHandler):
     """An event handler class for Observer instances.
-    For the patch being monitored, keeps track of the 'target_name', the file extensions and state of events.
+    For the patch being monitored, keeps track of the 'commands', the file extensions and state of events.
     """
 
-    def __init__(self, target_name, file_extensions):
+    def __init__(self, commands: str, path, file_extensions):
         super().__init__()
 
-        self._target_name = target_name
+        self._commands = commands
+        self._path = path
         self._file_extensions = file_extensions
         self._files = set()
 
-    def get_target_name(self) -> str:
-        """Returns the target_name passed in the contsructor."""
-        return self._target_name
+    def get_commands(self) -> str:
+        """Returns the commands passed in the contsructor."""
+        return self._commands
 
     def has_change(self) -> bool:
         """Returns True iff any file change event has occurred. """
@@ -101,7 +104,7 @@ class MonitorAnyFileChange(FileSystemEventHandler):
                 if event.src_path.endswith(file_extension):
                     self._files.add(event.src_path)
                     break
-        else:
+        elif event.src_path:
             self._files.add(event.src_path)
 
     def on_created(self, event: DirCreatedEvent | FileCreatedEvent) -> None:
@@ -140,43 +143,57 @@ class FilesWatcher:
         if self.args.verbose:
             print("Monitoring:")
         for path_defn in self.args.paths:
+            path_defn = re.sub("[ \n\t]+", " ", path_defn).strip()
+            path_defn = re.sub(" *(?P<del>[:,]) *", r'\g<del>', path_defn).strip()
+
             # Split [{targetname}@]...
-            parts = path_defn.split('@')
-            target_name = False if len(parts) == 1 else parts.pop(0)
-
-            # Split {path}[:[{extensions}]...]
-            parts = parts[0].split(':')
-            path_glob = parts.pop(0)
-
-            # Set default value for target_name, if none provided.
-            target_name = path_glob if not target_name else target_name
-
-            # Create list of file extensions.
-            if parts:
-                file_extensions = parts[0].split(',')
+            defn_parts = path_defn.split('@')
+            if len(defn_parts) == 1:
+                path_list = defn_parts[0].strip()
+                commands = None
             else:
-                file_extensions = []
+                commands = defn_parts[0].strip()
+                path_list = defn_parts[1].strip()
 
-            found_path = False
-            for path in glob.iglob(path_glob, recursive=True):
-                found_path = True
-                self._add_monitor(target_name, path, file_extensions)
+            for monitor_path in path_list.split(' '):
 
-            # Tree glob as a non-existent path if glob fails to expand.
-            if not found_path:
-                print(f"ERROR: No glob expansion for: {path_glob}.")
-                if self.args.exit_on_error:
-                    exit(1)
+                # Split {path}[:[{extensions}]...]
+                parts = monitor_path.split(':')
+                path_glob = parts[0].strip()
+                if len(parts) == 1:
+                    file_extensions = []
+                else:
+                    file_extensions = [f.strip() for f in parts[1].split(',')]
 
-    def _add_monitor(self, target_name: bool | Any, path: str | bytes | Any, file_extensions: list[Any] | Any):
+                # Set default value for commands, if none provided.
+                monitor_commands = f"echo {path_glob}" if not commands else commands
+
+                found_path = False
+                for path in glob.iglob(path_glob, recursive=True):
+                    found_path = True
+                    self._add_monitor(monitor_commands, path, file_extensions)
+
+                # Tree glob as a non-existent path if glob fails to expand.
+                if not found_path:
+                    print(f"ERROR: No glob expansion for: {path_glob}.")
+                    if self.args.exit_on_error:
+                        exit(1)
+
+    def _add_monitor(self, commands: str, path: str | bytes | Any, file_extensions: list[Any] | Any):
         """Create and starts a new path Observer."""
 
         observer = Observer()
-        event_handler = MonitorAnyFileChange(target_name, file_extensions)
+        event_handler = MonitorAnyFileChange(commands, path, file_extensions)
         observer.schedule(event_handler, path, recursive=True)
         try:
             if self.args.verbose:
-                print(f"    {target_name}@{path}:{",".join(file_extensions)}")
+                print("    ", end='')
+                if commands != path:
+                    print(f"{commands}@", end="")
+                print(path, end="")
+                if file_extensions:
+                    print(f":{",".join(file_extensions)}", end="")
+                print("")
             observer.start()
         except FileNotFoundError:
             print(f"ERROR: File not found: {path}")
@@ -187,7 +204,7 @@ class FilesWatcher:
         self.observers.append(observer)
         self.event_handlers.append(event_handler)
 
-    def start(self) -> set:
+    def start(self) -> str:
         """
         :return: A set of target names where files have been changed (within 1 second of first change found)
         """
@@ -216,15 +233,18 @@ class FilesWatcher:
 
         if self.args.verbose:
             for event_handler in self.event_handlers:
-                files = event_handler.get_files()
-                if files:
-                    print(f"Target {event_handler.get_target_name()}: {" ".join(files)}")
+                if event_handler.has_change():
+                    files = event_handler.get_files()
+                    if files:
+                        print(f"Targets {event_handler.get_commands()}: {" ".join(files)}")
 
         # Return set of target names with changes.
-        targets_changed = set(event_handler.get_target_name()
-                              for event_handler in self.event_handlers
-                              if event_handler.has_change())
-        return targets_changed
+        targets_changed = []
+        for event_handler in self.event_handlers:
+            if event_handler.has_change():
+                targets_changed.append(event_handler.get_commands())
+
+        return "; ".join(targets_changed)
 
 
 def main():
@@ -233,7 +253,7 @@ def main():
     args, parser = process_args()
     files_watcher = FilesWatcher(args, parser)
     targets_changed = files_watcher.start()
-    print(" ".join(targets_changed))
+    print(targets_changed)
 
     # If --repeat, re-initialize and start watch again.
     # Note: re-initializing may pick up globs that didn't previously exist.
@@ -241,7 +261,7 @@ def main():
         time.sleep(1)
         print("---")
         targets_changed = files_watcher.start()
-        print(" ".join(targets_changed))
+        print(targets_changed)
 
 
 if __name__ == "__main__":

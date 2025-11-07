@@ -1,6 +1,0 @@
-FROM tomcat:jre25-temurin-noble
-
-RUN rmdir /usr/local/tomcat/webapps
-RUN mv /usr/local/tomcat/webapps.dist /usr/local/tomcat/webapps
-COPY mount/ /
-COPY build/ /

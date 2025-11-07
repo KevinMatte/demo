@@ -14,7 +14,7 @@
     <option name="ADD_SOURCE_ROOTS" value="true" />
     <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
     <option name="SCRIPT_NAME" value="$PROJECT_DIR$/bin/fileWatcher.py" />
-    <option name="PARAMETERS" value="kevin" />
+    <option name="PARAMETERS" value="&quot;make update_dot_env; make -C images/demo_ui; make build_static @ images/demo_ui/src/static : .js , .jsx, .css,.html,.py, .php .env .secrets.env images/demo_java/src/root/var/www/html/version.txt&quot;" />
     <option name="SHOW_COMMAND_LINE" value="false" />
     <option name="EMULATE_TERMINAL" value="false" />
     <option name="MODULE_MODE" value="false" />
