@@ -16,8 +16,9 @@ build_clean: build_init
 
 build_static: build_init
 	tar cf - -C src/static . | (cd build; tar xvf -)
-	echo ${DEMO_UI_VERSION} > build/var/www/html/static/version.txt
-	. ${PROJ_ROOT}/.env; set | grep '^DEMO_.*\(\(VERSION\)\|\(DATE\)\)' > build/var/www/html/static/versions.txt
+	. ${PROJ_ROOT}/.env; \
+	echo ${DEMO_UI_VERSION} > build/var/www/html/static/version.txt; \
+	set | grep '^DEMO_.*\(\(VERSION\)\|\(DATE\)\)' > build/var/www/html/static/versions.txt
 
 build_front: build_init
 	cd src/front; npx vite build --outDir ../../build/var/www/html
