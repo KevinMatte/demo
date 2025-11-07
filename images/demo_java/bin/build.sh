@@ -10,10 +10,12 @@ PROJ_ROOT="$(git rev-parse --show-toplevel)"
 
 if [ \! -f jars/serlet-api.jar ]; then
   echo "Retrieving jars/servlet-api.jar"
+  set -e
   id=$(docker run -d --rm --name get_serlet_api_jar tomcat:jre25-temurin-noble sleep 100)
   docker cp ${id}:/usr/local/tomcat/lib/servlet-api.jar jars/servlet-api.jar
   docker kill ${id}
   echo "  Done"
+  set +e
 fi
 
 rm -fr build

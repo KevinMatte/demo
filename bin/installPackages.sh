@@ -32,7 +32,8 @@ sudo apt install -y libasio-dev
 #     STD CPP Help: https://www.creatis.insa-lyon.fr/~grenier/?p=273
 #        Save at /opt/qt/cppreference-doc-en-cpp.qch
 
-
+# For demo_java
+sudo apt install openjdk-17-jdk/noble-updates
 
 # =======================
 # For Video recording
