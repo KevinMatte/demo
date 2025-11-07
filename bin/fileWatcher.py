@@ -8,50 +8,86 @@ See full details in process_args() below. or running python filesWatcher.py -h
 """
 
 import glob
+import os.path
 import time
 import re
+import yaml
+import subprocess
 from argparse import ArgumentParser, Namespace, RawTextHelpFormatter
-from typing import Any
-
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler, DirCreatedEvent, FileCreatedEvent, DirDeletedEvent, \
     FileDeletedEvent, DirModifiedEvent, FileModifiedEvent, DirMovedEvent, FileMovedEvent
+
+try:
+    from yaml import CLoader as Loader, CDumper as Dumper
+except ImportError:
+    from yaml import Loader, Dumper
 
 
 def process_args() -> tuple[Namespace, ArgumentParser]:
 
     # Program's description
-    help_program = """Monitor's a paths (recursively) for changes.
-        
-        Note: globs allowed: **, *, ?
-        
-        Exit's with 0 if there was a change and 1 if something else caused the exit.
-        
-        Example: Monitor source code in multiple directories.
-         (This example is from a script where the echo'd targets are used in GNU Makefile.)
-        
-           bin/fileWatcher.py \
-             '-C images/demo_ui build_static@images/demo_ui/src/static:.js,.jsx,.css,.html' \
-             '-C images/demo_ui build_front@images/demo_ui/src/front:.jsx,.css,.html' \
-             '.env@bin/generateDotEnv.sh'
-             
-            
+    help_program = """Monitor's a paths and executes commands when something changes:
+    
+        Example YAML:
+# ==========================================================================
+# This sets up default values for all following targets.
+# The __defaults__ for one YAML file are NOT passed onto the next.
+"__defaults__":
+  # When the file in '--skip_file {file}' exists, these commands are run rather than the 'commands'
+  skipped:
+    - "bin/say.py '_MONITOR_NAME_: Skip file exists. Skipping.' 2>/dev/null"
+
+  # Executed before running 'commands'
+  started:
+    - "bin/say.py '_MONITOR_NAME_: Starting' 2>/dev/null"
+
+  # Executed after running 'commands' successfully.
+  completed:
+    - "make build_done"
+    - "bin/say.py '_MONITOR_NAME_: Completed' 2>/dev/null"
+
+  # Executed after running 'commands' failed.
+  error:
+    - "bin/say.py '_MONITOR_NAME_: Error' 2>/dev/null"
+
+  # Fall-back commands if 'commands' is not specified.
+  commands:
+    - "bin/say.py '_MONITOR_NAME_: Missing commands' 2>/dev/null"
+
+# This is the start of a declaration of files/paths to monitor and commands to execute.
+"static and environment":
+
+  # When a file/path changes, these commands will be executed.
+  commands:
+    - "make update_dot_env"
+    - "make -C images/demo_ui"
+    - "make update_dot_env"
+    - "make -C images/demo_ui build_static"
+
+  # A list of files/paths and file name patterns to monitor.
+  searches:
+    # Not used. Just nice to see.
+    - name: 'static'
+      # A list of paths to directories or files.
+      paths: ["images/demo_ui/src/static"]
+      # Optional. If given, the full path must match this python regular expression.
+      # You could include directories in these patterns, but if possible, don't, I think.
+      patterns: ['.*\\.js$', '.*\\.jsx$', '.*\\.css$', '.*\\.htm$l', '.*\\.py$', '.*\\.php$']
+
+    # A search example without patterns.
+    - name: 'environment'
+      paths: ['.env', '.secrets.env']
+# --------------------------------------------------------------------------
         """
 
     # Help on paths from program's argv
-    help_args_paths = """One or more glob/wildcard paths to monitor.
-        
-        [{commands}@]{path}[,{filter}]... A list of build targets and directory paths with optional suffix filters.
-        Example: build_mounted:src,.js,.jsx,.css,.html
-        
-        - commands is a list of commands to execute.
-         The 'path' is used if it's not provided. The script will echo this string when
-          the first file hit is found.
-        
-        """
-
+    help_args_paths = "One or more YAML files like the above."
     help_opt_verbose = "Print extra processing information to stdout."
     help_opt_repeat = "After targets found, repeat monitor in 1 second"
+    help_volume = "Set the volume."
+    help_tempo = "Set the tempo."
+    help_skip_file = "If provided, when a file is changed and this file exists, the commands are skipped."
 
     # Parse command-line argument
     arg_parser = ArgumentParser(formatter_class=RawTextHelpFormatter, description=help_program)
@@ -59,6 +95,9 @@ def process_args() -> tuple[Namespace, ArgumentParser]:
     arg_parser.add_argument("-v", "--verbose", help=help_opt_verbose, default=False, action='store_true')
     arg_parser.add_argument("-r", "--repeat", help=help_opt_repeat, default=False, action='store_true')
     arg_parser.add_argument("-e", "--exit_on_error", help=help_opt_repeat, default=False, action='store_true')
+    arg_parser.add_argument('-V', '--volume', default="0.3", help=help_volume)
+    arg_parser.add_argument('-T', '--tempo', default="1.9", help=help_tempo)
+    arg_parser.add_argument('-s', '--skip_file', default=None, help=help_skip_file)
     args = arg_parser.parse_args()
 
     if len(args.paths) == 0:
@@ -74,17 +113,16 @@ class MonitorAnyFileChange(FileSystemEventHandler):
     For the patch being monitored, keeps track of the 'commands', the file extensions and state of events.
     """
 
-    def __init__(self, commands: str, path, file_extensions):
+    def __init__(self, path, monitor_defn, monitor):
         super().__init__()
 
-        self._commands = commands
+        # Store parameters
         self._path = path
-        self._file_extensions = file_extensions
-        self._files = set()
+        self.monitor_defn = monitor_defn
+        self._monitor = monitor
 
-    def get_commands(self) -> str:
-        """Returns the commands passed in the contsructor."""
-        return self._commands
+        # Init
+        self._files = set()
 
     def has_change(self) -> bool:
         """Returns True iff any file change event has occurred. """
@@ -99,9 +137,9 @@ class MonitorAnyFileChange(FileSystemEventHandler):
         If a matching any file extension or no extensions given for the target,
         records the event's filepath reference.
         """
-        if self._file_extensions:
-            for file_extension in self._file_extensions:
-                if event.src_path.endswith(file_extension):
+        if 'patterns' in self._monitor:
+            for file_extension in self._monitor['patterns']:
+                if re.match(file_extension, event.src_path):
                     self._files.add(event.src_path)
                     break
         elif event.src_path:
@@ -132,79 +170,73 @@ class FilesWatcher:
         self.parser = parser
         self.observers = []
         self.event_handlers = []
-
+        self._monitor_defns_defaults = {}
+        self.observer = None
 
     def _setup_observers(self):
         """Observers and event handlers are recreated on each call to start(). """
         self.observers = []
         self.event_handlers = []
 
-        # Start monitor
+        # Parse monitor yamls and start them.
         if self.args.verbose:
             print("Monitoring:")
-        for path_defn in self.args.paths:
-            path_defn = re.sub("[ \n\t]+", " ", path_defn).strip()
-            path_defn = re.sub(" *(?P<del>[:,]) *", r'\g<del>', path_defn).strip()
+        for yaml_file in self.args.paths:
+            with open(yaml_file, 'r') as f:
+                monitor_defns = yaml.load(f, Loader=Loader)
+                self._start_monitors(yaml_file, monitor_defns)
 
-            # Split [{targetname}@]...
-            defn_parts = path_defn.split('@')
-            if len(defn_parts) == 1:
-                path_list = defn_parts[0].strip()
-                commands = None
-            else:
-                commands = defn_parts[0].strip()
-                path_list = defn_parts[1].strip()
+    def _start_monitors(self, source, monitor_defns):
+        self._monitor_defns_defaults = {}
 
-            for monitor_path in path_list.split(' '):
+        # Loop over array of monitor definitions.
+        for defn_name, monitor_defn in monitor_defns.items():
+            if defn_name == '__defaults__':
+                self._monitor_defns_defaults = monitor_defn
+                continue
 
-                # Split {path}[:[{extensions}]...]
-                parts = monitor_path.split(':')
-                path_glob = parts[0].strip()
-                if len(parts) == 1:
-                    file_extensions = []
-                else:
-                    file_extensions = [f.strip() for f in parts[1].split(',')]
+            # At yaml key as a name and as a compined source filename and monitor name.
+            monitor_defn = self._monitor_defns_defaults | monitor_defn
+            monitor_defn['__name'] = defn_name
+            monitor_defn['__key'] = f"{source}:{defn_name}"
 
-                # Set default value for commands, if none provided.
-                monitor_commands = f"echo {path_glob}" if not commands else commands
-
+            # Loop over search paths
+            for search_defn in monitor_defn['searches']:
                 found_path = False
-                for path in glob.iglob(path_glob, recursive=True):
-                    found_path = True
-                    self._add_monitor(monitor_commands, path, file_extensions)
+                i_glob = None
+                for i_glob, path_glob in enumerate(search_defn['paths']):
+                    for path in glob.iglob(path_glob, recursive=True):
+                        found_path = True
+                        self._add_monitor(path, monitor_defn, search_defn)
 
                 # Tree glob as a non-existent path if glob fails to expand.
-                if not found_path:
-                    print(f"ERROR: No glob expansion for: {path_glob}.")
+                if not found_path and i_glob is not None:
+                    print(f"ERROR: No glob expansion for: {monitor_defn['paths'][i_glob]}.")
                     if self.args.exit_on_error:
                         exit(1)
 
-    def _add_monitor(self, commands: str, path: str | bytes | Any, file_extensions: list[Any] | Any):
+    def _add_monitor(self, path: str, monitor_defn, monitor):
         """Create and starts a new path Observer."""
 
-        observer = Observer()
-        event_handler = MonitorAnyFileChange(commands, path, file_extensions)
-        observer.schedule(event_handler, path, recursive=True)
+        # One Observer for all paths.
+        self.observer = Observer()
+
+        # Create Observer event handlers that contain extra context information.
+        event_handler = MonitorAnyFileChange(path, monitor_defn, monitor)
+
+        self.observer.schedule(event_handler, path, recursive=True)
         try:
-            if self.args.verbose:
-                print("    ", end='')
-                if commands != path:
-                    print(f"{commands}@", end="")
-                print(path, end="")
-                if file_extensions:
-                    print(f":{",".join(file_extensions)}", end="")
-                print("")
-            observer.start()
+            self.observer.start()
         except FileNotFoundError:
             print(f"ERROR: File not found: {path}")
             if self.args.exit_on_error:
                 exit(1)
 
         # Add observer and event handler to list.
-        self.observers.append(observer)
+        self.observers.append(self.observer)
         self.event_handlers.append(event_handler)
 
-    def start(self) -> str:
+    def start(self):
         """
         :return: A set of target names where files have been changed (within 1 second of first change found)
         """
@@ -236,15 +268,34 @@ class FilesWatcher:
                 if event_handler.has_change():
                     files = event_handler.get_files()
                     if files:
-                        print(f"Targets {event_handler.get_commands()}: {" ".join(files)}")
+                        print(f"Targets {event_handler}: {" ".join(files)}")
 
         # Return set of target names with changes.
-        targets_changed = []
+        triggered_monitor_defn_keys = set()
+        triggered_event_handlers = []
+        has_skip_file = self.args.skip_file and os.path.exists(self.args.skip_file)
         for event_handler in self.event_handlers:
             if event_handler.has_change():
-                targets_changed.append(event_handler.get_commands())
+                triggered_event_handlers.append(event_handler)
+                monitor_key = event_handler.monitor_defn['__key']
+                if not monitor_key in triggered_event_handlers:
+                    triggered_monitor_defn_keys.add(monitor_key)
+                    if has_skip_file:
+                        self._run_commands(event_handler.monitor_defn, 'skipped')
+                    else:
+                        print(f"Executing {monitor_key}")
+                        res = self._run_commands(event_handler.monitor_defn, 'commands')
+                        self._run_commands(event_handler.monitor_defn, 'completed' if res == 0 else 'error')
+                        print()
 
-        return "; ".join(targets_changed)
+    def _run_commands(self, monitor_defn, commands_key):
+        if commands_key in monitor_defn:
+            for command in monitor_defn[commands_key]:
+                command = command.replace('_MONITOR_NAME_', monitor_defn['__name'])
+                res = subprocess.run(command, shell=True)
+                if res.returncode:
+                    return res.returncode
+        return 0
 
 
 def main():
@@ -252,16 +303,14 @@ def main():
 
     args, parser = process_args()
     files_watcher = FilesWatcher(args, parser)
-    targets_changed = files_watcher.start()
-    print(targets_changed)
+    files_watcher.start()
 
     # If --repeat, re-initialize and start watch again.
     # Note: re-initializing may pick up globs that didn't previously exist.
     while args.repeat:
         time.sleep(1)
         print("---")
-        targets_changed = files_watcher.start()
-        print(targets_changed)
+        files_watcher.start()
 
 
 if __name__ == "__main__":
