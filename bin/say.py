@@ -1,9 +1,9 @@
 #!bin/venv/bin/python
 
 from gtts import gTTS
-import os
 import tempfile
 from argparse import ArgumentParser, Namespace, RawTextHelpFormatter
+import subprocess
 
 global ARGV
 
@@ -39,7 +39,7 @@ def main():
         language = 'en'
         myobj = gTTS(text=my_text, lang=language, slow=False)
         myobj.save(file.name)
-        os.system(f"play -v {args.volume} {file.name} tempo {args.tempo}")
+        subprocess.run(f"play -v {args.volume} {file.name} tempo {args.tempo}", shell=True)
 
 if __name__ == "__main__":
     main()
