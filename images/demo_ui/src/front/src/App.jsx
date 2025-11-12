@@ -8,7 +8,7 @@ import Python, {toolDefn as pythonToolDefn} from './pages/Python.jsx';
 import PHP, {toolDefn as phpToolDefn} from './pages/PHP.jsx';
 import Java, {toolDefn as javaToolDefn} from './pages/Java.jsx';
 import DemoAnchor from "./parts/Anchors.jsx";
-import Containers, {toolDefn as dockerComposeToolDefn} from './pages/Containers.jsx';
+import Notes, {toolDefn as notesToolDefn} from './pages/Notes.jsx';
 
 function App() {
     const [pageName, setPageName] = useState('overview');
@@ -19,7 +19,7 @@ function App() {
 
     const menu = {
         "overview": {"label": "Overview", 'toolDefn': overviewToolDefn, 'page': null },
-        "containers": {"label": "Containers", 'toolDefn': dockerComposeToolDefn, 'page': (<Containers/>)},
+        "notes": {"label": "Notes", 'toolDefn': notesToolDefn, 'page': (<Notes/>)},
         "cpp_hello": {"label": "C++", 'toolDefn': cppToolDefn, 'page': (<CPP/>)},
         "python_hello": {"label": "Python", 'toolDefn': pythonToolDefn, 'page': (<Python/>)},
         "php_hello": {"label": "PHP", 'toolDefn': phpToolDefn, 'page': (<PHP/>)},
@@ -29,6 +29,7 @@ function App() {
 
     let pageDefn = menu[pageName];
     let pageTitle = (<h2>{pageDefn.toolDefn.title}</h2>);
+    let appPage = pageDefn.toolDefn.className || appCSS.appPage;
     return (
         <div className={appCSS.app}>
             <h1>Playground/Demo Project</h1>
@@ -36,8 +37,8 @@ function App() {
             <DemoAnchor path="" label="GitHub Source KevinMatte / demo"/><br/>
             <div className={appCSS.appBody}>
                 <hr/>
-                <div className={appCSS.appPage}>
-                    {pageTitle}
+                <div className={appPage}>
+                    {pageDefn.toolDefn.title && pageTitle}
                     {pageDefn.page}
                 </div>
             </div>

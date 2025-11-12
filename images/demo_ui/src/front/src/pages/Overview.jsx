@@ -48,7 +48,7 @@ function Overview({menu, handleClick}) {
 
                                     </div>
                                 </div>
-                                <div style={{display: "table-cell", verticalAlign: "middle"}}>{item.toolDefn.title}</div>
+                                <div style={{display: "table-cell", verticalAlign: "middle"}}>{item.toolDefn.description || item.toolDefn.title}</div>
                             </div>
                         );
                     }

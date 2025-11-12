@@ -76,7 +76,7 @@ def process_args() -> tuple[Namespace, ArgumentParser]:
       paths: "images/demo_ui/src/static"
       # Optional. If given, the full path must match this python regular expression.
       # You could include directories in these patterns, but if possible, don't, I think.
-      patterns: ['.*\.js$', '.*\.jsx$', '.*\.css$', '.*\.htm$l', '.*\.py$', '.*\.php$']
+      patterns: ['.*\\.js$', '.*\\.jsx$', '.*\\.css$', '.*\\.htm$l', '.*\\.py$', '.*\\.php$']
 
     # A search example without patterns.
     - name: 'environment'
@@ -88,7 +88,7 @@ def process_args() -> tuple[Namespace, ArgumentParser]:
   searches:
     - name: 'Front UI'
       paths: ["images/demo_ui/src/front"]
-      patterns: ['.*\.jsx$', '.*\.css$', '.*\.html$']
+      patterns: ['.*\\.jsx$', '.*\\.css$', '.*\\.html$']
 
 # For reloading this YAML file.
 # Note: Reloads happen every time changes are discovered.
@@ -296,6 +296,7 @@ class FilesWatcher:
                     else:
                         # Run 'commands'
                         print(f"Executing {monitor_key}")
+                        self._run_commands(event_handler.monitor_defn, 'started')
                         res = self._run_commands(event_handler.monitor_defn, 'commands')
                         self._run_commands(event_handler.monitor_defn, 'completed' if res == 0 else 'error')
                         print()
