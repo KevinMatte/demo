@@ -20,10 +20,27 @@ h1 {
 
 h2 {
   font-size: 1.5em;
+  & + div {
+    margin-left: 15px;
+  }
 }
 
 h3 {
   font-size: 1em;
+  margin-left: 15px;
+
+  & + div {
+    margin-left: 30px;
+  }
+}
+
+h4 {
+  font-size: 1em;
+  margin-left: 30px;
+
+  & + div {
+    margin-left: 45px;
+  }
 }
 
 ul {
