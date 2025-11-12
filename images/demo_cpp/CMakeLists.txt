@@ -22,4 +22,5 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(json)
 
 add_executable(demo_cpp src/main.cpp)
+add_executable(SharedLock src/SharedLock.cpp)
 target_link_libraries(demo_cpp PRIVATE Crow::Crow nlohmann_json::nlohmann_json)
