@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import appCSS from "../css/App.module.css";
+import appCSS from "../../css/App.module.css";
 
-import Menu from "../parts/Menu.jsx";
+import Menu from "../../parts/Menu.jsx";
 import Containers, {toolDefn as dockerComposeToolDefn} from "./Containers.jsx";
 import Build, {toolDefn as buildToolDefn} from "./Build.jsx";
 

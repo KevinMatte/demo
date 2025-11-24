@@ -2,13 +2,13 @@ import React, {useState} from 'react';
 import "./css/App.css";
 import appCSS from "./css/App.module.css";
 import Menu from './parts/Menu.jsx';
-import Overview, {toolDefn as overviewToolDefn} from './pages/Overview.jsx';
-import CPP, {toolDefn as cppToolDefn} from './pages/CPP.jsx';
-import Python, {toolDefn as pythonToolDefn} from './pages/Python.jsx';
-import PHP, {toolDefn as phpToolDefn} from './pages/PHP.jsx';
-import Java, {toolDefn as javaToolDefn} from './pages/Java.jsx';
+import Overview, {toolDefn as overviewToolDefn} from './pages/docs/Overview.jsx';
+import CPP, {toolDefn as cppToolDefn} from './pages/simple_demos/CPP.jsx';
+import Python, {toolDefn as pythonToolDefn} from './pages/simple_demos/Python.jsx';
+import PHP, {toolDefn as phpToolDefn} from './pages/simple_demos/PHP.jsx';
+import Java, {toolDefn as javaToolDefn} from './pages/simple_demos/Java.jsx';
 import DemoAnchor from "./parts/Anchors.jsx";
-import Notes, {toolDefn as notesToolDefn} from './pages/Notes.jsx';
+import Notes, {toolDefn as notesToolDefn} from './pages/docs/Notes.jsx';
 
 function App() {
     const [pageName, setPageName] = useState('overview');

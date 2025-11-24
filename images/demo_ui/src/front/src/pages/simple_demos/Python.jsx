@@ -1,6 +1,6 @@
 import React from "react";
-import IFrameTool from "./lib/IFrameTool.jsx";
-import DemoAnchor, {Anchor} from "../parts/Anchors.jsx";
+import IFrameTool from "../lib/IFrameTool.jsx";
+import DemoAnchor, {Anchor} from "../../parts/Anchors.jsx";
 
 export const toolDocs = (
     <div>
@@ -8,7 +8,7 @@ export const toolDocs = (
         <ul>
             <li><b>Main Code</b>:</li>
             <ul>
-                <li><DemoAnchor title="Client" path="images/demo_ui/src/front/src/pages/Python.jsx"/></li>
+                <li><DemoAnchor title="Client" path="images/demo_ui/src/front/src/pages/simple_demos/Python.jsx"/></li>
                 <li><DemoAnchor title="Server" path="images/demo_ui/src/static/var/www/html/py_app/hello_world.py"/>
                 </li>
             </ul>

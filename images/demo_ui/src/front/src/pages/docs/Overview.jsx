@@ -1,6 +1,6 @@
-import menuCss from "../parts/css/Menu.module.css";
-import MenuButton from "../parts/MenuButton.jsx";
-import DemoAnchor from "../parts/Anchors.jsx";
+import menuCss from "../../parts/css/Menu.module.css";
+import MenuButton from "../../parts/MenuButton.jsx";
+import DemoAnchor from "../../parts/Anchors.jsx";
 
 export const toolDefn = {
     "title": "Documentation: Demo Overview",
@@ -11,8 +11,6 @@ export const toolDefn = {
 function Overview({menu, handleClick}) {
     return (
         <div>
-
-
             <h2>Purpose {menuCss.menuButton}</h2>
             <ul>
                 <li>For myself:</li>

@@ -51,7 +51,9 @@
 
 "demo_ui front":
   # Note: A single string is recognized as a short form of a list of one string.
-  commands: "make -C images/demo_ui build_front"
+  commands:
+    - "make pre_build"
+    - "make -C images/demo_ui build_front"
   searches:
     - name: 'Front UI'
       paths: ["images/demo_ui/src/front"]

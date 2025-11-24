@@ -1,5 +1,5 @@
 import React from 'react';
-import DemoAnchor, {Anchor, GitHubAnchor} from "../parts/Anchors.jsx";
+import DemoAnchor, {Anchor, GitHubAnchor} from "../../parts/Anchors.jsx";
 
 
 export const toolDefn = {

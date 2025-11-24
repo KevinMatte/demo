@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import DemoAnchor, {Anchor} from "../parts/Anchors.jsx";
+import DemoAnchor, {Anchor} from "../../parts/Anchors.jsx";
 
 const toolDocs =
     (
@@ -10,7 +10,7 @@ const toolDocs =
                     <b>Main Code</b>:
                 </li>
                 <ul>
-                    <li><DemoAnchor title="Client" path="images/demo_ui/src/front/src/pages/CPP.jsx"/></li>
+                    <li><DemoAnchor title="Client" path="images/demo_ui/src/front/src/pages/simple_demos/CPP.jsx"/></li>
                     <li><DemoAnchor title="Server" path="images/demo_cpp/src/main.cpp"/></li>
                 </ul>
                 <li><b>Configuration</b></li>
