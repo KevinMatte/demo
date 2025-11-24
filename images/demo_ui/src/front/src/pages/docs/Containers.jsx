@@ -18,17 +18,16 @@ function Containers() {
                 const jsonData = await response.json();
                 setData(jsonData);
             } else {
-                console.log("err1");
                 setError(`HTTP error! status: ${response.status}</br>`);
             }
         } catch (err) {
-            setError(`HTTP error! status: ${err}</br>`);
+            if (window.location.host !== 'localhost:5173')
+                setError(`HTTP error! status: ${err}</br>`);
         }
     }
     useEffect(() => {
         handleSubmit()
     }, []);
-
 
     return (
         <div>
