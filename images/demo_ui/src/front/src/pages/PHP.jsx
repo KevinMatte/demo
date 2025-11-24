@@ -22,6 +22,7 @@ export const toolDocs = (
 );
 export const toolDefn = {
     "title": "Demo: Apache PHP Example",
+    "description": <span><b>Demo</b>: Apache PHP Example</span>,
     "toolDocs": toolDocs,
 };
 

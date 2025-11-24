@@ -36,6 +36,7 @@ const toolDocs =
 ;
 export const toolDefn = {
     "title": "Demo: C++ Microservices Example",
+    "description": <span><b>Demo</b>: C++ Microservices Example</span>,
     "toolDocs": toolDocs,
 };
 

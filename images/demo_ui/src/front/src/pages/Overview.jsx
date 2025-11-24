@@ -4,6 +4,7 @@ import DemoAnchor from "../parts/Anchors.jsx";
 
 export const toolDefn = {
     "title": "Documentation: Demo Overview",
+    "description": <span><b>Documentation</b>: Demo Overview</span>,
     "toolDocs": null,
 };
 

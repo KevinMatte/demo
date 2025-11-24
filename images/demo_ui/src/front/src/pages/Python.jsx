@@ -32,6 +32,7 @@ export const toolDocs = (
 );
 export const toolDefn = {
     "title": "Demo: WSGI Python Example",
+    "description": <span><b>Demo</b>: WSGI Python Example</span>,
     "toolDocs": toolDocs,
 };
 

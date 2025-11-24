@@ -8,7 +8,8 @@ import Build, {toolDefn as buildToolDefn} from "./Build.jsx";
 
 
 export const toolDefn = {
-    "description": "Documentation: Demo Notes",
+    "title": "Documentation: Demo Notes",
+    "description": <span><b>Documentation</b>: Demo Notes</span>,
     "toolDocs": null,
     "className": "Notes",
 };
