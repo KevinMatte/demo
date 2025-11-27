@@ -10,6 +10,13 @@ if [ \! -e bin/venv ]; then
     say "Done"
 fi
 
+if systemctl status docker | grep 'Active: active'; then
+  :;
+else
+  echo sudo systemctl start docker
+  sudo systemctl start docker
+fi
+
 if [ "$(lsof -i :5000 | wc -l)" = 0 ]; then
   say "Starting 5000:localhost:5000 tunnel"
   set -x

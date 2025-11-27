@@ -46,26 +46,9 @@ Note: Assumes localhost:5000 isn't already in use.
   * __bin/monitorBuild.sh__: Manually run on every new development session. \
 To rebuild to a mounted docker volume for continuous updates.
 
-## Video Recording (Ubuntu)
+## Video Production
 
-* Using OBS Studio (Ubuntu application install)
-* Open https://obsproject.com/
-* Goto `Download`
-* Follow Flatpak instructions
-* Add Background removal: `flatpak install com.obsproject.Studio.Plugin.BackgroundRemoval`
-* 
-* Added [OBS Background Removal plugin](https://obsproject.com/forum/resources/background-removal-virtual-green-screen-low-light-enhance.1260/)
-  using [pacstall](https://github.com/pacstall/pacstall)
-* sudo apt install ./obs-backgroundremoval-1.1.13-x86_64-linux-gnu.deb 
-* pacstall -I obs-backgroundremoval-deb
-* s
-* Open https://obsproject.com/
-* Click Forum / Resources / Search Resources
-* Keywords: Background Removal
-* Click Search
-* Click "Live Background Removal Lite 2.3.4"
-* Click "Go to Download"
-* Get: live-backgroundremoval-lite-2.3.3-x86_64-linux-gnu.deb
-* sudo apt install ./live-backgroundremoval-lite-2.3.3-x86_64-linux-gnu.deb
-* x
+* Installed Ubuntu's version of applications:
+  * Video Recording: obs-studio with: `sudo apt install obs-studio`
+  * Source Video Editor: kdenlive: `sudo apt install kdenlive` 
 
