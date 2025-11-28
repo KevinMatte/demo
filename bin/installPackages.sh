@@ -24,7 +24,6 @@ sudo apt install -y python3 python3-venv python-is-python3
 # =======================
 # For demo_cpp
 # -------------
-sudo apt update
 sudo apt -y install g++ cmake build-essential gdb ninja-build
 sudo apt install -y libasio-dev
 #   QT Creator: https://www.qt.io/download-qt-installer-oss

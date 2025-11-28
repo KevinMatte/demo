@@ -20,6 +20,11 @@
 
 .appPage {
   background: #dddddd;
+  resize: both; /* Enable both horizontal and vertical resizing */
+  overflow: auto; /* Required for resize to work */
+  width: 400px;
+  height: 250px;
+  border: 1px solid #ccc;
 }
 
 .code {
