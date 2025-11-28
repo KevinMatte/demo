@@ -1,8 +1,9 @@
 #!/bin/bash -e
 
+# Bumps all version numbers in src/docker/image_versions.ish where the docker image ID has changed.
+
 cd $(dirname "$0")/.. || exit 0
 
-# Bump all image versions.
 bumpVersions() {
   [ ! -f src/docker/image_versions.ish ] && touch src/docker/image_versions.ish
 

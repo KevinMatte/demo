@@ -33,11 +33,23 @@ __Project's tech-architecture so far__:
 Since this demo_ui is firstly for my own fun, the demo_ui manually builds with implementations that are already supported in
 available frameworks. I started with an empty project, and incrementally added technology.
 
-## Setup
+## Usage
 
+### Initial Setup
+
+* TODO: Test this...
 * Install packages: [installPackages.sh](bin/installPackages.sh)
 * Set passwords in .secrets.env
+* Prevent .secrets.env from being committed: \
+  `git update-index --assume-unchanged .secrets.env`
 * Optional: Setup demo_prod in /etc/hosts
+
+### New session for development/testing
+
+* TODO: Test this...
+* `make generateDotEnv`
+* `make version_bump`
+* `make localMounted`
 
 ## Development Base
 

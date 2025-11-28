@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Make sure <*Anchor /> paths in *.jsx files point to a file.
+
 res=0
 refs="$(find . -name '*.jsx' -print0 2>/dev/null |
  xargs -0 grep -h 'path="[a-z]' |

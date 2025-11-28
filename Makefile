@@ -21,7 +21,7 @@ tmp/venv.timestamp: bin/requirements.txt
 	   pip install -r bin/requirements.txt;
 	touch tmp/venv.timestamp;
 
-update_dot_env: bin/generateDotEnv.sh
+generateDotEnv.sh: bin/generateDotEnv.sh
 	bin/generateDotEnv.sh .env
 
 # ---------------------------
