@@ -1,4 +1,4 @@
-include .env
+-include .env
 export
 
 .PHONY: venv build pre_build local localMounted update_dot_env build_done generate_dotEnv version_bump

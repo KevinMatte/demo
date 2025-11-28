@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sudo apt update
+
 # =======================
 # External install instructions
 # -------------
@@ -7,19 +9,16 @@
 #   see https://docs.docker.com/engine/install/ubuntu/
 #   see https://docs.docker.com/engine/install/linux-postinstall/
 #
-# For nodejs see: https://nodesource.com/products/distributions
 
 # =======================
 # For Framework
 #  For 'play' used by say.py
 # -------------
-sudo apt update
 sudo apt install -y make sox libsox-fmt-mp3
 
 # =======================
 # For demo_ui
 # -------------
-sudo apt update
 sudo apt install -y python3 python3-venv python-is-python3
 
 # =======================
@@ -56,9 +55,4 @@ sudo apt install openjdk-17-jdk/noble-updates
 #sudo apt install libssl-dev libcrypto++-dev
 #sydo apt install libboost-all-dev
 
-
-
-
-
-
-
+which npm || echo "For nodejs and npm see: https://nodesource.com/products/distributions"
