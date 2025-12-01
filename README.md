@@ -18,15 +18,16 @@ __Project's tech-architecture so far__:
 * __Docker Containers__:
   * [__demo_ui__](images/demo_ui): Hosting WebPages with: Apache2, WSGI, PHP, Python3  
   * [__demo_mariadb__](images/demo_mariadb): mariadb:11.8
-  * [__demo_java__](images/demo_mariadb): Tomcat / Java
+  * [__demo_java__](images/demo_mariadb): Tomcat / Java Servlet
   * [__demo_cpp__](images/demo_cpp): With C++ using [Crow](https://github.com/CrowCpp/Crow) which is a fast and easy to use microframework for the web.
     * See [CMakeLists.txt](images/demo_cpp/CMakeLists.txt) for build details.
     * See [Crow API Reference](https://crowcpp.org/1.2.1/reference/index.html)
 * __Development IDE's__:
-  * [Qt Creator](https://doc.qt.io/qtcreator/) community version: C++ and Non-Qt application.
-  * [IntelliJ IDEA](https://lp.jetbrains.com/intellij-idea-promo/?source=google&medium=cpc&campaign=AMER_en_CA_IDEA_Branded&term=intellij&content=693349187730&gad_source=1&gad_campaignid=9736964566&gbraid=0AAAAADloJziWCXmF9C2JjxmXI5bvH0jzq&gclid=Cj0KCQjwvJHIBhCgARIsAEQnWlCL-PVMKW_4T1Iy0MB7le3GVHoYtiCcmhlxbGJVUf2CynHhIUUIX5waAutcEALw_wcB): 
+  * [JetBrains IntelliJ IDEA](https://www.jetbrains.com/idea/): 
     Python, PHP, JavaScript, etc
-* __Software Used__: See [installPackages.sh](bin/installPackages.sh)
+  * [JetBrains CLion](https://www.jetbrains.com/clion/)
+  * [Qt Creator](https://doc.qt.io/qtcreator/) community version: C++ and Non-Qt application.
+* __OS Software Used__: See [installPackages.sh](bin/installPackages.sh)
 
 ## Implementation Notes:
 
@@ -68,4 +69,5 @@ To rebuild to a mounted docker volume for continuous updates.
 * Installed Ubuntu's version of applications:
   * Video Recording: obs-studio with: `sudo apt install obs-studio`
   * Source Video Editor: kdenlive: `sudo apt install kdenlive` 
+
 
