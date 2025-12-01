@@ -24,7 +24,7 @@ __Project's tech-architecture so far__:
   * [bin/generateDotEnv.sh](bin/generateDotEnv.sh)
   * [bin/preprocessDockerCompose.py](bin/preprocessDockerCompose.py)
   * [src/docker-compose.yaml](src/docker-compose.yaml)
-* __Docker Containers__:
+* __Docker Containers__: demo/demo_* subdirectories.
   * [__demo_ui__](images/demo_ui): Hosting WebPages with: Apache2, WSGI, PHP, Python3  
   * [__demo_mariadb__](images/demo_mariadb): mariadb:11.8
   * [__demo_java__](images/demo_mariadb): Tomcat / Java Servlet
