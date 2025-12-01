@@ -1,5 +1,14 @@
 # Demo Project
 
+__Summary__:
+
+* __Target__: Ubuntu OS. Also tested under Window's WSL with Ubuntu distribution
+* __Purpose__: Framework to create a technical playground for practice, expirementation and skill advancement.
+* __IS NOT__: Fully following developoment disciplines/practices.
+  * Unit tests: Will be added when that's part of what I need.
+  * Selenium tests: Planned for the future.
+  * Usage of git branches, and pull requests, totally skipped. I am labelling 'good' versions, though.
+
 __Hosted Websites__:
   * [http://184.64.118.116](http://184.64.118.116): Forwarded to Home Computer
   * [kevinmatte.xyz](https://kevinmatte.xyz/): My resume with a __Demo__ menu item that links to the above.
