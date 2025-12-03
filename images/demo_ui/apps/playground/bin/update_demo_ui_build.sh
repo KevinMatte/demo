@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-echo "Adding playground apach2 site's locations"
+echo "Adding playground apache2 site's locations"
 sed -i -e '/# Locations/a\
     <Location "/api/demo_cpp/"> \
         ProxyPass "http://demo_cpp:8080/" \
