@@ -19,12 +19,13 @@ export const toolDocs = (
                             path="https://packages.debian.org/sid/httpd/libapache2-mod-wsgi-py3">
                         MOD WSGI
                     </Anchor>
+                    : Debian Apache2 Docs
                 </li>
                 <li>
                     <DemoAnchor title="/py_app URL Proxy"
                                 path="images/demo_ui/src/static/etc/apache2/sites-available/000-default.conf">
-                        &lt;Diretory "/var/www/html/py_app"&gt;
                     </DemoAnchor>
+                    : See &lt;Diretory "/var/www/html/py_app"&gt;
                 </li>
             </ul>
         </ul>

@@ -14,15 +14,22 @@ const toolDocs =
                 </ul>
                 <li><b>Configuration</b></li>
                 <ul>
-                    <li><Anchor title="/api/demo_java/ URL Proxy"
+                    <li>
+                        <Anchor title="/api/demo_java/ URL Proxy"
                                 path="https://httpd.apache.org/docs/current/mod/mod_proxy.html">MOD
-                        PROXY</Anchor></li>
-                    <DemoAnchor title="/api/demo_java/ URL Proxy"
+                        PROXY</Anchor>
+                        : httpd.apache.org/docs
+                    </li>
+                    <li>
+                        <DemoAnchor title="/api/demo_java/ URL Proxy"
                                 path="images/demo_ui/src/static/etc/apache2/sites-available/000-default.conf"
-                                label='&lt;Location "/api/demo_java/>"&gt;'
-                    />
-                    <li><DemoAnchor title="Tomcat Servlet Config" label="webapps/MyApp"
-                                    path="images/demo_java/src/MyApp"/></li>
+                        />
+                        : See &lt;Location "/api/demo_java/"&gt;
+                    </li>
+                    <li>
+                        <DemoAnchor title="Tomcat Servlet Config" label="webapps/MyApp"
+                                    path="images/demo_java/src/MyApp"/>
+                    </li>
                 </ul>
 
             </ul>

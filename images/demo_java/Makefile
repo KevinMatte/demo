@@ -5,15 +5,6 @@ PROJ_ROOT="$$(git rev-parse --show-toplevel)"
 build_dir:
 	bin/build.sh
 
-build_dev: build_dir
-	-docker kill demo_java_dev
-	. ${PROJ_ROOT}/.env; \
-		docker build -t "demo_java_dev" .; \
-		docker run -d --rm -p 8181:8080 --name demo_java_dev demo_java_dev;
-	@echo To open bash: docker exec -it demo_java_dev bash
-
-dev: build_dev
-
 build: build_dir
 	. ${PROJ_ROOT}/.env; docker build -t "demo_java" -f Dockerfile .
 

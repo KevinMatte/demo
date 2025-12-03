@@ -20,12 +20,13 @@ const toolDocs =
                                 path="https://httpd.apache.org/docs/current/mod/mod_proxy.html">
                             MOD PROXY
                         </Anchor>
+                        : httpd.apache.org/docs
                     </li>
                     <li>
                         <DemoAnchor title="/api/demo_cpp URL Proxy"
                                     path="images/demo_ui/src/static/etc/apache2/sites-available/000-default.conf"
                         />
-                        &lt;Location "/api/demo_cpp/"&gt;
+                        : See &lt;Location "/api/demo_cpp/"&gt;
                     </li>
 
                 </ul>
@@ -48,12 +49,10 @@ export default function CPP() {
     let relUrl;
     if (window.location.host === 'localhost:5173')
         // Handle vite dev mode.
-        relUrl = "localhost:8181";
-    else if (window.location.port !== 80)
-        // Handle docker mode with apach2 ProxyPass setup.
-        relUrl = `${window.location.hostname}:${window.location.port}/api/demo_cpp`;
+        relUrl = "localhost:18080";
     else
-        relUrl = `${window.location.hostname}/api/demo_cpp`;
+        // Handle docker mode with apache2 ProxyPass setup.
+        relUrl = `${window.location.hostname}:${window.location.port}/api/demo_cpp`;
 
 
     const handleReset = () => {
@@ -107,6 +106,7 @@ export default function CPP() {
                     </tr>
                     </tbody>
                 </table>
+                {data.message && <span style={{"color": "red"}}><hr/>{data.message}</span>}
                 <hr/>
             </div>
         );

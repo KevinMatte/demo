@@ -2,15 +2,24 @@
 export
 
 .PHONY: venv build pre_build local localMounted update_dot_env build_done generate_dotEnv version_bump
+.PHONY: checkDocker
 
 clean:
 	$(MAKE) -C images/demo_ui build_clean
 	$(MAKE) -C images/demo_cpp build_clean
 
+checkDocker:
+	@if docker ps > /dev/null 2>/dev/null; then :; else \
+	  echo "==========================="; \
+	  echo "Docker Engine is not active"; \
+	  echo "---------------------------"; \
+	  exit 1; \
+	fi
+
 # ---------------------------
 # Build framework targets
 # ---------------------------
-pre_build:
+pre_build: checkDocker
 	bin/checkJSXReferences.sh
 
 tmp/venv.timestamp: bin/requirements.txt

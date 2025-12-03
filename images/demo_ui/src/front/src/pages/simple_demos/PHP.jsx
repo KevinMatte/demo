@@ -13,8 +13,10 @@ export const toolDocs = (
             </ul>
             <li><b>Configuration</b></li>
             <ul>
-                <li><Anchor title="PHP WSGI"
+                <li>
+                    <Anchor title="PHP WSGI"
                             path="https://packages.debian.org/sid/httpd/libapache2-mod-php">libapache2-mod-php</Anchor>
+                    : Debian Apache2 Docs
                 </li>
             </ul>
         </ul>
