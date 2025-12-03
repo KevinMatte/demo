@@ -24,7 +24,7 @@ function Overview({menu, handleClick}) {
                 </ul>
             </ul>
 
-            <p><b>Note:</b> This UI(<DemoAnchor label="App.jsx" path="images/demo_ui/src/front/src/App.jsx"/>) is fully <b>ReactJS</b>, my favorite UI environment.</p>
+            <p><b>Note:</b> This UI(<DemoAnchor label="App.jsx" path="images/demo_ui/apps/playground/src/App.jsx"/>) is fully <b>ReactJS</b>, my favorite UI environment.</p>
 
             <h2>Menu</h2>
             <ul>

@@ -1,5 +1,5 @@
 
-.PHONY: all www venv build build_static build_front build_done build_init tag
+.PHONY: all www venv build build_static build_apps build_done build_init tag
 
 PROJ_ROOT="$$(git rev-parse --show-toplevel)"
 
@@ -10,7 +10,7 @@ build_clean: build_init
 	rm -fr build
 	mkdir -p build/var/www/html/static
 	mkdir -p build/var/www
-	cd src/front; npm install
+	$(MAKE) -C apps/playground build_clean
 
 
 
@@ -20,15 +20,17 @@ build_static: build_init
 	echo ${DEMO_UI_VERSION} > build/var/www/html/static/version.txt; \
 	set | grep '^DEMO_.*\(\(VERSION\)\|\(DATE\)\)' > build/var/www/html/static/versions.txt
 
-build_front: build_init
-	cd src/front; npx vite build --outDir ../../build/var/www/html
+build_apps: build_init
+	$(MAKE) -C apps/playground build
+	tar cf - -C apps/playground/build . | (cd build; tar xvf -)
+	apps/playground/bin/update_demo_ui_build.sh
 
 build_done:
 	rm -f tmp/build.locked
 
-build_mounted: build_static build_front build_done
+build_mounted: build_static build_apps build_done
 
-build: build_clean build_static build_front
+build: build_clean build_static build_apps
 	docker build -t "demo_ui" .
 
 clean:

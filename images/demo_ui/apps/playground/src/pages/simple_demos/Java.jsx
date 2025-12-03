@@ -9,7 +9,7 @@ const toolDocs =
             <ul>
                 <li><b>Main Code</b></li>
                 <ul>
-                    <li><DemoAnchor title="Client" path="images/demo_ui/src/front/src/pages/simple_demos/Java.jsx"/></li>
+                    <li><DemoAnchor title="Client" path="images/demo_ui/apps/playground/src/pages/simple_demos/Java.jsx"/></li>
                     <li><DemoAnchor title="Server" path="images/demo_java/src/MyApp/HelloWorld.java"/></li>
                 </ul>
                 <li><b>Configuration</b></li>

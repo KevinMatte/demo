@@ -8,8 +8,8 @@ export const toolDocs = (
         <ul>
             <li><b>Main Code</b>:</li>
             <ul>
-                <li><DemoAnchor title="Client" path="images/demo_ui/src/front/src/pages/simple_demos/Python.jsx"/></li>
-                <li><DemoAnchor title="Server" path="images/demo_ui/src/static/var/www/html/py_app/hello_world.py"/>
+                <li><DemoAnchor title="Client" path="images/demo_ui/apps/playground/src/pages/simple_demos/Python.jsx"/></li>
+                <li><DemoAnchor title="Server" path="images/demo_ui/apps/playground/src/static/var/www/html/py_app/hello_world.py"/>
                 </li>
             </ul>
             <li><b>Configuration</b></li>

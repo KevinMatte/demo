@@ -3,17 +3,17 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/images/demo_ui/src/front" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/images/demo_ui/src/static/var/www/html" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/images/demo_ui/apps/playground" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/images/demo_ui/apps/playground/src/static/var/www/html" type="java-resource" />
       <excludeFolder url="file://$MODULE_DIR$/bin/venv" />
       <excludeFolder url="file://$MODULE_DIR$/images/demo_ui/build" />
-      <excludeFolder url="file://$MODULE_DIR$/images/demo_ui/src/front/public" />
-      <excludeFolder url="file://$MODULE_DIR$/images/demo_ui/src/front/src/assets" />
       <excludeFolder url="file://$MODULE_DIR$/images/demo_mariadb/build" />
       <excludeFolder url="file://$MODULE_DIR$/images/demo_cpp/src/home/kevin/server/build" />
       <excludeFolder url="file://$MODULE_DIR$/images/demo_cpp/build" />
       <excludeFolder url="file://$MODULE_DIR$/images/demo_cpp/cmake_build" />
       <excludeFolder url="file://$MODULE_DIR$/images/demo_cpp/tmp" />
+      <excludeFolder url="file://$MODULE_DIR$/images/demo_ui/apps/playground/public" />
+      <excludeFolder url="file://$MODULE_DIR$/images/demo_ui/apps/playground/src/assets" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
