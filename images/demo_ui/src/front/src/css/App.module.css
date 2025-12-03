@@ -23,7 +23,7 @@
   resize: both; /* Enable both horizontal and vertical resizing */
   overflow: auto; /* Required for resize to work */
   width: 400px;
-  height: 250px;
+  height: 300px;
   border: 1px solid #ccc;
 }
 
