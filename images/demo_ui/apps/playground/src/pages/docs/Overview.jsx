@@ -1,6 +1,7 @@
 import menuCss from "../../parts/css/Menu.module.css";
 import MenuButton from "../../parts/MenuButton.jsx";
-import DemoAnchor from "../../parts/Anchors.jsx";
+import {Anchor} from "../../parts/Anchors.jsx";
+import React from "react";
 
 export const toolDefn = {
     "title": "Documentation: Demo Overview",
@@ -11,20 +12,8 @@ export const toolDefn = {
 function Overview({menu, handleClick}) {
     return (
         <div>
-            <h2>Purpose {menuCss.menuButton}</h2>
-            <ul>
-                <li>For myself:</li>
-                <ul>
-                    <li>Progressively review and exercise a selection of technologies from my resume.</li>
-                </ul>
-                <li>For others:
-                </li>
-                <ul>
-                    <li>Demonstrate my code and abilities.</li>
-                </ul>
-            </ul>
-
-            <p><b>Note:</b> This UI(<DemoAnchor label="App.jsx" path="images/demo_ui/apps/playground/src/App.jsx"/>) is fully <b>ReactJS</b>, my favorite UI environment.</p>
+            YouTube:
+            <Anchor path="https://youtu.be/Jd9BgYf0lW8">Playground Quick Tour</Anchor>
 
             <h2>Menu</h2>
             <ul>

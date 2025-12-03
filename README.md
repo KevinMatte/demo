@@ -1,5 +1,7 @@
 # Demo Project
 
+__See YouTube__: [Playground Quick Tour](https://youtu.be/Jd9BgYf0lW8)
+
 __Summary__:
 
 * __Target__: Ubuntu OS. Also tested under Window's WSL with Ubuntu distribution
