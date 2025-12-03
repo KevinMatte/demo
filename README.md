@@ -1,6 +1,6 @@
 # Demo Project
 
-__See YouTube__: [Playground Quick Tour](https://youtu.be/Jd9BgYf0lW8)
+__See YouTube__: [Playground Quick Tour](https://youtu.be/fLLyFpopUcY)
 
 __Summary__:
 

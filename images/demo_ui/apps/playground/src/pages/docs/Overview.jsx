@@ -13,7 +13,7 @@ function Overview({menu, handleClick}) {
     return (
         <div>
             YouTube:
-            <Anchor path="https://youtu.be/Jd9BgYf0lW8">Playground Quick Tour</Anchor>
+            <Anchor path="https://youtu.be/fLLyFpopUcY">Playground Quick Tour</Anchor>
 
             <h2>Menu</h2>
             <ul>
