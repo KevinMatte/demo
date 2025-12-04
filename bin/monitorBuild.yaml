@@ -41,6 +41,7 @@
       paths:
       - "images/demo_ui/**/static"
       - "images/demo_ui/apps/*/src"
+
       # Optional. If given, the full path must match this python regular expression.
       # You could include directories in these patterns, but if possible, don't, I think.
       patterns:
@@ -52,11 +53,14 @@
         - '.*\.html$'
         - '.*\.py$'
         - '.*\.php$'
-        - 'Makefile'
 
     # A search example without patterns.
     - name: 'environment'
       paths: ['.env', '.secrets.env']
+
+    - name: 'Makefile'
+      paths:
+      - "images/demo_ui/**/Makefile"
 
 
 # For reloading this YAML file.

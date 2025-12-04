@@ -41,7 +41,3 @@ build: build_clean build_static build_apps
 clean:
 	rm -fr bin/venv tmp/*
 
-test_make:
-	@pwd
-	@npm -v
-	@node -v
