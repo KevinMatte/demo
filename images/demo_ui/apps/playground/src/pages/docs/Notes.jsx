@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import appCSS from "../../css/App.module.css";
+import appCSS from "@/css/App.module.css";
 
-import Menu from "../../parts/Menu.jsx";
+import Menu from "@/parts/Menu.jsx";
 import Overview, {toolDefn as overviewToolDefn} from './Overview.jsx';
 import Build, {toolDefn as buildToolDefn} from "./Build.jsx";
 import Containers, {toolDefn as dockerComposeToolDefn} from "./Containers.jsx";
@@ -33,6 +33,7 @@ function Notes({menu, handleClick}) {
     let pageDefn = notesMenu[pageName];
     return (
         <div className={appCSS.app}>
+            Hello
             <div style={{margin: "20px"}}>
                 <Menu handler={menuHandler} menu={notesMenu} selectedMenuName={pageName}/>
             </div>

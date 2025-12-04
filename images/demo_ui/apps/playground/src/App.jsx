@@ -7,7 +7,7 @@ import Python, {toolDefn as pythonToolDefn} from './pages/simple_demos/Python.js
 import PHP, {toolDefn as phpToolDefn} from './pages/simple_demos/PHP.jsx';
 import Java, {toolDefn as javaToolDefn} from './pages/simple_demos/Java.jsx';
 import DemoAnchor from "./parts/Anchors.jsx";
-import Notes, {toolDefn as notesToolDefn} from './pages/docs/Notes.jsx';
+import Notes, {toolDefn as notesToolDefn} from '@docs/Notes.jsx';
 
 function App() {
     const [pageName, setPageName] = useState('notes');

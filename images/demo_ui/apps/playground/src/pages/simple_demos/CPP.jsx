@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import DemoAnchor, {Anchor} from "../../parts/Anchors.jsx";
+import DemoAnchor, {Anchor} from "@/parts/Anchors.jsx";
 
 const toolDocs =
     (

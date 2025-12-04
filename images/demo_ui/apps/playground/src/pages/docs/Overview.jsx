@@ -1,6 +1,6 @@
-import menuCss from "../../parts/css/Menu.module.css";
-import MenuButton from "../../parts/MenuButton.jsx";
-import {Anchor} from "../../parts/Anchors.jsx";
+import menuCss from "@/parts/css/Menu.module.css";
+import MenuButton from "@/parts/MenuButton.jsx";
+import {Anchor} from "@/parts/Anchors.jsx";
 import React from "react";
 
 export const toolDefn = {

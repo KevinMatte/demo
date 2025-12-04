@@ -1,4 +1,4 @@
-import DemoAnchor, {Anchor, GitHubAnchor} from "../../parts/Anchors.jsx";
+import DemoAnchor, {Anchor, GitHubAnchor} from "@/parts/Anchors.jsx";
 import React, {useEffect, useState} from "react";
 
 export const toolDefn = {
