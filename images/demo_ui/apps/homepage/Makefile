@@ -5,4 +5,4 @@ build_clean:
 	mkdir build
 
 build:
-	tar cf - -C src/static . | (cd build; tar xvf -)
+	tar cf - -C src . | (cd build; tar xvf -)

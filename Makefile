@@ -81,13 +81,22 @@ generate_dotEnv:
 version_bump:
 	bin/bumpVersion.sh
 
+test:
+	set -x; . ./.env; \
+	tag="v$${DEMO_UI_VERSION}"; \
+	git tag $${tag}; \
+	git push origin $${tag};
+
 publish: version_bump generate_dotEnv build
 	bin/preprocessDockerCompose.py src/docker-compose.yaml tmp/docker-compose.yaml production
-	$(MAKE) -C images/demo_ui tag
 	ssh demo_prod mkdir -p dev/demo.prod
 	scp tmp/docker-compose.yaml demo_prod:dev/demo.prod
 	scp .env demo_prod:dev/demo.prod/.env
 	set -x; . ./.env; \
+	tag="v$${DEMO_UI_VERSION}"
+	git tag $${tag}; \
+	git push origin $${tag}; \
+	exit 1;
 	docker tag demo_ui:latest localhost:5000/demo_ui:$${DEMO_UI_VERSION}; \
 	docker tag demo_cpp:latest localhost:5000/demo_cpp:$${DEMO_CPP_VERSION}; \
 	docker tag demo_mariadb:latest localhost:5000/demo_mariadb:$${DEMO_MARIADB_VERSION}; \

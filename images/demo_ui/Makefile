@@ -1,5 +1,5 @@
 
-.PHONY: all www venv build build_static build_apps build_done build_init tag
+.PHONY: all www venv build build_static build_apps build_done build_init
 
 PROJ_ROOT="$$(git rev-parse --show-toplevel)"
 
