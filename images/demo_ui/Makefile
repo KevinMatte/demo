@@ -12,6 +12,7 @@ build_clean: build_init
 	mkdir -p build/var/www
 	$(MAKE) -C apps/homepage build_clean
 	$(MAKE) -C apps/playground build_clean
+	$(MAKE) -C apps/animation build_clean
 
 
 
@@ -20,7 +21,11 @@ build_apps: build_init
 	tar cf - -C apps/homepage/build . | (cd build; tar xvf -)
 	$(MAKE) -C apps/playground build
 	tar cf - -C apps/playground/build . | (cd build; tar xvf -)
+	$(MAKE) -C apps/animation build
+	tar cf - -C apps/animation/build . | (cd build; tar xvf -)
+
 	bin/update_build.sh
+
 	apps/playground/bin/update_demo_ui_build.sh
 
 build_done:
@@ -28,6 +33,7 @@ build_done:
 
 build_mounted: build_static build_apps build_done
 	$(MAKE) -C apps/playground build
+	$(MAKE) -C apps/animation build
 
 build: build_clean build_static build_apps
 	docker build -t "demo_ui" .
