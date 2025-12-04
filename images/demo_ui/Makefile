@@ -15,23 +15,19 @@ build_clean: build_init
 
 
 
-build_static: build_init
-	tar cf - -C src/static . | (cd build; tar xvf -)
-	. ${PROJ_ROOT}/.env; \
-	echo ${DEMO_UI_VERSION} > build/var/www/html/static/version.txt; \
-	set | grep '^DEMO_.*\(\(VERSION\)\|\(DATE\)\)' > build/var/www/html/static/versions.txt
-
 build_apps: build_init
 	$(MAKE) -C apps/homepage build
 	tar cf - -C apps/homepage/build . | (cd build; tar xvf -)
 	$(MAKE) -C apps/playground build
 	tar cf - -C apps/playground/build . | (cd build; tar xvf -)
+	bin/update_build.sh
 	apps/playground/bin/update_demo_ui_build.sh
 
 build_done:
 	rm -f tmp/build.locked
 
 build_mounted: build_static build_apps build_done
+	$(MAKE) -C apps/playground build
 
 build: build_clean build_static build_apps
 	docker build -t "demo_ui" .

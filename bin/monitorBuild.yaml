@@ -25,14 +25,12 @@
   commands: "bin/say.py '_MONITOR_NAME_: Missing commands' 2>/dev/null"
 
 # This is the start of a declaration of files/paths to monitor and commands to execute.
-"static and environment":
+"demo_ui container":
 
   # When a file/path changes, these commands will be executed.
   commands:
     - "make update_dot_env"
-    - "make -C images/demo_ui"
-    - "make update_dot_env"
-    - "make -C images/demo_ui build_static"
+    - "make -C images/demo_ui build_mounted"
 
   # A list of files/paths and file name patterns to monitor.
   searches:
@@ -40,24 +38,17 @@
     - name: 'static'
       # A list of paths to directories or files.
       # Note: A single string is recognized as a short form of a list of one string.
-      paths: "images/demo_ui/src/static"
+      paths:
+      - "images/demo_ui/**/static"
+      - "images/demo_ui/apps/*/src"
       # Optional. If given, the full path must match this python regular expression.
       # You could include directories in these patterns, but if possible, don't, I think.
-      patterns: ['.*\.js$', '.*\.jsx$', '.*\.css$', '.*\.htm$l', '.*\.py$', '.*\.php$']
+      patterns: ['.*\.js$', '.*\.jsx$', '.*\.css$', '.*\.html$',  '.*\.py$', '.*\.php$']
 
     # A search example without patterns.
     - name: 'environment'
       paths: ['.env', '.secrets.env']
 
-"demo_ui front":
-  # Note: A single string is recognized as a short form of a list of one string.
-  commands:
-    - "make pre_build"
-    - "make -C images/demo_ui build_front"
-  searches:
-    - name: 'Front UI'
-      paths: ["images/demo_ui/src/front"]
-      patterns: ['.*\.jsx$', '.*\.css$', '.*\.html$']
 
 # For reloading this YAML file.
 # Note: Reloads happen every time changes are discovered.

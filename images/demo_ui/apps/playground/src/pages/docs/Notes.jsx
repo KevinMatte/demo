@@ -33,7 +33,6 @@ function Notes({menu, handleClick}) {
     let pageDefn = notesMenu[pageName];
     return (
         <div className={appCSS.app}>
-            Hello
             <div style={{margin: "20px"}}>
                 <Menu handler={menuHandler} menu={notesMenu} selectedMenuName={pageName}/>
             </div>
