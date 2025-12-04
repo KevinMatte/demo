@@ -8,4 +8,4 @@ build_clean:
 
 build:
 	tar cf - -C src/static . | (cd build; tar xvf -)
-	npx vite build --outDir build/var/www/html
+	npx vite build --outDir build/var/www/html/playground

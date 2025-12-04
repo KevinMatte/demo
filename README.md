@@ -1,6 +1,8 @@
 # Demo Project
 
-__See YouTube__: [Playground Quick Tour](https://youtu.be/fLLyFpopUcY)
+__Project Running at__: * [http://184.64.118.116](http://184.64.118.116):
+__Playground Quick Tour__: [YouTube](https://youtu.be/fLLyFpopUcY)
+
 
 __Summary__:
 
@@ -81,4 +83,9 @@ To rebuild to a mounted docker volume for continuous updates.
   * Video Recording: obs-studio with: `sudo apt install obs-studio`
   * Source Video Editor: kdenlive: `sudo apt install kdenlive` 
 
+__Notes__:
+
+* obs-studio output is mkv
+* Using [ffmpeg_cfr_mov.sh](bin/ffmpeg_cfr_mov.sh)
+  to generate constant frame rate *.mov for xdenlive 
 

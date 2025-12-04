@@ -10,6 +10,7 @@ build_clean: build_init
 	rm -fr build
 	mkdir -p build/var/www/html/static
 	mkdir -p build/var/www
+	$(MAKE) -C apps/homepage build_clean
 	$(MAKE) -C apps/playground build_clean
 
 
@@ -21,6 +22,8 @@ build_static: build_init
 	set | grep '^DEMO_.*\(\(VERSION\)\|\(DATE\)\)' > build/var/www/html/static/versions.txt
 
 build_apps: build_init
+	$(MAKE) -C apps/homepage build
+	tar cf - -C apps/homepage/build . | (cd build; tar xvf -)
 	$(MAKE) -C apps/playground build
 	tar cf - -C apps/playground/build . | (cd build; tar xvf -)
 	apps/playground/bin/update_demo_ui_build.sh
