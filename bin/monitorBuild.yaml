@@ -25,7 +25,7 @@
   commands: "bin/say.py '_MONITOR_NAME_: Missing commands' 2>/dev/null"
 
 # This is the start of a declaration of files/paths to monitor and commands to execute.
-"demo_ui container":
+"UI Mounted":
 
   # When a file/path changes, these commands will be executed.
   commands:
