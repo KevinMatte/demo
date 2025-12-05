@@ -1,13 +1,19 @@
 import './App.css'
+import Spreadsheet from "./Spreadsheet.tsx";
 
 function App() {
 
   return (
-      <>
-          <h1>Spreadsheet Project in TypeScript</h1>
-          <div id="spreadsheet" className="flexhfill"></div>
-      </>
-  )
+      <div className="flexvdisplay fill" style={{inset: "50px"}}>
+          <div className="flexfixed" style={{height: "20px"}}></div>
+          <div className="flexhdisplay flexvfill">
+              <div className="flexfixed" style={{width: "20px"}}></div>
+                  <Spreadsheet></Spreadsheet>
+              <div className="flexfixed" style={{width: "20px"}}></div>
+          </div>
+          <div className="flexfixed" style={{height: "20px"}}></div>
+      </div>
+    );
 }
 
 export default App
