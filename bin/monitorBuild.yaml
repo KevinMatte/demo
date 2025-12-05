@@ -30,7 +30,7 @@
   # When a file/path changes, these commands will be executed.
   commands:
     - "make update_dot_env"
-    - "make -C images/demo_ui build_src"
+    - "make -C images/demo_ui build_src update_image_build"
 
   # A list of files/paths and file name patterns to monitor.
   searches:
