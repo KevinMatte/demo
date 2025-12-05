@@ -1,0 +1,47 @@
+.flexvdisplay {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+}
+
+.flexvfill {
+    flex: 1;
+    align-items: stretch;
+    overflow: auto;
+}
+
+.flexhdisplay {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.flexhdisplaywrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.flexhfill {
+    flex: 1;
+    overflow: auto;
+}
+
+.flexfixed {
+}
+
+.fill {
+    width: 100%;
+    height: 100%;
+}
+
+.hiddenFill {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.scrollFill {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+

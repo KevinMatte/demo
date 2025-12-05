@@ -54,10 +54,10 @@ function Containers() {
                 <li><DemoAnchor title="Build" path="images/demo_ui/Dockerfile"/></li>
                 <li><Anchor title="Apache" path="https://httpd.apache.org/">Apache: HTTP Server Project</Anchor></li>
                 <li><DemoAnchor title="PHP Client" path="images/demo_ui/apps/playground/src/pages/simple_demos/PHP.jsx"/></li>
-                <li><DemoAnchor title="PHP Server" path="images/demo_ui/apps/playground/src/static/var/www/html/hello_world.php"/></li>
+                <li><DemoAnchor title="PHP Server" path="images/demo_ui/apps/playground/static/var/www/html/hello_world.php"/></li>
                 <li><DemoAnchor title="Python Client" path="images/demo_ui/apps/playground/src/pages/simple_demos/Python.jsx"/></li>
                 <li><DemoAnchor title="Python Server"
-                                path="images/demo_ui/apps/playground/src/static/var/www/html/py_app/hello_world.py"/>
+                                path="images/demo_ui/apps/playground/static/var/www/html/py_app/hello_world.py"/>
                 </li>
                 <li><b>Source Code</b></li>
                 <ul>

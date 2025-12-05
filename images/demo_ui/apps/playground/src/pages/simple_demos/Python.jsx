@@ -9,7 +9,7 @@ export const toolDocs = (
             <li><b>Main Code</b>:</li>
             <ul>
                 <li><DemoAnchor title="Client" path="images/demo_ui/apps/playground/src/pages/simple_demos/Python.jsx"/></li>
-                <li><DemoAnchor title="Server" path="images/demo_ui/apps/playground/src/static/var/www/html/py_app/hello_world.py"/>
+                <li><DemoAnchor title="Server" path="images/demo_ui/apps/playground/static/var/www/html/py_app/hello_world.py"/>
                 </li>
             </ul>
             <li><b>Configuration</b></li>
@@ -23,7 +23,7 @@ export const toolDocs = (
                 </li>
                 <li>
                     <DemoAnchor title="/py_app URL Proxy"
-                                path="images/demo_ui/src/static/etc/apache2/sites-available/000-default.conf">
+                                path="images/demo_ui/static/etc/apache2/sites-available/000-default.conf">
                     </DemoAnchor>
                     : See &lt;Diretory "/var/www/html/py_app"&gt;
                 </li>

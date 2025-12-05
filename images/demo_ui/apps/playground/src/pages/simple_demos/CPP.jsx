@@ -24,7 +24,7 @@ const toolDocs =
                     </li>
                     <li>
                         <DemoAnchor title="/api/demo_cpp URL Proxy"
-                                    path="images/demo_ui/src/static/etc/apache2/sites-available/000-default.conf"
+                                    path="images/demo_ui/static/etc/apache2/sites-available/000-default.conf"
                         />
                         : See &lt;Location "/api/demo_cpp/"&gt;
                     </li>

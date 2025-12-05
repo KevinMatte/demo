@@ -1,4 +1,6 @@
-.PHONY: build_clean build
+-include .env
+
+.PHONY: build_clean build build_static build_src
 
 PROJ_ROOT="$$(git rev-parse --show-toplevel)"
 
@@ -8,6 +10,10 @@ build_clean:
 	rm -fr build
 	mkdir build
 
-build:
-	#[ -d src/static ] && tar cf - -C src/static . | (cd build; tar xvf -)
+build_static:
+
+build_src:
+	#[ -d static ] && tar cf - -C static . | (cd build; tar xvf -)
 	npx vite build --outDir build/var/www/html/animation
+
+build: build_static build_src

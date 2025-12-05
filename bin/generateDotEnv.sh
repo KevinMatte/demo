@@ -13,11 +13,14 @@ cd $(dirname $0)/..
 # DEMO_JAVA_TOMCAT_MANAGER="...password..."
 # DEMO_JAVA_TOMCAT_ADMIN="...password..."
 
+DEMO_UI_APPS="homepage playground animation spreadsheet"
+
 cat <<EOF >${1:-.env}
 PROJ_ROOT=$(git rev-parse --show-toplevel)
 
 DEMO_UI_IMAGE=demo_ui
 DEMO_UI_WWW_PATH=$(pwd)/images/demo_ui/build/var/www
+DEMO_UI_APPS="${DEMO_UI_APPS}"
 
 DEMO_CPP_IMAGE=demo_cpp
 DEMO_CPP_PORT=8080
@@ -39,3 +42,11 @@ DEMO_JAVA_TOMCAT_MANAGER_PASSWORD=${DEMO_JAVA_TOMCAT_MANAGER_PASSWORD}
 
 $(cat src/docker/image_versions.ish | sed -e 's/ #.*//')
 EOF
+
+for m in $(ls -d images/*); do
+  cp .env $m/.env
+done
+
+for app in ${DEMO_UI_APPS}; do
+  cp .env images/demo_ui/apps/$app/.env
+done

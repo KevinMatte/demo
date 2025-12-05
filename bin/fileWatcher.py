@@ -73,7 +73,7 @@ def process_args() -> tuple[Namespace, ArgumentParser]:
     - name: 'static'
       # A list of paths to directories or files.
       # Note: A single string is recognized as a short form of a list of one string.
-      paths: "images/demo_ui/src/static"
+      paths: "images/demo_ui/static"
       # Optional. If given, the full path must match this python regular expression.
       # You could include directories in these patterns, but if possible, don't, I think.
       patterns: ['.*\\.js$', '.*\\.jsx$', '.*\\.css$', '.*\\.htm$l', '.*\\.py$', '.*\\.php$']

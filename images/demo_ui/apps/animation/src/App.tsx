@@ -3,9 +3,10 @@ import './App.css'
 function App() {
 
   return (
-    <>
-      <h1>Animation Project</h1>
-    </>
+      <>
+          <h1>Spreadsheet Project</h1>
+          <div id="spreadsheet" className="flexhfill"></div>
+      </>
   )
 }
 

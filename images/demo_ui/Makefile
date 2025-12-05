@@ -1,5 +1,6 @@
+-include .env
 
-.PHONY: all www venv build build_static build_apps build_done build_init
+.PHONY: all www venv build build_static update_image_build build_done build_init build_src retrieve_builds
 
 PROJ_ROOT="$$(git rev-parse --show-toplevel)"
 
@@ -10,34 +11,43 @@ build_clean: build_init
 	rm -fr build
 	mkdir -p build/var/www/html/static
 	mkdir -p build/var/www
-	$(MAKE) -C apps/homepage build_clean
-	$(MAKE) -C apps/playground build_clean
-	$(MAKE) -C apps/animation build_clean
+	for app in $$(echo ${DEMO_UI_APPS}); do echo "app: $${app}"; $(MAKE) -C apps/$${app} build_clean; done
 
 
+retrieve_builds:
+	for app in $$(echo ${DEMO_UI_APPS}); do \
+  		$(MAKE) -C apps/$${app} build; \
+		tar cf - -C apps/$${app}/build . | (cd build; tar xvf -); \
+  	done
 
-build_apps: build_init
-	$(MAKE) -C apps/homepage build
-	tar cf - -C apps/homepage/build . | (cd build; tar xvf -)
-	$(MAKE) -C apps/playground build
-	tar cf - -C apps/playground/build . | (cd build; tar xvf -)
-	$(MAKE) -C apps/animation build
-	tar cf - -C apps/animation/build . | (cd build; tar xvf -)
-
+update_image_build: build_init retrieve_builds
 	bin/update_build.sh
-
-	apps/playground/bin/update_demo_ui_build.sh
+	for app in $$(echo ${DEMO_UI_APPS}); do \
+  		echo "${app}"; \
+		if [ -e apps/$${app}/bin/update_demo_ui_build.sh ]; then \
+		  	apps/$${app}/bin/update_demo_ui_build.sh; \
+		fi \
+  	done
 
 build_done:
 	rm -f tmp/build.locked
 
-build_mounted: build_static build_apps build_done
-	$(MAKE) -C apps/playground build
-	$(MAKE) -C apps/animation build
+build_mounted: update_image_build build_done
+	for app in $$(echo ${DEMO_UI_APPS}); do $(MAKE) -C apps/$${app} build; done
 
-build: build_clean build_static build_apps
+build_static:
+	for app in $$(echo ${DEMO_UI_APPS}); do $(MAKE) -C apps/$${app} build_static; done
+
+build_src:
+	for app in $$(echo ${DEMO_UI_APPS}); do $(MAKE) -C apps/$${app} build_src; done
+
+build: build_clean update_image_build
 	docker build -t "demo_ui" .
 
 clean:
 	rm -fr bin/venv tmp/*
+
+test:
+	for app in $$(echo ${DEMO_UI_APPS}); do echo $${app}; done
+
 

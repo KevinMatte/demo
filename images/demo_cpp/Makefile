@@ -21,7 +21,7 @@ build_cmake:
 	cmake --build cmake_build --target all
 
 build: build_dir build_cmake
-	. ${PROJ_ROOT}/.env; docker build -t "demo_cpp" .
+	docker build -t "demo_cpp" .
 
 build_done:
 	rm -f tmp/build.locked

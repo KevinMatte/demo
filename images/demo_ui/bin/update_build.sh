@@ -2,8 +2,8 @@
 
 PROJ_ROOT="$(git rev-parse --show-toplevel)"
 
-echo "Updating build from src/static"
-tar cf - -C src/static . | (cd build; tar xvf -)
+echo "Updating build from static"
+tar cf - -C static . | (cd build; tar xvf -)
 
 echo "Setting static/version.txt"
 . ${PROJ_ROOT}/.env;

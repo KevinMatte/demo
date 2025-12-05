@@ -1,12 +1,10 @@
 .PHONY: backup build_dir
 
-PROJ_ROOT="$$(git rev-parse --show-toplevel)"
-
 build_dir:
 	bin/build.sh
 
 build: build_dir
-	. ${PROJ_ROOT}/.env; docker build -t "demo_java" -f Dockerfile .
+	docker build -t "demo_java" -f Dockerfile .
 
 build_run: build
 	-docker kill demo_java

@@ -20,7 +20,12 @@ $version = file_get_contents("static/version.txt");
     <p>There is a quick tour on YouTube here: <a href="https://youtu.be/fLLyFpopUcY" target="_blank">Playground Quick Tour</a></p>
 </div>
 
-<h2><a href="/animation">WIP: Animation Tool by PHP</a></h2>
+<h2><a href="/spreadsheet_ts">WIP: SpreadSheet Tool in TypeScript</a></h2>
+<div style="padding-left: 15px">
+    <p>This is work in progress.</p>
+</div>
+
+<h2><a href="/spreadsheet">WIP: Spreadsheet by JavaScript</a></h2>
 <div style="padding-left: 15px">
     <p>This is work in progress.</p>
 </div>

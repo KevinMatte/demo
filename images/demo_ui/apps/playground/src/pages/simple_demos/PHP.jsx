@@ -9,7 +9,7 @@ export const toolDocs = (
             <li><b>Main Code</b>:</li>
             <ul>
                 <li><DemoAnchor title="Client" path="images/demo_ui/apps/playground/src/pages/simple_demos/PHP.jsx"/></li>
-                <li><DemoAnchor title="Server" path="images/demo_ui/apps/playground/src/static/var/www/html/hello_world.php"/></li>
+                <li><DemoAnchor title="Server" path="images/demo_ui/apps/playground/static/var/www/html/hello_world.php"/></li>
             </ul>
             <li><b>Configuration</b></li>
             <ul>
