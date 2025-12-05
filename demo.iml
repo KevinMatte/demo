@@ -16,6 +16,7 @@
       <excludeFolder url="file://$MODULE_DIR$/images/demo_ui/apps/playground/src/assets" />
       <excludeFolder url="file://$MODULE_DIR$/images/demo_ui/apps/homepage/build" />
       <excludeFolder url="file://$MODULE_DIR$/images/demo_ui/apps/spreadsheet/build" />
+      <excludeFolder url="file://$MODULE_DIR$/images/demo_ui/apps/spreadsheet_ts/build" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
