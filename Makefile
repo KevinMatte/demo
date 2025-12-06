@@ -81,8 +81,7 @@ generate_dotEnv:
 version_bump:
 	bin/bumpVersion.sh
 
-publish: version_bump generate_dotEnv build
-	bin/preprocessDockerCompose.py src/docker-compose.yaml tmp/docker-compose.yaml production
+publish_push:
 	ssh demo_prod mkdir -p dev/demo.prod
 	scp tmp/docker-compose.yaml demo_prod:dev/demo.prod
 	scp .env demo_prod:dev/demo.prod/.env
@@ -101,4 +100,8 @@ publish: version_bump generate_dotEnv build
 	ssh demo_prod "cd dev/demo.prod; docker compose up  --remove-orphans --detach"
 	rm -f tmp/build.locked
 	@echo "Open: http://184.64.118.116/ or http://192.168.1.4:8080/"
+
+publish: version_bump generate_dotEnv
+	bin/preprocessDockerCompose.py src/docker-compose.yaml tmp/docker-compose.yaml production
+	$(MAKE) build publish_push
 
