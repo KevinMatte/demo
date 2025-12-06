@@ -79,6 +79,7 @@ generate_dotEnv:
 	bin/generateDotEnv.sh
 
 version_bump: build
+	# TODO: Put this on a separate volume.
 	bin/bumpVersion.sh
 
 publish_push:
