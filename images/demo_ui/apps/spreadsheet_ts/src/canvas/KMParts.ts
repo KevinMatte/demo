@@ -115,10 +115,8 @@ class KMDraw extends KMCanvas {
             return;
         if (event.buttons !== 1)
             return;
-        let mouseDownEvent = this.events['mousedown'];
-        if (!(mouseDownEvent instanceof MouseEvent))
-            return;
 
+        let mouseDownEvent = this.events['mousedown'] as MouseEvent;
         let ctx = this.canvas.getContext('2d');
         if (!ctx)
             return;

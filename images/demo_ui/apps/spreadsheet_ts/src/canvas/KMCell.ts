@@ -107,9 +107,7 @@ class KMCellText extends KMCell {
     handleEvent = (event: UIEvent, _details: any) => {
         if (!this.paintRectangle || !event.target)
             return;
-        let elm = event.target;
-        if (!(elm instanceof Node))
-            return;
+        let elm = event.target as Node;
         let parent = elm.parentElement;
         if (!parent)
             return;

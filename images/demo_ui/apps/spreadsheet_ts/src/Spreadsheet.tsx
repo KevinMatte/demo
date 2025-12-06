@@ -17,10 +17,7 @@ function Spreadsheet() {
     const dataSource = new DataSource(100, 200);
 
     useEffect(() => {
-        const canvas: any = spreadSheetRef.current;
-        if (!(canvas instanceof HTMLCanvasElement))
-            return;
-
+        const canvas: any = spreadSheetRef.current as HTMLCanvasElement;
         const ctx = canvas.getContext('2d');
 
         const getMousePos = (event: MouseEvent) => {
