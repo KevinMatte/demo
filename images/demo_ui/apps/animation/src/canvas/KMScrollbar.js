@@ -57,7 +57,7 @@ class KMScrollbar extends KMCanvas {
         this._updateCanvasRange();
     }
 
-    handleClickEvent(event) {
+    handleClickEvent = (event: UIEvent) => {
         let offset = this.onX ? event.offsetX : event.offsetY;
         let mouseDownEvent = this.takeEvent('mousedown');
 
@@ -73,7 +73,7 @@ class KMScrollbar extends KMCanvas {
             this.dragStart = null;
     }
 
-    handleMouseDown(event) {
+    handleMouseDown = (event: UIEvent) => {
         let dragStart = this.onX ? event.offsetX : event.offsetY;
         if (dragStart >= this.lineStart && dragStart <= this.lineStart + this.lineLength) {
             this.dragStart = dragStart;
@@ -82,7 +82,7 @@ class KMScrollbar extends KMCanvas {
         }
     }
 
-    handleMouseMove(event) {
+    handleMouseMove = (event: UIEvent) => {
         if (event.buttons !== 1 || this.dragStart === null)
             return;
 

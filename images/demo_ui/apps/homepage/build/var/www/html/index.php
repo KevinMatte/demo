@@ -20,15 +20,19 @@ $version = file_get_contents("static/version.txt");
     <p>There is a quick tour on YouTube here: <a href="https://youtu.be/fLLyFpopUcY" target="_blank">Playground Quick Tour</a></p>
 </div>
 
-<h2><a href="/spreadsheet_ts">WIP: SpreadSheet Tool in TypeScript</a></h2>
+<h2>Spreadsheet tool.</h2>
 <div style="padding-left: 15px">
-    <p>This is work in progress.</p>
+<ul>
+    <li><a href="/spreadsheet">Written in JavaScript</a></li>
+    <li><a href="/spreadsheet_ts">Converted to TypeScript</a></li>
+</ul>
 </div>
 
-<h2><a href="/spreadsheet">WIP: Spreadsheet by JavaScript</a></h2>
 <div style="padding-left: 15px">
-    <p>This is work in progress.</p>
+    <p>This is work in progress. It's just an old project written in JavaScript that I thought would
+    be a good expirement to convert to React/TypeScript</p>
 </div>
+
 
 </body>
 </html>

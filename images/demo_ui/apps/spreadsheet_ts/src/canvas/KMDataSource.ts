@@ -1,5 +1,7 @@
 class KMDataSource
 {
+    data: Array<any>;
+
     constructor(data = []) {
         this.data = data;
     }
@@ -15,7 +17,7 @@ class KMDataSource
             return 0;
     }
 
-    getData(iColumn, iRow)
+    getData(iColumn: number, iRow: number)
     {
         return {
             value: this.data[iRow][iColumn],
@@ -28,3 +30,5 @@ class KMDataSource
         };
     }
 }
+
+export {KMDataSource}

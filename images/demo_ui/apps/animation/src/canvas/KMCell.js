@@ -23,7 +23,7 @@ class KMCell {
     cellPaint(ctx, x, y, columnWidth, rowHeight, rowTextAscent) {
     }
 
-    handleEvent(event, details) {
+    handleEvent = (_event: UIEvent, details) => {
     }
 }
 
@@ -87,7 +87,7 @@ class KMCellText extends KMCell {
         ctx.restore();
     }
 
-    handleEvent(event, details) {
+    handleEvent = (event: UIEvent, details) => {
         this.inputNode = document.createElement('input');
         this.inputNode.setAttribute('id', 'KM');
         this.inputNode.style.position = 'absolute';

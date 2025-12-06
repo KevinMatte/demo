@@ -1,16 +1,20 @@
 // import './App.css'
 // import { useRef, useEffect, useState } from 'react';
 //
-import { useRef, useEffect, useState } from 'react';
+import {useRef, useEffect, useState} from 'react';
 import './canvas/css/KMSpreadsheet.css'
+import {KMSpreadsheet} from "./canvas/KMSpreadsheet.ts";
+import {DataSource} from "./dataSource.ts";
 
 function Spreadsheet() {
-    const spreadSheetRef = useRef(null);
-    const vscrollRef = useRef(null);
-    const hscrollRef = useRef(null);
+    const spreadSheetRef = useRef<HTMLCanvasElement>(null);
+    const vscrollRef = useRef<HTMLCanvasElement>(null);
+    const hscrollRef = useRef<HTMLCanvasElement>(null);
     const [isDrawing, setIsDrawing] = useState(false);
-    const [lastPosition, setLastPosition] = useState({ x: 0, y: 0 });
+    const [lastPosition, setLastPosition] = useState({x: 0, y: 0});
     const [isResized, setIsResized] = useState(false);
+    const [_kmSpreadsheet, setKMSpreadsheet] = useState<KMSpreadsheet|null>(null);
+    const dataSource = new DataSource(100, 200);
 
     useEffect(() => {
         const canvas: any = spreadSheetRef.current;
@@ -62,6 +66,13 @@ function Spreadsheet() {
         if (!isResized) {
             setIsResized(true);
             handleResize();
+            if (spreadSheetRef.current && hscrollRef.current && vscrollRef.current) {
+                let ss = new KMSpreadsheet(spreadSheetRef.current,
+                    hscrollRef.current,
+                    vscrollRef.current,
+                    dataSource);
+                setKMSpreadsheet(ss);
+            }
         }
 
         return () => {
@@ -77,7 +88,7 @@ function Spreadsheet() {
     // );
     return (
         <>
-            <div id="spreadsheet" className="km_spd_cell flexhfill"  style={{ border: '1px solid black' }}>
+            <div id="spreadsheet" className="km_spd_cell flexhfill" style={{border: '1px solid black'}}>
                 <canvas ref={spreadSheetRef} className="km_spd_canvas fill">Support for HTML Canvas required.</canvas>
                 <canvas ref={vscrollRef} className="km_spd_row_scroll km_spd_scroll_width"></canvas>
                 <canvas ref={hscrollRef} className="km_spd_col_scroll km_spd_scroll_height"></canvas>

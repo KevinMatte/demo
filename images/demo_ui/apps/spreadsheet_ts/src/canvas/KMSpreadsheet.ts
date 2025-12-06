@@ -1,47 +1,51 @@
 // TODO: JSON Configurable
 // TODO: Edit
+import {KMCanvas} from "./KMParts.ts";
+import {KMAxis} from "./KMParts.ts";
+import {KMDataSource} from "./KMDataSource.ts";
+import KMScrollbar from "./KMScrollbar.ts";
+import {KMCellManager} from "./KMCellManager.ts";
+import {KMCell, KMCellText} from "./KMCell.ts";
 
 class KMSpreadsheet extends KMCanvas {
-    divID;
-    mouseDownEvent = null;
-    mouseUpEvent = null;
-    dataSource = null;
-    columnWidths = [];
-    rowHeights = [];
-    rowTextAscents = {};
+    mouseDownEvent: MouseEvent | null = null;
+    mouseUpEvent: MouseEvent | null = null;
+    dataSource: KMDataSource | null = null;
+    columnWidths : Array<number> = [];
+    rowHeights: Array<number> = [];
+    rowTextAscents: Array<number> = [];
     x = new KMAxis(true);
     y = new KMAxis(false);
-    cellManager = null;
-    elm;
+    cellManager: KMCellManager | null = null;
     hScroll;
     vScroll;
+    hoverX: number = 0;
+    onXGrid: boolean = false;
+    hoverY: number = 0;
+    onYGrid: boolean = false;
 
-    constructor(elm, dataSource) {
-        super(null);
+    constructor(canvas: HTMLCanvasElement,
+                hScrollCanvas: HTMLCanvasElement,
+                vScrollCanvas: HTMLCanvasElement,
+                dataSource: KMDataSource) {
+        super(canvas);
 
         this.setDataSource(dataSource);
 
-        this.elm = (typeof elm === 'string') ? document.getElementById(elm) : elm;
-        this.divID = this.elm.getAttribute('id');
-        this.renderHTML();
-
         this.hScroll = new KMScrollbar(
-            this.elm.querySelector('.km_spd_col_scroll'),
+            hScrollCanvas,
             true,
             this.handleHScroll,
             this.x.lockCount,
             dataSource.getNumColumns(),
         );
         this.vScroll = new KMScrollbar(
-            this.elm.querySelector('.km_spd_row_scroll'),
+            vScrollCanvas,
             false,
             this.handleVScroll,
             this.y.lockCount,
             dataSource.getNumRows()
         );
-        let canvas = this.elm.querySelector('.km_spd_canvas');
-        this.setCanvas(canvas);
-
         this.canvas.addEventListener('mousedown', this.handleMouseDown);
         this.canvas.addEventListener('mouseup', this.handleMouseUp);
         this.canvas.addEventListener('click', this.handleMouseClick);
@@ -49,30 +53,7 @@ class KMSpreadsheet extends KMCanvas {
         this.setPos(this.x.lockCount, this.y.lockCount);
     }
 
-    renderHTML() {
-        let parser = new DOMParser();
-        let doc = parser.parseFromString(`
-<div id="spreadsheet" class="km_spd_cell">
-    <canvas class="km_spd_canvas fill">Support for HTML Canvas required.</canvas>
-    <canvas class="km_spd_row_scroll km_spd_scroll_width"></canvas>
-    <canvas class="km_spd_col_scroll km_spd_scroll_height"></canvas>
-</div>
-        `, 'text/html');
-
-        let elm = doc.getElementById('spreadsheet');
-        for (let i = 0; i < elm.classList.length; ++i)
-            this.elm.classList.add(elm.classList.item(i));
-
-        // Empty this.elm div
-        while (this.elm.firstChild)
-            this.elm.removeChild(this.elm.lastChild);
-
-        // Add new content
-        while (elm.childNodes.length > 0)
-            this.elm.appendChild(elm.childNodes[0]);
-    }
-
-    handleMouseClick(event) {
+    handleMouseClick = (event: MouseEvent) => {
         if (!this.mouseDownEvent)
             return;
 
@@ -87,23 +68,23 @@ class KMSpreadsheet extends KMCanvas {
             return;
 
         // If clicking in a cell.
-        if (!clickDetails.onXGrid && !clickDetails.onYGrid) {
+        if (!clickDetails.onXGrid && !clickDetails.onYGrid && this.cellManager) {
             let cell = this.cellManager.getCell(clickDetails.posX, clickDetails.posY);
             if (cell)
                 cell.handleEvent(event, clickDetails);
         }
     }
 
-    handleMouseDown(event) {
+    handleMouseDown = (event: MouseEvent) => {
         this.mouseDownEvent = event;
         this.mouseUpEvent = null;
     }
 
-    handleMouseUp(event) {
+    handleMouseUp = (event: MouseEvent) => {
         this.mouseUpEvent = event;
     }
 
-    handleMouseMove(event) {
+    handleMouseMove = (event: MouseEvent) => {
         if (event.buttons !== 0)
             return;
 
@@ -128,7 +109,7 @@ class KMSpreadsheet extends KMCanvas {
         // console.log(`mouse ${posX}(${onXGrid ? 'Grid' : ''}), ${posY}(${onYGrid ? 'Grid' : ''})`);
     }
 
-    getOffsetDetails(offsetX, offsetY) {
+    getOffsetDetails(offsetX: number, offsetY: number) {
         let x, y, posX, posY;
         let gridX, gridY;
         let onXGrid = false, onYGrid = false;
@@ -177,12 +158,12 @@ class KMSpreadsheet extends KMCanvas {
         };
     }
 
-    handleResize() {
-        super.handleResize();
+    handleResize = (_ev: UIEvent) => {
+        this.setCanvasDimenstions();
         this.setPos(this.x.viewPos, this.y.viewPos);
     }
 
-    setDataSource(dataSource) {
+    setDataSource(dataSource: KMDataSource) {
         this.cellManager = new KMCellManager(dataSource);
         this.dataSource = dataSource;
         this.x.max = this.dataSource.getNumColumns();
@@ -193,15 +174,15 @@ class KMSpreadsheet extends KMCanvas {
         }
     }
 
-    handleHScroll(pos) {
+    handleHScroll = (pos: number) => {
         this.setPos(pos, this.y.viewPos, true);
     }
 
-    handleVScroll(pos) {
+    handleVScroll = (pos: number) => {
         this.setPos(this.x.viewPos, pos, false);
     }
 
-    setPos(posX, posY, onX = null) {
+    setPos(posX: number, posY: number, onX: boolean | null = null) {
         this.x.viewPos = posX;
         this.y.viewPos = posY;
         this.repaint();
@@ -217,24 +198,29 @@ class KMSpreadsheet extends KMCanvas {
             this.vScroll.setIndex(posY);
     }
 
-    repaint(details = {}) {
+    repaint(details: Record<string, any> = {}) {
         let x, y, maxX, maxY, posX, posY;
         let gridX, gridY;
-        let cell;
+        let cell : KMCell | null;
 
         let ctx = this.canvas.getContext('2d');
+        if (!ctx)
+            return;
+
         ctx.save();
         let style = window.getComputedStyle(this.canvas);
         ctx.font =
             style.getPropertyValue('font-size') + ' ' +
             style.getPropertyValue('font-family');
-        if (!this.dataSource.hasOwnProperty("getColumnSample") && !this.dataSource.hasOwnProperty("getRowSample")) {
+        if (this.dataSource && this.cellManager &&
+            !this.dataSource.hasOwnProperty("getColumnSample") &&
+            !this.dataSource.hasOwnProperty("getRowSample")) {
             x = 0;
             posX = this.x.getNextPos(-1);
             gridX = this.x.getGridLines(posX);
             this.columnWidths = [];
             this.rowHeights = [];
-            this.rowTextAscents = {};
+            this.rowTextAscents = [];
             this.cellManager.loadStart();
             while (x < this.canvas.width && posX < this.x.max) {
                 details.inLockX = posX < this.x.lockCount;
@@ -244,9 +230,11 @@ class KMSpreadsheet extends KMCanvas {
                 while (y < this.canvas.height && posY < this.y.max) {
                     details.inLockY = posY < this.y.lockCount;
                     cell = this.cellManager.loadCell(ctx, posX, posY, details);
-                    this.columnWidths[posX] = Math.max(this.columnWidths[posX] ?? 0, cell.cellWidth);
-                    this.rowHeights[posY] = Math.max(this.rowHeights[posY] ?? 0, cell.cellHeight);
-                    this.rowTextAscents[posY] = Math.max(this.rowTextAscents[posY] ?? 0, cell.ascent);
+                    if (cell instanceof KMCellText) {
+                        this.columnWidths[posX] = Math.max(this.columnWidths[posX] ?? 0, cell.cellWidth);
+                        this.rowHeights[posY] = Math.max(this.rowHeights[posY] ?? 0, cell.cellHeight);
+                        this.rowTextAscents[posY] = Math.max(this.rowTextAscents[posY] ?? 0, cell.ascent);
+                    }
                     y += this.rowHeights[posY] + gridY.width;
                     posY = this.y.getNextPos(posY);
                     gridY = this.y.getGridLines(posY);
@@ -291,8 +279,10 @@ class KMSpreadsheet extends KMCanvas {
         ctx.restore();
     }
 
-    paint(ctx, maxX, maxY) {
+    paint(ctx: CanvasRenderingContext2D, maxX: number, maxY: number) {
         let x, y, posX, posY, gridX, gridY;
+        if (!this.cellManager)
+            return;
 
         // Clear background
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -331,3 +321,4 @@ class KMSpreadsheet extends KMCanvas {
     }
 }
 
+export {KMSpreadsheet};

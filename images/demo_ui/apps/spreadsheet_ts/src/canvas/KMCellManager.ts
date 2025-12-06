@@ -1,14 +1,17 @@
+import {KMDataSource} from "./KMDataSource.ts";
+import {KMCell, KMCellText} from "./KMCell.ts";
+
 class KMCellManager {
-    dataSource;
-    cellByKey = {};
-    oldCells = null;
+    dataSource: KMDataSource;
+    cellByKey: Record<string, KMCell> = {};
+    oldCells: Record<string, KMCell> | null = null;
     cellDefaults = {padding: 4};
 
-    constructor(dataSource) {
+    constructor(dataSource: KMDataSource) {
         this.dataSource = dataSource;
     }
 
-    getCell(posX, posY) {
+    getCell(posX: number, posY: number) {
         let key = `${posX}-${posY}`;
         return this.cellByKey[key] ?? null;
     }
@@ -22,11 +25,11 @@ class KMCellManager {
         this.oldCells = null;
     }
 
-    loadCell(ctx, posX, posY, details = {}) {
+    loadCell(ctx: CanvasRenderingContext2D, posX: number, posY: number, details: Record<string, any> = {}) {
         let key = `${posX}-${posY}`;
         let data;
         let cell;
-        if (this.oldCells.hasOwnProperty(key)) {
+        if (this.oldCells && this.oldCells.hasOwnProperty(key)) {
             cell = this.oldCells[key];
             this.cellByKey[key] = cell;
             delete this.oldCells[key];
@@ -59,3 +62,5 @@ class KMCellManager {
         return cell;
     }
 }
+
+export {KMCellManager};

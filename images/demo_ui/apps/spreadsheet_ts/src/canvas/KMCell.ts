@@ -3,15 +3,15 @@ class KMCell {
     value;
     cellDefaults;
     details;
-    isHover;
-    paintRectangle;
+    isHover: number = 0;
+    paintRectangle: { x: number, y: number, columnWidth: number, rowHeight: number } | null = null;
 
     constructor(
-        ctx,
-        data,
-        cellDefaults,
-        details,
-        isHover,
+        _ctx: CanvasRenderingContext2D,
+        data: any,
+        cellDefaults: any,
+        details: any,
+        isHover: any,
     ) {
         this.data = data;
         this.value = data.value;
@@ -20,22 +20,34 @@ class KMCell {
         this.isHover = isHover;
     }
 
-    cellPaint(ctx, x, y, columnWidth, rowHeight, rowTextAscent) {
+    cellPaint(_ctx: CanvasRenderingContext2D,
+              _x: number,
+              _y: number,
+              _columnWidth: number,
+              _rowHeight: number,
+              _rowTextAscent: number) {
     }
 
-    handleEvent(event, details) {
+    handleEvent = (_event: UIEvent, _details: {}) => {
     }
 }
 
+
 class KMCellText extends KMCell {
-    inputNode;
+    inputNode: HTMLElement | null = null;
+    cellPadding: number = 0;
+    cellWidth: number = 0;
+    cellHeight: number = 0;
+    ascent: number = 0;
+    ctxProperties: any;
+    paintRectangle: { x: number, y: number, columnWidth: number, rowHeight: number } | null = null;
 
     constructor(
-        ctx,
-        data,
-        cellDefaults,
-        details,
-        isHover,
+        ctx: CanvasRenderingContext2D,
+        data: any,
+        cellDefaults: any,
+        details: any,
+        isHover: number,
     ) {
         super(ctx, data, cellDefaults, details, isHover);
 
@@ -71,7 +83,12 @@ class KMCellText extends KMCell {
         this.isHover = isHover;
     }
 
-    cellPaint(ctx, x, y, columnWidth, rowHeight, rowTextAscent) {
+    cellPaint(ctx: CanvasRenderingContext2D,
+              x: number,
+              y: number,
+              columnWidth: number,
+              rowHeight: number,
+              rowTextAscent: number) {
         this.paintRectangle = {x, y, columnWidth, rowHeight};
         ctx.save();
         Object.assign(ctx, this.ctxProperties);
@@ -87,17 +104,28 @@ class KMCellText extends KMCell {
         ctx.restore();
     }
 
-    handleEvent(event, details) {
+    handleEvent = (event: UIEvent, _details: any) => {
+        if (!this.paintRectangle || !event.target)
+            return;
+        let elm = event.target;
+        if (!(elm instanceof Node))
+            return;
+        let parent = elm.parentElement;
+        if (!parent)
+            return;
+
         this.inputNode = document.createElement('input');
         this.inputNode.setAttribute('id', 'KM');
         this.inputNode.style.position = 'absolute';
-        this.inputNode.style.top = `${this.paintRectangle.y+1}px`;
-        this.inputNode.style.left = `${this.paintRectangle.x+1}px`;
-        this.inputNode.style.width = `${this.paintRectangle.columnWidth-1}px`;
-        this.inputNode.style.height = `${this.paintRectangle.rowHeight-1}px`;
-        this.inputNode.style.border = 0;
-        this.inputNode.style.padding = 0;
-        event.target.parentElement.appendChild(this.inputNode);
+        this.inputNode.style.top = `${this.paintRectangle.y + 1}px`;
+        this.inputNode.style.left = `${this.paintRectangle.x + 1}px`;
+        this.inputNode.style.width = `${this.paintRectangle.columnWidth - 1}px`;
+        this.inputNode.style.height = `${this.paintRectangle.rowHeight - 1}px`;
+        this.inputNode.style.border = "0";
+        this.inputNode.style.padding = "0";
+        parent.appendChild(this.inputNode);
         this.inputNode.focus();
     }
 }
+
+export {KMCell, KMCellText};
