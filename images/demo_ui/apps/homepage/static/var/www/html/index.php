@@ -24,7 +24,7 @@ $version = file_get_contents("static/version.txt");
 <div style="padding-left: 15px">
 <ul>
     <li><a href="/spreadsheet">Written in JavaScript</a></li>
-    <li><a href="/spreadsheet_ts">Converted to TypeScript</a></li>
+    <li><a href="/spreadsheet_ts">Converted to React/TypeScript</a></li>
 </ul>
 </div>
 
