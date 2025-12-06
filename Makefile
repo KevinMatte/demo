@@ -78,16 +78,14 @@ publish_remove_images:
 generate_dotEnv:
 	bin/generateDotEnv.sh
 
-version_bump:
+version_bump: build
 	bin/bumpVersion.sh
 
 publish_push:
 	ssh demo_prod mkdir -p dev/demo.prod
 	scp tmp/docker-compose.yaml demo_prod:dev/demo.prod
 	scp .env demo_prod:dev/demo.prod/.env
-	tag="v$${DEMO_UI_VERSION}";
-	git tag $${tag};
-	git push origin $${tag};
+	tag="v$${DEMO_UI_VERSION}";	git tag $${tag}; git push origin $${tag};
 	docker tag demo_ui:latest localhost:5000/demo_ui:$${DEMO_UI_VERSION};
 	docker tag demo_cpp:latest localhost:5000/demo_cpp:$${DEMO_CPP_VERSION};
 	docker tag demo_mariadb:latest localhost:5000/demo_mariadb:$${DEMO_MARIADB_VERSION};

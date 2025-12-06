@@ -18,6 +18,7 @@ bumpVersions() {
     lastDate="$(echo $versionLine | cut -d= -f2 | cut -d'#' -f3)"
     latestID="$(docker image ls --format "{{.ID}}" ${image}:latest)"
 
+      echo "old: ${image} ${dateVar}='${lastDate}': ${versionLine}"
     if [ "$latestID" != "$lastID" ]; then
       n="$(printf "%s" "$(echo "${lastVersion}" | sed -e 's/[^.]//g')" | wc -m)";
       majorPart="$(echo "${lastVersion}" | cut -d. -f1-"$n")"
@@ -25,8 +26,10 @@ bumpVersions() {
       minorPart="$((minorPart + 1))"
       version="${majorPart}.${minorPart}"
       now="$(date +'%Y/%m/%d %H:%M:%S')"
-      printf "%s=%s #%s#%s\n" "${versionVar}" "${version}" "${latestID}" "${now}" >> tmp/image_versions.ish
+      newLine="$(printf "%s=%s #%s#%s" "${versionVar}" "${version}" "${latestID}" "${now}")"
+      echo "$newLine" >> tmp/image_versions.ish
       echo "${dateVar}='${now}'" >> tmp/image_versions.ish
+      echo "new: ${image} ${dateVar}='${now}': ${newLine}"
     else
       echo "${versionLine}" >> tmp/image_versions.ish
       echo "${dateVar}='${lastDate}'" >> tmp/image_versions.ish
