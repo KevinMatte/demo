@@ -1,3 +1,5 @@
+import {bindHandlers} from '../utils/listeners.ts';
+
 class KMCanvas {
     events: Record<string, UIEvent> = {};
     canvas: HTMLCanvasElement;
@@ -5,6 +7,7 @@ class KMCanvas {
 
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
+        bindHandlers(this);
         this.canvas.addEventListener('mousedown', this.handleSaveMouseEvent);
         window.addEventListener('resize', this.handleResize);
         this.handleResize(new UIEvent('resize', {}));
@@ -21,15 +24,15 @@ class KMCanvas {
         this.canvas.height = this.canvas.offsetHeight;
     }
 
-    handleResize = (_ev: UIEvent) => {
+    handleResize(_ev: UIEvent) {
         this.setCanvasDimenstions();
     }
 
-    handleClickEvent = (_ev: MouseEvent) => {
+    handleClickEvent(_ev: MouseEvent) {
 
     }
 
-    handleSaveMouseEvent = (event: MouseEvent) => {
+    handleSaveMouseEvent(event: MouseEvent) {
         this.events[event.type] = event;
     }
 
@@ -47,7 +50,7 @@ class KMCanvas {
         }
     }
 
-    handlePointerCapture = (event: PointerEvent) => {
+    handlePointerCapture(event: PointerEvent) {
         if (event.buttons === 1) {
             this.canvas.setPointerCapture(event.pointerId);
             this.hasCapture = true;
@@ -57,7 +60,7 @@ class KMCanvas {
         }
     }
 
-    handlePointerRelease = (event: PointerEvent) => {
+    handlePointerRelease(event: PointerEvent) {
         if (this.hasCapture) {
             this.canvas.releasePointerCapture(event.pointerId);
             this.hasCapture = false;
@@ -86,7 +89,7 @@ class KMDraw extends KMCanvas {
         this.imageSave = null;
     }
 
-    handleMouseUp = (event: MouseEvent) => {
+    handleMouseUp(event: MouseEvent) {
         let mouseDownEvent = this.takeEvent();
         if (mouseDownEvent === null)
             return;
@@ -110,7 +113,7 @@ class KMDraw extends KMCanvas {
         ctx.restore();
     }
 
-    handleMouseMove = (event: MouseEvent) => {
+    handleMouseMove(event: MouseEvent) {
         if (!this.events.hasOwnProperty('mousedown'))
             return;
         if (event.buttons !== 1)

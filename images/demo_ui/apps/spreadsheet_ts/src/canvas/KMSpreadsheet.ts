@@ -53,7 +53,7 @@ class KMSpreadsheet extends KMCanvas {
         this.setPos(this.x.lockCount, this.y.lockCount);
     }
 
-    handleMouseClick = (event: MouseEvent) => {
+    handleMouseClick(event: MouseEvent) {
         if (!this.mouseDownEvent)
             return;
 
@@ -75,16 +75,16 @@ class KMSpreadsheet extends KMCanvas {
         }
     }
 
-    handleMouseDown = (event: MouseEvent) => {
+    handleMouseDown(event: MouseEvent) {
         this.mouseDownEvent = event;
         this.mouseUpEvent = null;
     }
 
-    handleMouseUp = (event: MouseEvent) => {
+    handleMouseUp(event: MouseEvent) {
         this.mouseUpEvent = event;
     }
 
-    handleMouseMove = (event: MouseEvent) => {
+    handleMouseMove(event: MouseEvent) {
         if (event.buttons !== 0)
             return;
 
@@ -158,9 +158,10 @@ class KMSpreadsheet extends KMCanvas {
         };
     }
 
-    handleResize = (_ev: UIEvent) => {
-        this.setCanvasDimenstions();
-        this.setPos(this.x.viewPos, this.y.viewPos);
+    handleResize(event: UIEvent) {
+        super.handleResize(event)
+        if (this.x && this.y)
+            this.setPos(this.x.viewPos, this.y.viewPos);
     }
 
     setDataSource(dataSource: KMDataSource) {
@@ -174,11 +175,11 @@ class KMSpreadsheet extends KMCanvas {
         }
     }
 
-    handleHScroll = (pos: number) => {
+    handleHScroll(pos: number) {
         this.setPos(pos, this.y.viewPos, true);
     }
 
-    handleVScroll = (pos: number) => {
+    handleVScroll(pos: number) {
         this.setPos(this.x.viewPos, pos, false);
     }
 

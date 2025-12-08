@@ -28,7 +28,7 @@ class KMCell {
               _rowTextAscent: number) {
     }
 
-    handleEvent = (_event: UIEvent, _details: {}) => {
+    handleEvent(_event: UIEvent, _details: {}) {
     }
 }
 
@@ -104,7 +104,7 @@ class KMCellText extends KMCell {
         ctx.restore();
     }
 
-    handleEvent = (event: UIEvent, _details: any) => {
+    handleEvent(event: UIEvent, _details: any) {
         if (!this.paintRectangle || !event.target)
             return;
         let elm = event.target as Node;
