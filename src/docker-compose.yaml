@@ -19,8 +19,9 @@ services:
         app_protocol: http
         mode: host
 
+    volumes:
+      - "version_data:/mnt/version_data"
 # #if mounted
-#    volumes:
 #      - "${DEMO_UI_WWW_PATH}:/var/www"
 # #endif
 
@@ -41,6 +42,7 @@ services:
     volumes:
       - "${MARIADB_BACKUP_PATH}:/backup"
       - demo_mariadb_mysql:/var/lib/mysql
+      - "version_data:/mnt/version_data"
     networks:
       - backend
 
@@ -55,6 +57,8 @@ services:
     restart: always
     ports:
       - '8888:8080'
+    volumes:
+      - "version_data:/mnt/version_data"
     networks:
       - frontend
       - backend
@@ -67,6 +71,8 @@ services:
 # #endif
     container_name: demo_cpp
     restart: always
+    volumes:
+      - "version_data:/mnt/version_data"
     networks:
       - backend
 # #if mounted or local
@@ -103,3 +109,5 @@ networks:
 volumes:
   demo_mariadb_mysql:
     name: demo_mariadb_mysql
+  version_data:
+    name: version_data

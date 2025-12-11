@@ -82,12 +82,13 @@ generate_dotEnv:
 version_bump: build
 	# TODO: Put this on a separate volume.
 	bin/bumpVersion.sh
+	bin/publishVersion.sh
 
 publish_push:
 	ssh demo_prod mkdir -p dev/demo.prod
-	scp tmp/docker-compose.yaml demo_prod:dev/demo.prod
+	scp tmp/docker-compose.yaml tmp/version_data.tar bin/publishVersion.sh demo_prod:dev/demo.prod
 	scp .env demo_prod:dev/demo.prod/.env
-	tag="v$${DEMO_UI_VERSION}";	git tag $${tag}; git push origin $${tag};
+	tag="v$${DEMO_UI_VERSION}"; git tag $${tag} 2>/dev/null && git push origin $${tag} || :
 	docker tag demo_ui:latest localhost:5000/demo_ui:$${DEMO_UI_VERSION};
 	docker tag demo_cpp:latest localhost:5000/demo_cpp:$${DEMO_CPP_VERSION};
 	docker tag demo_mariadb:latest localhost:5000/demo_mariadb:$${DEMO_MARIADB_VERSION};
@@ -97,11 +98,12 @@ publish_push:
 	docker push localhost:5000/demo_mariadb:$${DEMO_MARIADB_VERSION};
 	docker push localhost:5000/demo_java:$${DEMO_JAVA_VERSION};
 
-	ssh demo_prod "cd dev/demo.prod; docker compose up  --remove-orphans --detach"
+	ssh demo_prod "cd dev/demo.prod && ./publishVersion.sh version_data.tar && docker compose up  --remove-orphans --detach"
 	rm -f tmp/build.locked
-	@echo "Open: http://184.64.118.116/ or http://192.168.1.4:8080/"
 
 publish: version_bump generate_dotEnv
 	bin/preprocessDockerCompose.py src/docker-compose.yaml tmp/docker-compose.yaml production
 	$(MAKE) build publish_push
+	docker kill version_update 2>/dev/null || :;
+	@echo "Open: http://184.64.118.116/ or http://192.168.1.4:8080/"
 

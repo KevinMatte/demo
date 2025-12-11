@@ -1,6 +1,6 @@
 <?php
 
-$version = file_get_contents("static/version.txt");
+$version = file_get_contents("/mnt/version_data/demo_ui_version.txt");
 
  print(<<<EOF
 <!DOCTYPE html>

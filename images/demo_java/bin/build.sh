@@ -28,8 +28,6 @@ sed -i \
   -e "s/TOMCAT_ADMIN_PASSWORD/${DEMO_JAVA_TOMCAT_ADMIN_PASSWORD}/g" \
   build/usr/local/tomcat/conf/tomcat-users.xml
 
-echo ${DEMO_JAVA_VERSION} > build/var/www/html/version.txt
-
 mkdir -p build/usr/local/tomcat/webapps/MyApp
 cp -pr src/MyApp/WEB-INF build/usr/local/tomcat/webapps/MyApp
 javac -d build/usr/local/tomcat/webapps/MyApp/WEB-INF/classes \
