@@ -13,6 +13,7 @@ checkDocker:
 	  echo "==========================="; \
 	  echo "Docker Engine is not active"; \
 	  echo "---------------------------"; \
+	  echo "Run: bin/dockerSetup.sh (or bin/devSetup.sh for localMounted file monitoring)"; \
 	  exit 1; \
 	fi
 
