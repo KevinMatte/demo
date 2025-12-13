@@ -54,4 +54,8 @@ sudo apt install openjdk-17-jdk/noble-updates
 #sudo apt install libssl-dev libcrypto++-dev
 #sydo apt install libboost-all-dev
 
+echo "Install pnpm"
+curl -fsSL https://get.pnpm.io/install.sh | sh -
+
 which npm || echo "For nodejs and npm see: https://nodesource.com/products/distributions"
+

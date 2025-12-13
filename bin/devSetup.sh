@@ -1,5 +1,7 @@
 #!/bin/bash -e
 
+cd $(dirname "$0")/..
+
 . bin/funcs.ish
 
 # Lazily, create virtual environment for python scripts.
