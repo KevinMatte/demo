@@ -13,7 +13,7 @@ cd $(dirname $0)/..
 # DEMO_JAVA_TOMCAT_MANAGER="...password..."
 # DEMO_JAVA_TOMCAT_ADMIN="...password..."
 
-DEMO_UI_APPS="homepage playground spreadsheet spreadsheet_ts"
+DEMO_UI_APPS="homepage playground spreadsheet spreadsheet_ts animation"
 
 cat <<EOF >${1:-.env}
 PROJ_ROOT=$(git rev-parse --show-toplevel)
