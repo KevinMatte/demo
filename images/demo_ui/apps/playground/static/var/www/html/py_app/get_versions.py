@@ -8,14 +8,17 @@ def application(environ, start_response):
 
     pwd=os.getcwd()
     values = {}
-    path = environ['load_from'] if 'load_from' in environ else '/var/www/html/static/versions.txt'
+    path = environ['load_from'] if 'load_from' in environ else '/mnt/version_data/image_versions.ish'
     with open(path, 'r') as f:
         line = f.readline()
         while line:
 
-            m = re.match('(?P<name>DEMO_[A-Z_]+)=.(?P<value>[0-9./:]*)', line)
+            m = re.match('(?P<name>DEMO_[A-Z_]+)=(?P<value>.*)', line)
             if m:
-                values[m['name']] = m['value']
+                value = m['value'].strip('"\'')
+                if ' #' in value:
+                    value = value[:value.index(' #')]
+                values[m['name']] = value
 
             line = f.readline()
 

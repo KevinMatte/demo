@@ -22,6 +22,19 @@ function App() {
         "python_hello": {"label": "Python", 'toolDefn': pythonToolDefn, 'page': (<Python/>)},
         "php_hello": {"label": "PHP", 'toolDefn': phpToolDefn, 'page': (<PHP/>)},
         "java_hello": {"label": "Java", 'toolDefn': javaToolDefn, 'page': (<Java/>)},
+        "spreadsheet": {
+            label: "Sheet.jsx", url: 'http://localhost:8080/spreadsheet',
+            prefix: <><h3>Spread Sheets Implementations:</h3>&nbsp;&nbsp;&nbsp;&nbsp; </>,
+            toolDefn: {
+                description: <><b>App: </b>Spreadsheet written in JavaScript</>
+            }
+        },
+        "spreadsheet_ts": {
+            "label": "Sheet.tsx", 'url': 'http://localhost:8080/spreadsheet_ts',
+            toolDefn: {
+                description: <><b>App: </b>Spreadsheet converted to TypeScript</>
+            }
+        },
     };
     menu.notes.page = (<Notes menu={menu} handleClick={menuHandler}/>);
 

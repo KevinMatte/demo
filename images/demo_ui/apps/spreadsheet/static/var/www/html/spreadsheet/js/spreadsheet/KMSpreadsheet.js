@@ -50,9 +50,23 @@ class KMSpreadsheet extends KMCanvas {
     }
 
     renderHTML() {
+        let queryString = window.location.search;
+        let queryParams = new URLSearchParams(queryString);
+        let back = queryParams.get('back');
+        let backElement = "";
+        if (back) {
+            backElement = `
+                <input type="button"
+                       onclick='window.location.assign("${back}")' value="Back to playground"
+                       style='background: yellow;'
+                />
+            `;
+        }
+
         let parser = new DOMParser();
         let doc = parser.parseFromString(`
 <div id="spreadsheet" class="km_spd_cell">
+    ${backElement}
     <canvas class="km_spd_canvas fill">Support for HTML Canvas required.</canvas>
     <canvas class="km_spd_row_scroll km_spd_scroll_width"></canvas>
     <canvas class="km_spd_col_scroll km_spd_scroll_height"></canvas>

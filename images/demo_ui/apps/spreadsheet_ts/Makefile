@@ -6,7 +6,7 @@ PROJ_ROOT="$$(git rev-parse --show-toplevel)"
 
 build_clean:
 	rm -fr node_modules dist
-	npm install
+	pnpm install
 	rm -fr build
 	mkdir build
 

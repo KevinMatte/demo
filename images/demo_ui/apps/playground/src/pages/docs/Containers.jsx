@@ -49,55 +49,71 @@ function Containers() {
                 </li>
             </ul>
 
-            <h3>Docker UI Container {data && data['DEMO_UI_DATE']} {data && data['DEMO_UI_VERSION']}</h3>
-            <ul>
-                <li><DemoAnchor title="Build" path="images/demo_ui/Dockerfile"/></li>
-                <li><Anchor title="Apache" path="https://httpd.apache.org/">Apache: HTTP Server Project</Anchor></li>
-                <li><DemoAnchor title="PHP Client" path="images/demo_ui/apps/playground/src/pages/simple_demos/PHP.jsx"/></li>
-                <li><DemoAnchor title="PHP Server" path="images/demo_ui/apps/playground/static/var/www/html/hello_world.php"/></li>
-                <li><DemoAnchor title="Python Client" path="images/demo_ui/apps/playground/src/pages/simple_demos/Python.jsx"/></li>
-                <li><DemoAnchor title="Python Server"
-                                path="images/demo_ui/apps/playground/static/var/www/html/py_app/hello_world.py"/>
-                </li>
-                <li><b>Source Code</b></li>
+            <h3>Docker UI Container</h3>
+            <div>
+                <p>Version: {data && data['DEMO_UI_VERSION']} Built: {data && data['DEMO_UI_DATE']}</p>
                 <ul>
-                    <li><DemoAnchor title="Java Client" path="images/demo_ui/apps/playground/src/pages/simple_demos/Java.jsx"/></li>
-                    <li><DemoAnchor title="CPP Client" path="images/demo_ui/apps/playground/src/pages/simple_demos/CPP.jsx"/></li>
-                </ul>
-            </ul>
-
-            <h3>Docker Java Container {data && data['DEMO_JAVA_DATE']} {data && data['DEMO_JAVA_VERSION']}</h3>
-            <ul>
-                <li><DemoAnchor title="Build" path="images/demo_java/Dockerfile"/></li>
-                <li><Anchor title="Tomcat" label="tomcat:jre25-temurin-noble"
-                            path="https://hub.docker.com/_/tomcat/tags?name=jre25-temurin-noble"/></li>
-                <li><b>Source Code</b></li>
-                <ul>
-                    <li><DemoAnchor title="Server" path="images/demo_java/src/MyApp/HelloWorld.java">
-                        Hello World copied example from Tomcat
-                    </DemoAnchor>
+                    <li><DemoAnchor title="Build" path="images/demo_ui/Dockerfile"/></li>
+                    <li><Anchor title="Apache" path="https://httpd.apache.org/">Apache: HTTP Server Project</Anchor></li>
+                    <li><DemoAnchor title="PHP Client" path="images/demo_ui/apps/playground/src/pages/simple_demos/PHP.jsx"/></li>
+                    <li><DemoAnchor title="PHP Server" path="images/demo_ui/apps/playground/static/var/www/html/hello_world.php"/></li>
+                    <li><DemoAnchor title="Python Client" path="images/demo_ui/apps/playground/src/pages/simple_demos/Python.jsx"/></li>
+                    <li><DemoAnchor title="Python Server"
+                                    path="images/demo_ui/apps/playground/static/var/www/html/py_app/hello_world.py"/>
                     </li>
+                    <li><b>Source Code</b></li>
+                    <ul>
+                        <li><DemoAnchor title="Java Client" path="images/demo_ui/apps/playground/src/pages/simple_demos/Java.jsx"/></li>
+                        <li><DemoAnchor title="CPP Client" path="images/demo_ui/apps/playground/src/pages/simple_demos/CPP.jsx"/></li>
+                    </ul>
                 </ul>
-            </ul>
+            </div>
 
-            <h3>Docker CPP Container {data && data['DEMO_CPP_DATE']} {data && data['DEMO_CPP_VERSION']}</h3>
-            <ul>
-                <li><DemoAnchor title="Build" path="images/demo_cpp/Dockerfile"/></li>
-                <li><GitHubAnchor title="Library: C++ Microservices" path="CrowCpp/Crow"/></li>
-                <li><GitHubAnchor title="Library" path="/nlohmann/json"/></li>
-                <li><b>Source Code</b></li>
+
+            <h3>Docker Java Container</h3>
+            <div>
+                <p>Version: {data && data['DEMO_JAVA_VERSION']} Built: {data && data['DEMO_JAVA_DATE']}</p>
                 <ul>
-                    <li><DemoAnchor title="Server" path="images/demo_cpp/src/main.cpp"/></li>
+                    <li><DemoAnchor title="Build" path="images/demo_java/Dockerfile"/></li>
+                    <li><Anchor title="Tomcat" label="tomcat:jre25-temurin-noble"
+                                path="https://hub.docker.com/_/tomcat/tags?name=jre25-temurin-noble"/></li>
+                    <li><b>Source Code</b></li>
+                    <ul>
+                        <li><DemoAnchor title="Server" path="images/demo_java/src/MyApp/HelloWorld.java">
+                            Hello World copied example from Tomcat
+                        </DemoAnchor>
+                        </li>
+                    </ul>
                 </ul>
-            </ul>
+            </div>
 
-            <h3>Docker MariaDB Container {data && data['DEMO_MARIADB_DATE']} {data && data['DEMO_MARIADB_VERSION']}</h3>
-            <ul>
-                <li><DemoAnchor title="demo_mariadb" path="images/demo_mariadb/Dockerfile"></DemoAnchor></li>
-                <li><Anchor title="MariaDB MySQL Server" label="mariadb:11.8"
-                            path="https://hub.docker.com/_/mariadb/tags?name=11.8-noble"/></li>
-                <li><b>Source Code</b>: None needed, so far.</li>
-            </ul>
+
+            <h3>Docker CPP Container</h3>
+            <div>
+                <p>Version: {data && data['DEMO_CPP_VERSION']} Built: {data && data['DEMO_CPP_DATE']}</p>
+                <ul>
+                    <li><DemoAnchor title="Build" path="images/demo_cpp/Dockerfile"/></li>
+                    <li><GitHubAnchor title="Library: C++ Microservices" path="CrowCpp/Crow"/></li>
+                    <li><GitHubAnchor title="Library" path="/nlohmann/json"/></li>
+                    <li><b>Source Code</b></li>
+                    <ul>
+                        <li><DemoAnchor title="Server" path="images/demo_cpp/src/main.cpp"/></li>
+                    </ul>
+                </ul>
+            </div>
+
+
+            <h3>Docker MariaDB Container</h3>
+            <div>
+                <p>Version: {data && data['DEMO_MARIADB_VERSION']} Built: {data && data['DEMO_MARIADB_DATE']}</p>
+                <ul>
+                    <li><DemoAnchor title="demo_mariadb" path="images/demo_mariadb/Dockerfile"></DemoAnchor></li>
+                    <li><Anchor title="MariaDB MySQL Server" label="mariadb:11.8"
+                                path="https://hub.docker.com/_/mariadb/tags?name=11.8-noble"/></li>
+                    <li><b>Source Code</b>: None needed, so far.</li>
+                </ul>
+            </div>
+
         </div>
     )
 }

@@ -7,7 +7,6 @@ import Build, {toolDefn as buildToolDefn} from "./Build.jsx";
 import Containers, {toolDefn as dockerComposeToolDefn} from "./Containers.jsx";
 
 
-
 export const toolDefn = {
     "title": "Documentation: Demo Notes",
     "noTitle": true,
@@ -18,7 +17,7 @@ export const toolDefn = {
 
 function Notes({menu, handleClick}) {
     const notesMenu = {
-        "overview": {"label": "Overview", 'toolDefn': overviewToolDefn, 'page': null },
+        "overview": {"label": "Overview", 'toolDefn': overviewToolDefn, 'page': null},
         "build": {"label": "Build", 'toolDefn': buildToolDefn, 'page': (<Build/>)},
         "containers": {"label": "Docker Containers", 'toolDefn': dockerComposeToolDefn, 'page': (<Containers/>)},
     };
