@@ -47,7 +47,7 @@ class KMCanvas extends KMClass {
     }
 
     handleResize() {
-        this.canvas.gridSize = this.canvas.offsetWidth;
+        this.canvas.width = this.canvas.offsetWidth;
         this.canvas.height = this.canvas.offsetHeight;
     }
 
@@ -139,7 +139,7 @@ class KMDraw extends KMCanvas {
         let ctx = this.canvas.getContext('2d');
         ctx.save();
         if (this.imageSave === null)
-            this.imageSave = ctx.getImageData(0, 0, this.canvas.gridSize, this.canvas.height);
+            this.imageSave = ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
         else
             ctx.putImageData(this.imageSave, 0, 0);
         ctx.beginPath();

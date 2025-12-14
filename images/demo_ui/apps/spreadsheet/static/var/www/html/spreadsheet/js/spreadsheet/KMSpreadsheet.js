@@ -150,7 +150,7 @@ class KMSpreadsheet extends KMCanvas {
         x = 0;
         posX = this.x.getNextPos(-1);
         gridX = this.x.getGridLines(posX);
-        while (x < this.canvas.gridSize && posX < this.x.max) {
+        while (x < this.canvas.width && posX < this.x.max) {
             x += gridX.gridSize;
             if (x >= offsetX) {
                 onXGrid = true;
@@ -250,7 +250,7 @@ class KMSpreadsheet extends KMCanvas {
             this.rowHeights = [];
             this.rowTextAscents = {};
             this.cellManager.loadStart();
-            while (x < this.canvas.gridSize && posX < this.x.max) {
+            while (x < this.canvas.width && posX < this.x.max) {
                 details.inLockX = posX < this.x.lockCount;
                 y = 0;
                 posY = this.y.getNextPos(-1);
@@ -277,14 +277,14 @@ class KMSpreadsheet extends KMCanvas {
         x = 0;
         posX = this.x.getNextPos(-1);
         gridX = this.x.getGridLines(posX);
-        while (x < this.canvas.gridSize && posX < this.x.max) {
+        while (x < this.canvas.width && posX < this.x.max) {
             x += this.columnWidths[posX] + gridX.gridSize;
             posX = this.x.getNextPos(posX);
             gridX = this.x.getGridLines(posX);
         }
         maxX = x;
         this.x.viewMax = posX;
-        this.x.scrollMax = (maxX <= this.canvas.gridSize) ? this.x.viewMax : this.x.viewMax - 1;
+        this.x.scrollMax = (maxX <= this.canvas.width) ? this.x.viewMax : this.x.viewMax - 1;
 
         // From max heights, get total heights and max Y.
         y = 0;
@@ -309,7 +309,7 @@ class KMSpreadsheet extends KMCanvas {
         let x, y, posX, posY, gridX, gridY;
 
         // Clear background
-        ctx.clearRect(0, 0, this.canvas.gridSize, this.canvas.height);
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         // Draw grid.
         x = 0;
