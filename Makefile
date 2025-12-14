@@ -53,17 +53,19 @@ build_done:
 # Development targets
 # ---------------------------
 
-local: build
+local: generateDotEnv.sh
 	-docker compose kill 2>/dev/null || echo "Pass: services not running"
 	bin/preprocessDockerCompose.py src/docker-compose.yaml docker-compose.yaml local
+	${MAKE} -C . build
 	docker compose up --no-build --remove-orphans --detach
 	rm -f tmp/build.locked
 	@echo "Open: http://localhost:8080/"
 
 # Local run with mounted volume:
-localMounted: build
+localMounted: generateDotEnv.sh
 	-docker compose kill 2>/dev/null || echo "Pass: services not running"
 	bin/preprocessDockerCompose.py src/docker-compose.yaml docker-compose.yaml mounted
+	${MAKE} -C . build
 	docker compose up --remove-orphans --detach
 	rm -f tmp/build.locked
 	@echo "Open: http://localhost:8080/"
