@@ -12,6 +12,6 @@ build_static:
 	tar cf - -C static . | (cd build; tar xvf -)
 
 build_src:
-	npx vite build --outDir build/var/www/html/playground
+	pnpm build --outDir build/var/www/html/playground
 
 build: build_static build_src

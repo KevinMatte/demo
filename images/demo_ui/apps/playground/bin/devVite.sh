@@ -1,3 +1,3 @@
 #!/bin/bash
 
-npx vite dev --port 5173
+pnpm run dev --port 5173

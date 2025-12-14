@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/images/demo_ui/apps/playground" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/images/demo_ui/apps/playground/src/static/var/www/html" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/images/demo_ui/apps/spreadsheet_ts" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/images/demo_ui/apps/animation" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/bin/venv" />
       <excludeFolder url="file://$MODULE_DIR$/images/demo_ui/build" />
       <excludeFolder url="file://$MODULE_DIR$/images/demo_mariadb/build" />

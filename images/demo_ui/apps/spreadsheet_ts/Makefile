@@ -14,6 +14,6 @@ build_static:
 
 build_src:
 	#[ -d static ] && tar cf - -C static . | (cd build; tar xvf -)
-	npx vite build --outDir build/var/www/html/spreadsheet_ts
+	pnpm build --outDir build/var/www/html/spreadsheet_ts
 
 build: build_static build_src

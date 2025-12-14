@@ -17,5 +17,5 @@ If you are developing a production application, we recommend using TypeScript wi
 
 # Dev
 
-* `npx vite dev`
+* `pnpm run dev`
 * images/demo_ui/apps/playground
