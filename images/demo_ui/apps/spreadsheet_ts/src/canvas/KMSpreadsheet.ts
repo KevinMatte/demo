@@ -118,7 +118,7 @@ class KMSpreadsheet extends KMCanvas {
         posX = this.x.getNextPos(-1);
         gridX = this.x.getGridLines(posX);
         while (x < this.canvas.width && posX < this.x.max) {
-            x += gridX.width;
+            x += gridX.gridSize;
             if (x >= offsetX) {
                 onXGrid = true;
                 break;
@@ -136,7 +136,7 @@ class KMSpreadsheet extends KMCanvas {
         posY = this.y.getNextPos(-1);
         gridY = this.y.getGridLines(posY);
         while (y < this.canvas.height && posY < this.y.max) {
-            y += gridY.width;
+            y += gridY.gridSize;
             if (y >= offsetY) {
                 onYGrid = true;
                 break;
@@ -236,12 +236,12 @@ class KMSpreadsheet extends KMCanvas {
                         this.rowHeights[posY] = Math.max(this.rowHeights[posY] ?? 0, cell.cellHeight);
                         this.rowTextAscents[posY] = Math.max(this.rowTextAscents[posY] ?? 0, cell.ascent);
                     }
-                    y += this.rowHeights[posY] + gridY.width;
+                    y += this.rowHeights[posY] + gridY.gridSize;
                     posY = this.y.getNextPos(posY);
                     gridY = this.y.getGridLines(posY);
                 }
 
-                x += this.columnWidths[posX] + gridX.width;
+                x += this.columnWidths[posX] + gridX.gridSize;
                 posX = this.x.getNextPos(posX);
                 gridX = this.x.getGridLines(posX);
             }
@@ -253,7 +253,7 @@ class KMSpreadsheet extends KMCanvas {
         posX = this.x.getNextPos(-1);
         gridX = this.x.getGridLines(posX);
         while (x < this.canvas.width && posX < this.x.max) {
-            x += this.columnWidths[posX] + gridX.width;
+            x += this.columnWidths[posX] + gridX.gridSize;
             posX = this.x.getNextPos(posX);
             gridX = this.x.getGridLines(posX);
         }
@@ -266,7 +266,7 @@ class KMSpreadsheet extends KMCanvas {
         posY = this.y.getNextPos(-1);
         gridY = this.y.getGridLines(posY);
         while (y < this.canvas.height && posY < this.y.max) {
-            y += this.rowHeights[posY] + gridY.width;
+            y += this.rowHeights[posY] + gridY.gridSize;
             posY = this.y.getNextPos(posY);
             gridY = this.y.getGridLines(posY);
         }

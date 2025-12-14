@@ -93,7 +93,7 @@ class KMCellText extends KMCell {
         this.inputNode.style.position = 'absolute';
         this.inputNode.style.top = `${this.paintRectangle.y+1}px`;
         this.inputNode.style.left = `${this.paintRectangle.x+1}px`;
-        this.inputNode.style.width = `${this.paintRectangle.columnWidth-1}px`;
+        this.inputNode.style.gridSize = `${this.paintRectangle.columnWidth-1}px`;
         this.inputNode.style.height = `${this.paintRectangle.rowHeight-1}px`;
         this.inputNode.style.border = 0;
         this.inputNode.style.padding = 0;

@@ -104,7 +104,7 @@ class KMScrollbar extends KMCanvas {
     }
 
     _updateCanvasRange() {
-        this.canvasRange = (this.onX ? this.canvas.width : this.canvas.height) - this.trim - this.startDraw;
+        this.canvasRange = (this.onX ? this.canvas.gridSize : this.canvas.height) - this.trim - this.startDraw;
         this.lineLength = this.visibleIndices / this.indexRange * this.canvasRange;
     }
 
@@ -122,9 +122,9 @@ class KMScrollbar extends KMCanvas {
 
         let ctx = this.canvas.getContext('2d');
         ctx.fillStyle = "white";
-        ctx.fillRect(0, 0, this.canvas.width - (this.onX ? 0 : this.trimX), this.canvas.height - this.trimY);
+        ctx.fillRect(0, 0, this.canvas.gridSize - (this.onX ? 0 : this.trimX), this.canvas.height - this.trimY);
         ctx.beginPath();
-        let lineThickness = (this.onX ? this.canvas.height : this.canvas.width) / 2;
+        let lineThickness = (this.onX ? this.canvas.height : this.canvas.gridSize) / 2;
         ctx.lineWidth = lineThickness;
         ctx.strokeStyle = 'green';
         if (this.onX) {

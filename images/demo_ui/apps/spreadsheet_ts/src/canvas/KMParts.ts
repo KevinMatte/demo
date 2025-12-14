@@ -143,20 +143,20 @@ class KMDraw extends KMCanvas {
 class KMGridLine {
     vertical: boolean;
     lines: Record<string, any> = {};
-    width: number;
+    gridSize: number;
     nextStart: number;
 
     constructor(vertical: boolean, lines: {}) {
         this.vertical = vertical;
         this.lines = lines;
 
-        this.width = 0;
+        this.gridSize = 0;
         for (let lineSettingKey in this.lines) {
             let lineSetting: any = this.lines[lineSettingKey];
             if (typeof lineSetting === 'number')
-                this.width += lineSetting;
+                this.gridSize += lineSetting;
             else if (typeof lineSetting === 'object')
-                this.width += lineSetting['lineWidth'];
+                this.gridSize += lineSetting['lineWidth'];
         }
         this.nextStart = 0;
     }
