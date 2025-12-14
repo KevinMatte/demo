@@ -23,14 +23,14 @@ function App() {
         "php_hello": {"label": "PHP", 'toolDefn': phpToolDefn, 'page': (<PHP/>)},
         "java_hello": {"label": "Java", 'toolDefn': javaToolDefn, 'page': (<Java/>)},
         "spreadsheet": {
-            label: "Sheet.jsx", url: 'http://localhost:8080/spreadsheet',
+            label: "Sheet.jsx", url: '/spreadsheet',
             prefix: <><h3>Spread Sheets Implementations:</h3>&nbsp;&nbsp;&nbsp;&nbsp; </>,
             toolDefn: {
                 description: <><b>App: </b>Spreadsheet written in JavaScript</>
             }
         },
         "spreadsheet_ts": {
-            "label": "Sheet.tsx", 'url': 'http://localhost:8080/spreadsheet_ts',
+            "label": "Sheet.tsx", 'url': '/spreadsheet_ts',
             toolDefn: {
                 description: <><b>App: </b>Spreadsheet converted to TypeScript</>
             }
