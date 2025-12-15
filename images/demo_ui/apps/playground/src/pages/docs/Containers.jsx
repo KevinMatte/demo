@@ -10,10 +10,11 @@ export const toolDefn = {
 function Containers() {
     const [data, setData] = useState(null);
     const [error, setError] = useState(null);
+    let isDevVite = window.location.host === 'localhost:5173';
     const handleSubmit = async () => {
         // Read the form data
         try {
-            const response = await fetch(`/py_app/get_versions.py`);
+            const response = await fetch(`${isDevVite ? 'http://localhost:8080' : ''}/py_app/get_versions.py`);
             if (response.ok) {
                 const jsonData = await response.json();
                 setData(jsonData);

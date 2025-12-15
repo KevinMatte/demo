@@ -9,13 +9,13 @@ export const toolDefn = {
     "toolDocs": null,
 };
 
-function Overview({menu, handleClick}) {
+function Overview({heading, menu, handleClick}) {
     return (
         <div>
             YouTube:
             <Anchor path="https://youtu.be/fLLyFpopUcY">Playground Quick Tour</Anchor>
 
-            <h2>Menu</h2>
+            <h2>{heading}</h2>
             <ul>
                 <div style={{display: "table"}}>
                 {Object.keys(menu).map(name => {

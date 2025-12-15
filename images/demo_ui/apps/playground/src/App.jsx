@@ -1,13 +1,10 @@
 import React, {useState} from 'react';
-import "./css/App.css";
-import appCSS from "./css/App.module.css";
-import Menu from './parts/Menu.jsx';
-import CPP, {toolDefn as cppToolDefn} from './pages/simple_demos/CPP.jsx';
-import Python, {toolDefn as pythonToolDefn} from './pages/simple_demos/Python.jsx';
-import PHP, {toolDefn as phpToolDefn} from './pages/simple_demos/PHP.jsx';
-import Java, {toolDefn as javaToolDefn} from './pages/simple_demos/Java.jsx';
-import DemoAnchor from "./parts/Anchors.jsx";
+import "@/css/App.css";
+import appCSS from "@/css/App.module.css";
+import Menu from '@/parts/Menu.jsx';
+import DemoAnchor from "@/parts/Anchors.jsx";
 import Notes, {toolDefn as notesToolDefn} from '@docs/Notes.jsx';
+import {menus_apps, menus_skeletons} from "@/vars/menus.jsx";
 
 function App() {
     const [pageName, setPageName] = useState('notes');
@@ -17,26 +14,11 @@ function App() {
     }
 
     const menu = {
-        "notes": {"label": "Notes", 'toolDefn': notesToolDefn, 'page': null},
-        "cpp_hello": {"label": "C++", 'toolDefn': cppToolDefn, 'page': (<CPP/>)},
-        "python_hello": {"label": "Python", 'toolDefn': pythonToolDefn, 'page': (<Python/>)},
-        "php_hello": {"label": "PHP", 'toolDefn': phpToolDefn, 'page': (<PHP/>)},
-        "java_hello": {"label": "Java", 'toolDefn': javaToolDefn, 'page': (<Java/>)},
-        "spreadsheet": {
-            label: "Sheet.jsx", url: '/spreadsheet',
-            prefix: <><h3>Spread Sheets Implementations:</h3>&nbsp;&nbsp;&nbsp;&nbsp; </>,
-            toolDefn: {
-                description: <><b>App: </b>Spreadsheet written in JavaScript</>
-            }
-        },
-        "spreadsheet_ts": {
-            "label": "Sheet.tsx", 'url': '/spreadsheet_ts',
-            toolDefn: {
-                description: <><b>App: </b>Spreadsheet converted to TypeScript</>
-            }
-        },
+        "notes": {"label": "Notes", 'toolDefn': notesToolDefn,
+            'page': <Notes menu={{...menus_skeletons, ...menus_apps}} handleClick={menuHandler}/>},
+        ...menus_skeletons,
+        ...menus_apps,
     };
-    menu.notes.page = (<Notes menu={menu} handleClick={menuHandler}/>);
 
     let pageDefn = menu[pageName];
     let pageTitle = "";

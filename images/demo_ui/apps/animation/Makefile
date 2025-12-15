@@ -1,6 +1,6 @@
 -include .env
 
-.PHONY: build_clean build build_static build_src
+.PHONY: build_clean build build_static build_src spreadsheet_js_dev
 
 PROJ_ROOT="$$(git rev-parse --show-toplevel)"
 
@@ -17,3 +17,6 @@ build_src:
 	pnpm build --outDir build/var/www/html/animation
 
 build: build_static build_src
+
+animation_dev:
+	pnpm run dev --port 5173

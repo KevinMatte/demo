@@ -30,6 +30,7 @@ def application(environ, start_response):
         ('Content-Length', str(len(output))),
         ('Cache-Control', "no-cache, no-store, must-revalidate"),
         ('Pragma', "no-cache"),
+        ('Access-Control-Allow-Origin', "http://localhost:5173"),
         ('Expires', "0"),
     ]
     start_response(status, response_headers)

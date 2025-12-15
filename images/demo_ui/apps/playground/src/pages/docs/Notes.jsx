@@ -17,11 +17,11 @@ export const toolDefn = {
 
 function Notes({menu, handleClick}) {
     const notesMenu = {
-        "overview": {"label": "Overview", 'toolDefn': overviewToolDefn, 'page': null},
+        "overview": {"label": "Overview", 'toolDefn': overviewToolDefn,
+            'page': (<Overview menu={menu} heading="Overview" handleClick={handleClick}/>)},
         "build": {"label": "Build", 'toolDefn': buildToolDefn, 'page': (<Build/>)},
         "containers": {"label": "Docker Containers", 'toolDefn': dockerComposeToolDefn, 'page': (<Containers/>)},
     };
-    notesMenu.overview.page = (<Overview menu={menu} handleClick={handleClick}/>);
 
     const [pageName, setPageName] = useState('overview');
 
