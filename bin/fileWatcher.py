@@ -304,33 +304,36 @@ class FilesWatcher:
             self.observer.stop()
             self.observer.join()
 
-        # Keeping set of defn's run to avoid running twice.
-        triggered_monitor_defn_keys = set()
-
         # Check if optional --skip-file {file} exists.
         has_skip_file = self.args.skip_file and os.path.exists(self.args.skip_file)
 
-        # Iterate over event_handlers to find out which ones triggered.
+        # Keeping set of defn's run to avoid running twice.
+        files_recs = {}
         for event_handler in self.event_handlers:
-            if event_handler.has_change():
-
-                # Only execute commands for unrun monitor definitions.
+            files = event_handler.get_files()
+            if files:
                 monitor_key = event_handler.monitor_defn['__key']
-                if not monitor_key in triggered_monitor_defn_keys:
-                    triggered_monitor_defn_keys.add(monitor_key)
+                if monitor_key in files_recs:
+                    files_recs[monitor_key][1] = files_recs[monitor_key][1].union(set(files))
+                else:
+                    files_recs[monitor_key] = [event_handler.monitor_defn, set(files)]
 
-                    if has_skip_file:
-                        # Run 'skipped' commands
-                        self._run_commands(event_handler.monitor_defn, 'skipped')
-                    else:
-                        # Run 'commands'
-                        print(f"Executing {monitor_key}")
-                        self._run_commands(event_handler.monitor_defn, 'started')
-                        res = self._run_commands(event_handler.monitor_defn, 'commands')
-                        self._run_commands(event_handler.monitor_defn, 'completed' if res == 0 else 'error')
-                        print()
+        # Iterate over event_handlers to find out which ones triggered.
+        for [monitor_key, files_rec] in files_recs.items():
+            [monitor_defn, file_set] = files_rec
+            if has_skip_file:
+                # Run 'skipped' commands
+                self._run_commands(monitor_defn, 'skipped', file_set)
+            else:
+                # Run 'commands'
+                print(f"Executing {monitor_key}")
+                self._run_commands(monitor_defn, 'started', file_set)
+                res = self._run_commands(monitor_defn, 'commands', file_set)
+                self._run_commands(monitor_defn, 'completed' if res == 0 else 'error', file_set)
+                print()
 
-    def _run_commands(self, monitor_defn, commands_key):
+    def _run_commands(self, monitor_defn, commands_key, file_set):
+        files_str = " ".join(file_set)
         # If there is a list of commands to run
         if commands_key in monitor_defn:
 
@@ -342,6 +345,7 @@ class FilesWatcher:
             # Execute each command.
             for command in commands:
                 command = command.replace('_MONITOR_NAME_', monitor_defn['__name'])
+                command = command.replace('_FILES_', files_str)
                 res = subprocess.run(command, shell=True)
                 if res.returncode:
                     # Return process error code.

@@ -20,7 +20,7 @@
 "UI Sources":
   commands:
     - "make update_dot_env"
-    - "make -C images/demo_ui build_src update_image_build"
+    - "cd images/demo_ui; bin/build_inc.sh _FILES_"
   searches:
     - name: 'static'
       paths:
