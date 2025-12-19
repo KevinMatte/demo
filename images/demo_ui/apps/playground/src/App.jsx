@@ -3,7 +3,7 @@ import "@/css/App.css";
 import appCSS from "@/css/App.module.css";
 import Menu from '@/parts/Menu.jsx';
 import DemoAnchor from "@/parts/Anchors.jsx";
-import Notes, {toolDefn as notesToolDefn} from '@docs/Notes.jsx';
+import MenuPage, {toolDefn as notesToolDefn} from '@docs/MenuPage.jsx';
 import {menus_apps, menus_skeletons} from "@/vars/menus.jsx";
 
 function App() {
@@ -14,8 +14,8 @@ function App() {
     }
 
     const menu = {
-        "notes": {"label": "Notes", 'toolDefn': notesToolDefn,
-            'page': <Notes menu={{...menus_skeletons, ...menus_apps}} handleClick={menuHandler}/>},
+        "notes": {"label": "MenuPage", 'toolDefn': notesToolDefn,
+            'page': <MenuPage menu={{...menus_skeletons, ...menus_apps}} handleClick={menuHandler}/>},
         ...menus_skeletons,
         ...menus_apps,
     };

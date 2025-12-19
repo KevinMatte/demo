@@ -8,14 +8,14 @@ import Containers, {toolDefn as dockerComposeToolDefn} from "./Containers.jsx";
 
 
 export const toolDefn = {
-    "title": "Documentation: Demo Notes",
+    "title": "Documentation: Demo MenuPage",
     "noTitle": true,
     "description": <span><b>Documentation</b>: Demo Notes</span>,
     "toolDocs": null,
-    "className": "Notes",
+    "className": "MenuPage",
 };
 
-function Notes({menu, handleClick}) {
+function MenuPage({menu, handleClick}) {
     const notesMenu = {
         "overview": {"label": "Overview", 'toolDefn': overviewToolDefn,
             'page': (<Overview menu={menu} heading="Overview" handleClick={handleClick}/>)},
@@ -43,4 +43,4 @@ function Notes({menu, handleClick}) {
     )
 }
 
-export default Notes;
+export default MenuPage;

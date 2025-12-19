@@ -8,7 +8,7 @@
 
   started: "bin/say.py '_MONITOR_NAME_: Starting' 2>/dev/null"
   completed:
-    - "make build_done"
+    - "make build_done >/dev/null"
     - "rm -f tmp/build.locked"
     - "bin/say.py '_MONITOR_NAME_: Completed' 2>/dev/null"
   error:
