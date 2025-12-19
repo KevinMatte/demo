@@ -3,8 +3,11 @@ import "@/css/App.css";
 import appCSS from "@/css/App.module.css";
 import Menu from '@/parts/Menu.jsx';
 import DemoAnchor from "@/parts/Anchors.jsx";
-import MenuPage, {toolDefn as notesToolDefn} from '@docs/MenuPage.jsx';
+import TabPages, {toolDefn as notesToolDefn} from '@docs/TabPages.jsx';
 import {menus_apps, menus_skeletons} from "@/vars/menus.jsx";
+import Overview, {toolDefn as overviewToolDefn} from '@/pages/docs/Overview.jsx';
+import Build, {toolDefn as buildToolDefn} from "@/pages/docs/Build.jsx";
+import Containers, {toolDefn as dockerComposeToolDefn} from "@/pages/docs/Containers.jsx";
 
 function App() {
     const [pageName, setPageName] = useState('notes');
@@ -13,11 +16,19 @@ function App() {
         setPageName(item);
     }
 
+    let topMenu = {...menus_skeletons, ...menus_apps};
+
+    const notesMenu = {
+        "overview": {"label": "Overview", 'toolDefn': overviewToolDefn,
+            'page': (<Overview menu={topMenu} heading="Overview" handleClick={menuHandler}/>)},
+        "build": {"label": "Build", 'toolDefn': buildToolDefn, 'page': (<Build/>)},
+        "containers": {"label": "Docker Containers", 'toolDefn': dockerComposeToolDefn, 'page': (<Containers/>)},
+    };
+
     const menu = {
-        "notes": {"label": "MenuPage", 'toolDefn': notesToolDefn,
-            'page': <MenuPage menu={{...menus_skeletons, ...menus_apps}} handleClick={menuHandler}/>},
-        ...menus_skeletons,
-        ...menus_apps,
+        "notes": {"label": "Notes", 'toolDefn': notesToolDefn,
+            'page': <TabPages tabMenu={notesMenu}/>},
+        ...topMenu,
     };
 
     let pageDefn = menu[pageName];
