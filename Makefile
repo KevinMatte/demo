@@ -66,7 +66,7 @@ build_done:
 # ---------------------------
 
 .PHONY: local
-local: generateDotEnv.sh
+local: git_good generateDotEnv.sh
 	-docker compose kill 2>/dev/null || echo "Pass: services not running"
 	bin/preprocessDockerCompose.py src/docker-compose.yaml docker-compose.yaml local
 	${MAKE} -C . build
@@ -123,7 +123,7 @@ publish_push:
 	rm -f tmp/build.locked
 
 .PHONY: publish
-publish: git_good version_bump generate_dotEnv
+publish: version_bump generate_dotEnv
 	bin/preprocessDockerCompose.py src/docker-compose.yaml tmp/docker-compose.yaml production
 	$(MAKE) build publish_push
 	docker kill version_update 2>/dev/null || :;
