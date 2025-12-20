@@ -11,3 +11,5 @@ RUN rm /var/www/html/index.html
 COPY build/ /
 
 RUN chown -R www-data:www-data /var/www
+
+CMD ["/root/bin/start.sh"]

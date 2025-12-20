@@ -54,7 +54,7 @@ function App() {
     let pageDefn = menuDefn[pageName];
     return (
         <div className={appCSS.app}>
-            <h1>Playground/Demo Project</h1>
+            <h1>Playground/Demo Project: {window.DEMO_VERSION}</h1>
             <Menu handler={menuHandler} menu={menu} selectedMenuName={pageName}/>
             <DemoAnchor path="" label="GitHub Source KevinMatte / demo"/><br/>
             <hr/>

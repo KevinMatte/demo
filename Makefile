@@ -40,9 +40,12 @@ tmp/venv.timestamp: bin/requirements.txt
 	   pip install -r bin/requirements.txt;
 	touch tmp/venv.timestamp;
 
-.PHONY: generate_dotEnv
+.PHONY: generateDotEnv.sh
 generateDotEnv.sh: bin/generateDotEnv.sh
 	bin/generateDotEnv.sh .env
+
+.PHONY: update_dot_env
+update_dot_env: generateDotEnv.sh
 
 # ---------------------------
 # Build targets
@@ -66,13 +69,16 @@ build_done:
 # ---------------------------
 
 .PHONY: local
-local: git_good generateDotEnv.sh
+local: generateDotEnv.sh
 	-docker compose kill 2>/dev/null || echo "Pass: services not running"
 	bin/preprocessDockerCompose.py src/docker-compose.yaml docker-compose.yaml local
 	${MAKE} -C . build
 	docker compose up --no-build --remove-orphans --detach
 	rm -f tmp/build.locked
 	@echo "Open: http://localhost:8080/"
+
+.PHONY: local_test
+local_test: git_good local
 
 # Local run with mounted volume:
 .PHONY: localMounted
