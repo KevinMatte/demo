@@ -4,7 +4,25 @@
 
 cd $(dirname "$0")/.. || exit 0
 
+bumpVersion() {
+  local lastVersion leftPart versionPart rightPart
+
+  lastVersion="$1"
+  field="${2:-3}"
+  leftPart="$(echo "${lastVersion}" | cut -d. -f1-"$((field - 1))" 2>/dev/null)"
+  versionPart="$(echo "${lastVersion}" | cut -d. -f"${field}")"
+  rightPart="$(echo "${lastVersion}" | cut -d. -f"$((field + 1))-" 2>/dev/null)"
+  versionPart="$((versionPart + 1))"
+  [ -n "${rightPart}" ] && rightPart=".${rightPart}"
+  [ -n "${leftPart}" ] && leftPart="${leftPart}."
+  echo "${leftPart}${versionPart}${rightPart}"
+}
+
 declare -a updatedImages
+appVersionField=99
+appVersion="$(grep "^DEMO_VERSION" src/docker/image_versions.ish | sed -e 's/^.*=//' | sed -e 's/[^0-9.].*//')"
+appVersion=${appVersion:-1.0.0}
+
 bumpVersions() {
   [ ! -f src/docker/image_versions.ish ] && touch src/docker/image_versions.ish
 
@@ -21,13 +39,15 @@ bumpVersions() {
     lastDate="$(echo $versionLine | cut -d= -f2 | cut -d'#' -f3)"
     latestID="$(docker image ls --format "{{.ID}}" ${image}:latest)"
 
-      echo "old: ${image} ${dateVar}='${lastDate}': ${versionLine}"
+    echo "old: ${image} ${dateVar}='${lastDate}': ${versionLine}"
+
     if [ "$latestID" != "$lastID" ]; then
-      n="$(printf "%s" "$(echo "${lastVersion}" | sed -e 's/[^.]//g')" | wc -m)";
-      majorPart="$(echo "${lastVersion}" | cut -d. -f1-"$n")"
-      minorPart="$(echo "${lastVersion}" | cut -d. -f"$((n + 1))")"
-      minorPart="$((minorPart + 1))"
-      version="${majorPart}.${minorPart}"
+      version=$(bumpVersion "$lastVersion")
+      field=$(diff <(echo "${lastVersion}" | sed -e 's/\./\n/g') <(echo "${version}" | sed -e 's/\./\n/g') |
+          grep -m 1 "[0-9][0-9]*c" |
+          sed -e 's/[^0-9].*//'
+        )
+      [ ${field} -lt ${appVersionField} ] && appVersionField=${field}
       imageDate="$(date +'%Y/%m/%d %H:%M:%S')"
       newLine="$(printf "%s=%s #%s#%s" "${versionVar}" "${version}" "${latestID}" "${imageDate}")"
       echo "$newLine" >> tmp/image_versions.ish
@@ -47,8 +67,18 @@ bumpVersions() {
     echo "${version}"  > tmp/mnt/version_data/${image}_version.txt
     echo "${imageDate}" > tmp/mnt/version_data/${image}_date.txt
   done
+
+  # Update DEMO_VERSION
+  if [ "$appVersionField" != 99 ]; then
+    appVersion=$(bumpVersion $appVersion ${appVersionField})
+  fi
+  echo "DEMO_VERSION=${appVersion}"  >> tmp/image_versions.ish
+
+  # Update source and commit.
   mv "tmp/image_versions.ish" "src/docker/image_versions.ish"
   cp src/docker/image_versions.ish tmp/mnt/version_data/image_versions.ish
+
+  # Save data for shared volume
   tar cf tmp/version_data.tar -C tmp mnt/version_data
 }
 
@@ -56,6 +86,8 @@ bumpVersions
 if [ ${#updatedImages} = 0 ]; then
   echo "No image version changed."
 else
+  appVersionField
+
   echo "git commit -m "${updatedImages}" src/docker/image_versions.ish"
   git commit -m "${updatedImages}" src/docker/image_versions.ish
 fi
