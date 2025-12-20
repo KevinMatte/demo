@@ -1,15 +1,13 @@
 import menuCss from "./css/Menu.module.css";
 
-export default function MenuButton(props) {
-    let {handler, label, name, selected, url, title, children, ...buttonProps} = props;
-    const handleClick = () => {
-        if (url)
-            window.open(url, "_self");
-        handler(name);
-    }
+export default function MenuButton(
+    {
+        handler, label, name, selected, title, children,
+        ...buttonProps
+    }) {
     return (
         <button className={selected ? menuCss.selected : ""}
-                onClick={() => handleClick(name)}
+                onClick={() => handler(name)}
                 title={title}
                 {...buttonProps}
         >

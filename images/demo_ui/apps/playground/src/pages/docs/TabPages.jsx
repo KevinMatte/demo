@@ -6,17 +6,17 @@ import Menu from "@/parts/Menu.jsx";
 
 export const toolDefn = {
     "title": "Documentation: Demo TabPages",
-    "noTitle": true,
     "description": <span><b>Documentation</b>: Demo Notes</span>,
     "toolDocs": null,
     "className": "TabPages",
 };
 
-function TabPages({tabMenu}) {
-    const [pageName, setPageName] = useState(Object.keys(tabMenu)[0]);
+function TabPages({tabMenu, key: _key}) {
+    let initialPageName = Object.keys(tabMenu)[0];
+    let [pageName, setPageName] = useState(initialPageName);
 
-    const menuHandler = (item) => {
-        setPageName(item);
+    let menuHandler = (menu, itemName) => {
+        setPageName(itemName);
     }
 
     let pageDefn = tabMenu[pageName];

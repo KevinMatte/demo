@@ -77,14 +77,14 @@ def process_args() -> tuple[Namespace, ArgumentParser]:
       # Optional. If given, the full path must match this python regular expression.
       # You could include directories in these patterns, but if possible, don't, I think.
       patterns:
-        - '.*\.js$'
-        - '.*\.jsx$'
-        - '.*\.ts$'
-        - '.*\.tsx$'
-        - '.*\.css$'
-        - '.*\.html$'
-        - '.*\.py$'
-        - '.*\.php$'
+        - '.*\\.js$'
+        - '.*\\.jsx$'
+        - '.*\\.ts$'
+        - '.*\\.tsx$'
+        - '.*\\.css$'
+        - '.*\\.html$'
+        - '.*\\.py$'
+        - '.*\\.php$'
 
     # A search example without patterns.
     - name: 'environment'

@@ -10,6 +10,8 @@ export const toolDefn = {
 function Build() {
     return (
         <div>
+            YouTube:
+            <Anchor path="https://youtu.be/fLLyFpopUcY">Playground Quick Tour</Anchor>
             <h2>General Build</h2>
             <div>
                 <ul>

@@ -8,7 +8,7 @@ export const toolDefn = {
     "toolDocs": null,
 };
 
-function MenuSummary({menu, handleClick}) {
+function MenuSummary({menu, handleClick, key: _key}) {
     return (
         <ul>
             <div style={{display: "table"}}>
@@ -19,7 +19,7 @@ function MenuSummary({menu, handleClick}) {
                                 <div style={{display: "table-cell"}}>
                                     <div style={{float: "right", margin: "2px"}}>
                                         <MenuButton
-                                            handler={() => handleClick(name)}
+                                            handler={() => handleClick(menu, name)}
                                             name={name}
                                             key={name}
                                             title={item.toolDefn.title}

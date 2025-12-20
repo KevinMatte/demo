@@ -3,34 +3,25 @@ import "@/css/App.css";
 import appCSS from "@/css/App.module.css";
 import Menu from '@/parts/Menu.jsx';
 import DemoAnchor from "@/parts/Anchors.jsx";
-import {Anchor} from "@/parts/Anchors.jsx";
 import TabPages, {toolDefn as notesToolDefn} from '@docs/TabPages.jsx';
 import {menus_apps, menus_skeletons} from "@/vars/menus.jsx";
-import MenuSummary, {toolDefn as overviewToolDefn} from '@docs/MenuSummary.jsx';
+import MenuSummary from '@docs/MenuSummary.jsx';
 import Build, {toolDefn as buildToolDefn} from "@/pages/docs/Build.jsx";
 import Containers, {toolDefn as dockerComposeToolDefn} from "@/pages/docs/Containers.jsx";
 
 function App() {
-    const [pageName, setPageName] = useState('notes');
-
-    const menuHandler = (item) => {
-        setPageName(item);
+    const menuHandler = (menu, itemName) => {
+        let item = menu[itemName];
+        if (!item.page && item.url) {
+            let url = `${item.url}?back=${encodeURIComponent(window.location.href)}`;
+            window.location.assign(url);
+        } else {
+            setMenuDefn(menu);
+            setPageName(itemName);
+        }
     }
 
-    let topMenu = {...menus_skeletons, ...menus_apps};
-
     const notesMenu = {
-        "overview": {
-            "label": "Menu Summary", 'toolDefn': overviewToolDefn,
-            'page': (
-                <>
-                    YouTube:
-                    <Anchor path="https://youtu.be/fLLyFpopUcY">Playground Quick Tour</Anchor>
-                    <h2>Menu Summary</h2>
-                    <MenuSummary menu={topMenu} handleClick={menuHandler}/>
-                </>
-            )
-        },
         "build": {"label": "Build", 'toolDefn': buildToolDefn, 'page': (<Build/>)},
         "containers": {"label": "Docker Containers", 'toolDefn': dockerComposeToolDefn, 'page': (<Containers/>)},
     };
@@ -38,15 +29,31 @@ function App() {
     const menu = {
         "notes": {
             "label": "Notes", 'toolDefn': notesToolDefn,
-            'page': <TabPages tabMenu={notesMenu}/>
+            'page': <TabPages tabMenu={notesMenu} key="notesMenu"/>
         },
-        ...topMenu,
+        "skeletons": {
+            "label": "Skeletons", 'toolDefn': {
+                "title": "Skeletons",
+                "description": <span><b>Documentation</b>: App Skeletons/Frameworks/Stacks</span>,
+                "toolDocs": null,
+            },
+            'page': <MenuSummary menu={menus_skeletons} handleClick={menuHandler}/>
+        },
+        "apps": {
+            "label": "Apps", 'toolDefn': {
+                "title": "WIP Apps",
+                "description": <span><b>Full Page Apps</b>: In various states of WIP. A &lt;Back&gt; button will be on the top.</span>,
+                "toolDocs": null,
+                "className": "TabPages",
+            },
+            'page': <MenuSummary menu={menus_apps} handleClick={menuHandler} key="apps"/>
+        },
     };
 
-    let pageDefn = menu[pageName];
-    let pageTitle = "";
-    if (!pageDefn.toolDefn.noTitle && pageDefn.toolDefn.title)
-        pageTitle = (<h2>{pageDefn.toolDefn.title}</h2>);
+    const [pageName, setPageName] = useState('notes');
+    const [menuDefn, setMenuDefn] = useState(menu);
+
+    let pageDefn = menuDefn[pageName];
     let appPage = pageDefn.toolDefn.className || appCSS.appPage;
     return (
         <div className={appCSS.app}>
@@ -56,7 +63,6 @@ function App() {
             <div className={appCSS.appBody}>
                 <hr/>
                 <div className={appPage}>
-                    {pageDefn.toolDefn.title && pageTitle}
                     {pageDefn.page}
                 </div>
             </div>
