@@ -1,13 +1,12 @@
 -include .env
 export
 
-.PHONY: venv build pre_build local localMounted update_dot_env build_done generate_dotEnv version_bump
-.PHONY: checkDocker
-
+.PHONY: clean
 clean:
 	$(MAKE) -C images/demo_ui build_clean
 	$(MAKE) -C images/demo_cpp build_clean
 
+.PHONY: checkDocker
 checkDocker:
 	@if docker ps > /dev/null 2>/dev/null; then :; else \
 	  echo "==========================="; \
@@ -20,6 +19,16 @@ checkDocker:
 # ---------------------------
 # Build framework targets
 # ---------------------------
+
+.PHONY: git_good
+git_good:
+	@if test -n "$$(git status -s)"; then \
+  		echo "git status is not clean"; \
+  		git status -s; \
+  		exit 1; \
+  	fi
+
+.PHONY: pre_build
 pre_build: checkDocker
 	bin/checkJSXReferences.sh
 
@@ -31,19 +40,22 @@ tmp/venv.timestamp: bin/requirements.txt
 	   pip install -r bin/requirements.txt;
 	touch tmp/venv.timestamp;
 
+.PHONY: generate_dotEnv
 generateDotEnv.sh: bin/generateDotEnv.sh
 	bin/generateDotEnv.sh .env
 
 # ---------------------------
 # Build targets
 # ---------------------------
-build: pre_build tmp/venv.timestamp update_dot_env
+.PHONY: build
+build: pre_build tmp/venv.timestamp
 	$(MAKE) -C images/demo_ui build
 	$(MAKE) -C images/demo_cpp build
 	$(MAKE) -C images/demo_mariadb build
 	$(MAKE) -C images/demo_java build
 
 # Finalizes/cleans up build.
+.PHONY: build_done
 build_done:
 	$(MAKE) -C images/demo_cpp build_done
 	$(MAKE) -C images/demo_mariadb build_done
@@ -53,6 +65,7 @@ build_done:
 # Development targets
 # ---------------------------
 
+.PHONY: local
 local: generateDotEnv.sh
 	-docker compose kill 2>/dev/null || echo "Pass: services not running"
 	bin/preprocessDockerCompose.py src/docker-compose.yaml docker-compose.yaml local
@@ -62,6 +75,7 @@ local: generateDotEnv.sh
 	@echo "Open: http://localhost:8080/"
 
 # Local run with mounted volume:
+.PHONY: localMounted
 localMounted: generateDotEnv.sh
 	-docker compose kill 2>/dev/null || echo "Pass: services not running"
 	bin/preprocessDockerCompose.py src/docker-compose.yaml docker-compose.yaml mounted
@@ -75,17 +89,22 @@ localMounted: generateDotEnv.sh
 # Publish to public target
 # ---------------------------
 
+.PHONY: publish_remove_images
 publish_remove_images:
 	ssh demo_prod "docker image rm $$(docker image ls | grep localhost | sed -e 's/  */:/g' | cut -d':' -f1,2,3)"
 
+.PHONY: generate_dotEnv
 generate_dotEnv:
 	bin/generateDotEnv.sh
 
-version_bump: build
-	# TODO: Put this on a separate volume.
+
+.PHONY: version_bump
+version_bump: git_good build
+	# Make sure all files are committed.
 	bin/bumpVersion.sh
 	bin/publishVersion.sh
 
+.PHONY: publish_push
 publish_push:
 	ssh demo_prod mkdir -p dev/demo.prod
 	scp tmp/docker-compose.yaml tmp/version_data.tar bin/publishVersion.sh demo_prod:dev/demo.prod
@@ -103,7 +122,8 @@ publish_push:
 	ssh demo_prod "cd dev/demo.prod && ./publishVersion.sh version_data.tar && docker compose up  --remove-orphans --detach"
 	rm -f tmp/build.locked
 
-publish: version_bump generate_dotEnv
+.PHONY: publish
+publish: git_good version_bump generate_dotEnv
 	bin/preprocessDockerCompose.py src/docker-compose.yaml tmp/docker-compose.yaml production
 	$(MAKE) build publish_push
 	docker kill version_update 2>/dev/null || :;
