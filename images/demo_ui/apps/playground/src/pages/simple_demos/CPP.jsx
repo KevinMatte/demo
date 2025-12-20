@@ -4,7 +4,6 @@ import DemoAnchor, {Anchor} from "@/parts/Anchors.jsx";
 const toolDocs =
     (
         <div>
-            <h2>Tech Stack:</h2>
             <ul>
                 <li>
                     <b>Main Code</b>:
@@ -37,7 +36,8 @@ const toolDocs =
 ;
 export const toolDefn = {
     "title": "Demo: C++ Microservices Example",
-    "description": <span><b>Demo</b>: C++ Microservices Example</span>,
+    "description": <u><b>C++ Microservices Example</b></u>,
+    "summary": <>JSX -&gt; Apache -&gt; Apache MOD_PROXY -&gt; Docker Container -&gt; CPP Microservice</>,
 };
 
 export default function CPP() {
@@ -131,6 +131,8 @@ export default function CPP() {
                 <button type="submit">Perform +, -, *, / calculations</button>
                 {data && <button type="reset">Reset form</button>}
             </form>
+            <hr/>
+            <h2>Tech Stack:</h2>
             {toolDocs}
         </>
     );

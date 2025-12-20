@@ -3,8 +3,6 @@ import IFrameTool from "@/parts/IFrameTool.jsx";
 import DemoAnchor, {Anchor} from "@/parts/Anchors.jsx";
 
 export const toolDocs = (
-    <div>
-        <h2>Tech Stack:</h2>
         <ul>
             <li><b>Main Code</b>:</li>
             <ul>
@@ -22,11 +20,11 @@ export const toolDocs = (
                 </li>
             </ul>
         </ul>
-    </div>
 );
 export const toolDefn = {
     "title": "Demo: Apache PHP Example",
-    "description": <span><b>Demo</b>: Apache PHP Example</span>,
+    "description": <u><b>Apache PHP Example</b></u>,
+    "summary": <>JSX -&gt; Apache -&gt; Apache PHP WSGI -&gt; Python Script</>,
 };
 
 export default function PHP() {
@@ -36,6 +34,7 @@ export default function PHP() {
             <hr/>
             <IFrameTool url="/hello_world.php"/>
             <hr/>
+            <h2>Tech Stack:</h2>
             {toolDocs}
         </>
     );

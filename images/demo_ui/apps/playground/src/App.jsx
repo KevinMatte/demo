@@ -28,19 +28,19 @@ function App() {
 
     const menu = {
         "notes": {
-            "label": "Base Build & Stack", 'toolDefn': notesToolDefn,
+            "label": "Docs: Base Build & Stack", 'toolDefn': notesToolDefn,
             'page': <TabPages tabMenu={notesMenu} key="notesMenu"/>
         },
         "wirings": {
-            "label": "Dev Stack Wirings", 'toolDefn': {
+            "label": "Apps: Dev Stack Wirings", 'toolDefn': {
                 "title": "Wirings",
                 "description": <span><b>Documentation</b>: App Wirings/Frameworks/Stacks</span>,
             },
             'page': <MenuSummary menu={menus_wirings} handleClick={menuHandler}/>
         },
         "apps": {
-            "label": "Apps", 'toolDefn': {
-                "title": "WIP Apps",
+            "label": "Apps: Fuller Apps", 'toolDefn': {
+                "title": "Apps: Fuller Apps",
                 "description": <span><b>Full Page Apps</b>: In various states of WIP. A &lt;Back&gt; button will be on the top.</span>,
                 "className": "TabPages",
             },
@@ -57,8 +57,8 @@ function App() {
             <h1>Playground/Demo Project</h1>
             <Menu handler={menuHandler} menu={menu} selectedMenuName={pageName}/>
             <DemoAnchor path="" label="GitHub Source KevinMatte / demo"/><br/>
+            <hr/>
             <div className={appCSS.appBody}>
-                <hr/>
                 {pageDefn.page}
             </div>
         </div>

@@ -2,44 +2,56 @@ import menuCss from "@/parts/css/Menu.module.css";
 import MenuButton from "@/parts/MenuButton.jsx";
 import React from "react";
 
-export const toolDefn = {
+const toolDefn = {
     "title": "Documentation: Demo Menu",
     "description": <span><b>Documentation</b>: Demo Overview</span>,
 };
 
 function MenuSummary({menu, handleClick, key: _key}) {
-    return (
-        <ul>
-            <div style={{display: "table"}}>
-                {Object.keys(menu).map(name => {
-                        let item = menu[name];
-                        return (
-                            <div style={{display: "table-row"}} key={name} className={menuCss.menu}>
-                                <div style={{display: "table-cell"}}>
-                                    <div style={{float: "right", margin: "2px"}}>
-                                        <MenuButton
-                                            handler={() => handleClick(menu, name)}
-                                            name={name}
-                                            key={name}
-                                            title={item.toolDefn.title}
-                                            selected={name === 'overview'}
-                                        >
-                                            {item.label}
-                                        </MenuButton>
+    let rows = [];
+    for (let name in menu) {
+        let item = menu[name];
+        rows.push(
+            <div style={{display: "table-row"}} key={`${name}_r1`} className={menuCss.menu}>
+                <div style={{display: "table-cell"}}>
+                    <div style={{float: "right", margin: "2px"}}>
+                        <MenuButton
+                            handler={() => handleClick(menu, name)}
+                            name={name}
+                            key={`${name}_button`}
+                            title={item.toolDefn.title}
+                            selected={name === 'overview'}
+                        >
+                            {item.label}
+                        </MenuButton>
 
-                                    </div>
-                                </div>
-                                <div style={{
-                                    display: "table-cell",
-                                    verticalAlign: "middle"
-                                }}>{item.toolDefn.description || item.toolDefn.title}</div>
-                            </div>
-                        );
-                    }
-                )}
+                    </div>
+                </div>
+                <div style={{
+                    display: "table-cell",
+                    verticalAlign: "middle"
+                }}>{item.toolDefn.description || item.toolDefn.title}</div>
             </div>
-        </ul>
+        )
+        rows.push(
+            <div style={{display: "table-row"}} key={`${name}_r2`} className={menuCss.menu}>
+                <div style={{display: "table-cell"}}>
+                </div>
+                <div style={{
+                    display: "table-cell",
+                    verticalAlign: "middle"
+                }}>{item.toolDefn.summary || 'No summary'}</div>
+            </div>
+        );
+    }
+    return (
+        <>
+            <div style={{display: "table"}}>
+                {...rows}
+            </div>
+        </>
     )
 }
 
+export {toolDefn}
 export default MenuSummary;
