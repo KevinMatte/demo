@@ -3,13 +3,15 @@ import IFrameTool from "@/parts/IFrameTool.jsx";
 import DemoAnchor, {Anchor} from "@/parts/Anchors.jsx";
 
 export const toolDocs = (
-    <div>
+    <>
         <h2>Tech Stack:</h2>
         <ul>
             <li><b>Main Code</b>:</li>
             <ul>
-                <li><DemoAnchor title="Client" path="images/demo_ui/apps/playground/src/pages/simple_demos/Python.jsx"/></li>
-                <li><DemoAnchor title="Server" path="images/demo_ui/apps/playground/static/var/www/html/py_app/hello_world.py"/>
+                <li><DemoAnchor title="Client" path="images/demo_ui/apps/playground/src/pages/simple_demos/Python.jsx"/>
+                </li>
+                <li><DemoAnchor title="Server"
+                                path="images/demo_ui/apps/playground/static/var/www/html/py_app/hello_world.py"/>
                 </li>
             </ul>
             <li><b>Configuration</b></li>
@@ -29,14 +31,21 @@ export const toolDocs = (
                 </li>
             </ul>
         </ul>
-    </div>
+    </>
 );
 export const toolDefn = {
     "title": "Demo: WSGI Python Example",
     "description": <span><b>Demo</b>: WSGI Python Example</span>,
-    "toolDocs": toolDocs,
 };
 
 export default function Python() {
-    return (<IFrameTool url="/py_app/hello_world.py"/>);
+    return (
+        <>
+            <h2>Python Wiring/Framework</h2>
+            <hr/>
+            <IFrameTool url="/py_app/hello_world.py"/>
+            <hr/>
+            {toolDocs}
+        </>
+    );
 }

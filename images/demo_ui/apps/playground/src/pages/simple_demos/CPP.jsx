@@ -38,7 +38,6 @@ const toolDocs =
 export const toolDefn = {
     "title": "Demo: C++ Microservices Example",
     "description": <span><b>Demo</b>: C++ Microservices Example</span>,
-    "toolDocs": toolDocs,
 };
 
 export default function CPP() {
@@ -112,7 +111,7 @@ export default function CPP() {
         );
 
     return (
-        <div>
+        <>
             {loading && <p>Loading</p>}
             <div>
                 {results}
@@ -132,7 +131,8 @@ export default function CPP() {
                 <button type="submit">Perform +, -, *, / calculations</button>
                 {data && <button type="reset">Reset form</button>}
             </form>
-        </div>
+            {toolDocs}
+        </>
     );
 }
 

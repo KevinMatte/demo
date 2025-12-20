@@ -4,7 +4,6 @@ import React, {useEffect, useState} from "react";
 export const toolDefn = {
     "title": "Documentation: Docker Compose Usage",
     "description": <span><b>Documentation</b>: Docker Compose Usage</span>,
-    "toolDocs": null,
 };
 
 function Containers() {

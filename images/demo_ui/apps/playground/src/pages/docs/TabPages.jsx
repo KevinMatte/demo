@@ -7,7 +7,6 @@ import Menu from "@/parts/Menu.jsx";
 export const toolDefn = {
     "title": "Documentation: Demo TabPages",
     "description": <span><b>Documentation</b>: Demo Notes</span>,
-    "toolDocs": null,
     "className": "TabPages",
 };
 
@@ -25,10 +24,7 @@ function TabPages({tabMenu, key: _key}) {
             <div style={{margin: "20px"}}>
                 <Menu handler={menuHandler} menu={tabMenu} selectedMenuName={pageName}/>
             </div>
-            <div>
-                {pageDefn.page}
-            </div>
-            {pageDefn.toolDefn.toolDocs}
+            {pageDefn.page}
         </div>
     )
 }

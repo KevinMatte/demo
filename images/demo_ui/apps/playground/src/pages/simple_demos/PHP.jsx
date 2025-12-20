@@ -8,8 +8,10 @@ export const toolDocs = (
         <ul>
             <li><b>Main Code</b>:</li>
             <ul>
-                <li><DemoAnchor title="Client" path="images/demo_ui/apps/playground/src/pages/simple_demos/PHP.jsx"/></li>
-                <li><DemoAnchor title="Server" path="images/demo_ui/apps/playground/static/var/www/html/hello_world.php"/></li>
+                <li><DemoAnchor title="Client" path="images/demo_ui/apps/playground/src/pages/simple_demos/PHP.jsx"/>
+                </li>
+                <li><DemoAnchor title="Server"
+                                path="images/demo_ui/apps/playground/static/var/www/html/hello_world.php"/></li>
             </ul>
             <li><b>Configuration</b></li>
             <ul>
@@ -25,9 +27,16 @@ export const toolDocs = (
 export const toolDefn = {
     "title": "Demo: Apache PHP Example",
     "description": <span><b>Demo</b>: Apache PHP Example</span>,
-    "toolDocs": toolDocs,
 };
 
 export default function PHP() {
-    return (<IFrameTool url="/hello_world.php"/>);
+    return (
+        <>
+            <h2>Python Wiring/Framework</h2>
+            <hr/>
+            <IFrameTool url="/hello_world.php"/>
+            <hr/>
+            {toolDocs}
+        </>
+    );
 }

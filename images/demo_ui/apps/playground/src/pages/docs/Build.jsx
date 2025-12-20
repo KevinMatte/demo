@@ -4,7 +4,6 @@ import DemoAnchor, {Anchor, GitHubAnchor} from "@/parts/Anchors.jsx";
 
 export const toolDefn = {
     "title": "Documentation: Build Framework",
-    "toolDocs": null,
 };
 
 function Build() {

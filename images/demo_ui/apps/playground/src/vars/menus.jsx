@@ -5,7 +5,7 @@ import Python, {toolDefn as pythonToolDefn} from '@/pages/simple_demos/Python.js
 import PHP, {toolDefn as phpToolDefn} from '@/pages/simple_demos/PHP.jsx';
 import Java, {toolDefn as javaToolDefn} from '@/pages/simple_demos/Java.jsx';
 
-const menus_skeletons = {
+const menus_wirings = {
     "cpp_hello": {"label": "C++", 'toolDefn': cppToolDefn, 'page': (<CPP/>)},
     "python_hello": {"label": "Python", 'toolDefn': pythonToolDefn, 'page': (<Python/>)},
     "php_hello": {"label": "PHP", 'toolDefn': phpToolDefn, 'page': (<PHP/>)},
@@ -42,4 +42,4 @@ const menus_apps = {
     },
 }
 
-export {menus_skeletons, menus_apps};
+export {menus_wirings, menus_apps};

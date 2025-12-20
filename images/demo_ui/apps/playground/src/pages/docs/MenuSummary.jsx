@@ -5,7 +5,6 @@ import React from "react";
 export const toolDefn = {
     "title": "Documentation: Demo Menu",
     "description": <span><b>Documentation</b>: Demo Overview</span>,
-    "toolDocs": null,
 };
 
 function MenuSummary({menu, handleClick, key: _key}) {

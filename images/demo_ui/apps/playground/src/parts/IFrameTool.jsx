@@ -15,7 +15,7 @@ export default function IFrameTool({url}) {
 
     return (
         <div>
-            <iframe src={fullUrl} width={300} height={100} style={{background: "white"}}>
+            <iframe src={fullUrl} width={300} height={100} style={{background: "white", resize: "both"}}>
             </iframe>
         </div>
     );
