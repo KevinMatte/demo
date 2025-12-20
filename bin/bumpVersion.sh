@@ -4,6 +4,7 @@
 
 cd $(dirname "$0")/.. || exit 0
 
+declare -a updatedImages
 bumpVersions() {
   [ ! -f src/docker/image_versions.ish ] && touch src/docker/image_versions.ish
 
@@ -33,6 +34,7 @@ bumpVersions() {
       echo "${dateVar}='${imageDate}'" >> tmp/image_versions.ish
       echo "new: ${image} ${dateVar}='${imageDate}': ${newLine}"
       echo
+      updatedImages+=" ${image}=${versionVar}"
     else
       echo "${versionLine}" >> tmp/image_versions.ish
       echo "${dateVar}='${lastDate}'" >> tmp/image_versions.ish
@@ -51,6 +53,12 @@ bumpVersions() {
 }
 
 bumpVersions
+if [ ${#updatedImages} = 0 ]; then
+  echo "No image version changed."
+else
+  echo "git commit -m "${updatedImages}" src/docker/image_versions.ish"
+  git commit -m "${updatedImages}" src/docker/image_versions.ish
+fi
 
 
 
