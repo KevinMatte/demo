@@ -86,8 +86,6 @@ bumpVersions
 if [ ${#updatedImages} = 0 ]; then
   echo "No image version changed."
 else
-  appVersionField
-
   echo "git commit -m "${updatedImages}" src/docker/image_versions.ish"
   git commit -m "${updatedImages}" src/docker/image_versions.ish
 fi
