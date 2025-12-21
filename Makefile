@@ -115,7 +115,7 @@ publish_push:
 	ssh demo_prod mkdir -p dev/demo.prod
 	scp tmp/docker-compose.yaml tmp/version_data.tar bin/publishVersion.sh demo_prod:dev/demo.prod
 	scp .env demo_prod:dev/demo.prod/.env
-	tag="v$${DEMO_UI_VERSION}"; git tag $${tag} 2>/dev/null && git push origin $${tag} || :
+	tag="v$${DEMO_VERSION}"; git tag $${tag} 2>/dev/null && git push origin $${tag} || :
 	docker tag demo_ui:latest localhost:5000/demo_ui:$${DEMO_UI_VERSION};
 	docker tag demo_cpp:latest localhost:5000/demo_cpp:$${DEMO_CPP_VERSION};
 	docker tag demo_mariadb:latest localhost:5000/demo_mariadb:$${DEMO_MARIADB_VERSION};
