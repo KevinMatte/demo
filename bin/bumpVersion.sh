@@ -2,6 +2,22 @@
 
 # Bumps all version numbers in src/docker/image_versions.ish where the docker image ID has changed.
 
+NO_BUMP=0
+while getopts "nx" opt; do
+  case ${opt} in
+    n)
+      NO_BUMP=1
+      ;;
+    x)
+      set -x
+      ;;
+    \?)
+      echo "Invalid option: -${OPTARG}" >&2
+      exit 1
+      ;;
+  esac
+done
+
 cd $(dirname "$0")/.. || exit 0
 
 bumpVersion() {
@@ -41,7 +57,7 @@ bumpVersions() {
 
     echo "old: ${image} ${dateVar}='${lastDate}': ${versionLine}"
 
-    if [ "$latestID" != "$lastID" ]; then
+    if [ "${NO_BUMP}" = 0 ] && [ "$latestID" != "$lastID" ]; then
       version=$(bumpVersion "$lastVersion")
       field=$(diff <(echo "${lastVersion}" | sed -e 's/\./\n/g') <(echo "${version}" | sed -e 's/\./\n/g') |
           grep -m 1 "[0-9][0-9]*c" |
@@ -69,7 +85,7 @@ bumpVersions() {
   done
 
   # Update DEMO_VERSION
-  if [ "$appVersionField" != 99 ]; then
+  if [ "${NO_BUMP}" = 0 ] && [ "$appVersionField" != 99 ]; then
     appVersion=$(bumpVersion $appVersion ${appVersionField})
   fi
   echo "DEMO_VERSION=${appVersion}"  >> tmp/image_versions.ish

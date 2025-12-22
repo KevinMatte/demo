@@ -17,15 +17,15 @@ build_clean: build_init
 retrieve_builds:
 	for app in $$(echo ${DEMO_UI_APPS}); do \
   		$(MAKE) -C apps/$${app} build; \
-		tar cf - -C apps/$${app}/build . | (cd build; tar xvf -); \
+		tar cf - -C apps/$${app}/build . | (cd build; tar xf -); \
   	done
 
 update_image_build: build_init retrieve_builds
 	bin/update_build.sh
 	for app in $$(echo ${DEMO_UI_APPS}); do \
   		echo "${app}"; \
-		if [ -e apps/$${app}/bin/update_demo_ui_build.sh ]; then \
-		  	apps/$${app}/bin/update_demo_ui_build.sh; \
+		if [ -e apps/$${app}/bin/update_build.sh ]; then \
+		  	apps/$${app}/bin/update_build.sh; \
 		fi \
   	done
 

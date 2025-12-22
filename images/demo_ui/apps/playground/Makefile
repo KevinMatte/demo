@@ -9,7 +9,7 @@ build_clean:
 	mkdir build
 
 build_static:
-	tar cf - -C static . | (cd build; tar xvf -)
+	tar cf - -C static . | (cd build; tar xf -)
 
 build_src:
 	pnpm build --outDir build/var/www/html/playground

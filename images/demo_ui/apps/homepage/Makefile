@@ -7,6 +7,6 @@ build_clean:
 	mkdir build
 
 build_static:
-	tar cf - -C static . | (cd build; tar xvf -)
+	tar cf - -C static . | (cd build; tar xf -)
 
 build: build_static

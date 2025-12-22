@@ -63,7 +63,7 @@ available frameworks. I started with an empty project, and incrementally added t
 * TODO: Test this...
 * `make generateDotEnv`
 * `make version_bump`
-* `make localMounted`
+* `make local_mounted`
 
 ## Development Base
 

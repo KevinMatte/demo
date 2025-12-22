@@ -4,7 +4,9 @@
 # ====================================
 "__defaults__":
 
-  skipped: "bin/say.py '_MONITOR_NAME_: Skip file exists. Skipping.' 2>/dev/null"
+  skipped:
+    - "bin/say.py '_MONITOR_NAME_: Skip file exists. Skipping.' 2>/dev/null"
+    - "echo '_MONITOR_NAME_: Skip file exists. Skipping.' 2>/dev/null"
 
   started: "bin/say.py '_MONITOR_NAME_: Starting' 2>/dev/null"
   completed:
@@ -20,11 +22,12 @@
 "UI Sources":
   commands:
     - "make update_dot_env"
+    - "echo bin/build_inc.sh _FILES_"
     - "cd images/demo_ui; bin/build_inc.sh _FILES_"
   searches:
-    - name: 'static'
+    - name: 'src'
       paths:
-        - "images/demo_ui/apps/*/src"
+        - "images/demo_ui"
       patterns:
         - '.*\.js$'
         - '.*\.jsx$'
@@ -34,6 +37,7 @@
         - '.*\.html$'
         - '.*\.py$'
         - '.*\.php$'
+        - '.*\.py$'
     - name: 'environment'
       paths: ['.env', '.secrets.env']
 
@@ -47,15 +51,6 @@
       paths:
         - "images/demo_ui/apps/*/Makefile"
         - "images/demo_ui/Makefile"
-
-# ====================================
-"UI Static":
-  commands:
-    - "make -C images/demo_ui build_static update_image_build"
-  searches:
-    - name: 'static'
-      paths:
-        - "images/demo_ui/apps/*/static"
 
 # ====================================
 "monitorBuild YAML Changed":

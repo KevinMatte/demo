@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash -ex
 
 # Bumps all version numbers in src/docker/image_versions.ish where the docker image ID has changed.
 

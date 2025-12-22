@@ -13,7 +13,7 @@ build_clean:
 build_static:
 
 build_src:
-	#[ -d static ] && tar cf - -C static . | (cd build; tar xvf -)
+	#[ -d static ] && tar cf - -C static . | (cd build; tar xf -)
 	pnpm build --outDir build/var/www/html/spreadsheet_ts
 
 build: build_static build_src

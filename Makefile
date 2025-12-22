@@ -12,7 +12,7 @@ checkDocker:
 	  echo "==========================="; \
 	  echo "Docker Engine is not active"; \
 	  echo "---------------------------"; \
-	  echo "Run: $$(pwd)/bin/dockerSetup.sh (or $$(pwd)/bin/devSetup.sh for localMounted file monitoring)"; \
+	  echo "Run: $$(pwd)/bin/dockerSetup.sh (or $$(pwd)/bin/devMonitor.sh for local_mounted file monitoring)"; \
 	  exit 1; \
 	fi
 
@@ -72,24 +72,24 @@ build_done:
 local: generateDotEnv.sh
 	-docker compose kill 2>/dev/null || echo "Pass: services not running"
 	bin/preprocessDockerCompose.py src/docker-compose.yaml docker-compose.yaml local
+	bin/bumpVersion.sh -n
+	bin/publishVersion.sh
 	${MAKE} -C . build
 	docker compose up --no-build --remove-orphans --detach
 	rm -f tmp/build.locked
 	@echo "Open: http://localhost:8080/"
 
-.PHONY: local_test
-local_test: git_good local
-
 # Local run with mounted volume:
-.PHONY: localMounted
-localMounted: generateDotEnv.sh
+.PHONY: local_mounted
+local_mounted: generateDotEnv.sh
 	-docker compose kill 2>/dev/null || echo "Pass: services not running"
 	bin/preprocessDockerCompose.py src/docker-compose.yaml docker-compose.yaml mounted
+	bin/bumpVersion.sh -n
+	bin/publishVersion.sh
 	${MAKE} -C . build
 	docker compose up --remove-orphans --detach
 	rm -f tmp/build.locked
 	@echo "Open: http://localhost:8080/"
-
 
 # ---------------------------
 # Publish to public target
@@ -102,7 +102,6 @@ publish_remove_images:
 .PHONY: generate_dotEnv
 generate_dotEnv:
 	bin/generateDotEnv.sh
-
 
 .PHONY: version_bump
 version_bump: git_good build

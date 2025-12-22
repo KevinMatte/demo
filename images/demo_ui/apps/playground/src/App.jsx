@@ -23,23 +23,23 @@ function App() {
 
     const notesMenu = {
         "build": {"label": "Build", 'toolDefn': buildToolDefn, 'page': (<Build/>)},
-        "containers": {"label": "Docker Containers", 'toolDefn': dockerComposeToolDefn, 'page': (<Containers/>)},
+        "containers": {"label": "Docker", 'toolDefn': dockerComposeToolDefn, 'page': (<Containers/>)},
     };
 
     const menu = {
         "notes": {
-            "label": "Docs: Base Build & Stack", 'toolDefn': notesToolDefn,
+            "label": "Dev Docs", 'toolDefn': notesToolDefn,
             'page': <TabPages tabMenu={notesMenu} key="notesMenu"/>
         },
         "wirings": {
-            "label": "Apps: Dev Stack Wirings", 'toolDefn': {
+            "label": "Hello World Wiring", 'toolDefn': {
                 "title": "Wirings",
                 "description": <span><b>Documentation</b>: App Wirings/Frameworks/Stacks</span>,
             },
             'page': <MenuSummary menu={menus_wirings} handleClick={menuHandler}/>
         },
         "apps": {
-            "label": "Apps: Fuller Apps", 'toolDefn': {
+            "label": "Playground Apps", 'toolDefn': {
                 "title": "Apps: Fuller Apps",
                 "description": <span><b>Full Page Apps</b>: In various states of WIP. A &lt;Back&gt; button will be on the top.</span>,
                 "className": "TabPages",

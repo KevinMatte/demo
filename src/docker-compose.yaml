@@ -10,6 +10,8 @@ services:
     container_name: demo_ui
 # #if mounted or local
     build: images/demo_ui
+    environment:
+      NO_CORS: 1
 # #endif
     ports:
       - name: web
@@ -78,18 +80,9 @@ services:
 # #if mounted or local
     ports:
       - '18080:${DEMO_CPP_PORT}'
-# #endif
     environment:
-# #if mounted or local
       NO_CORS: 1
 # #endif
-      DEMO_CPP_IMAGE: "${DEMO_CPP_IMAGE}"
-      DEMO_CPP_VERSION: "${DEMO_CPP_VERSION}"
-      DEMO_CPP_PORT: "${DEMO_CPP_PORT}"
-      DEMO_CPP_USER_NAME: "${DEMO_CPP_USER_NAME}"
-      DEMO_CPP_USER_ID: "${DEMO_CPP_USER_ID}"
-      DEMO_CPP_GROUP_NAME: "${DEMO_CPP_GROUP_NAME}"
-      DEMO_CPP_GROUP_ID: "${DEMO_CPP_GROUP_ID}"
 
 
   mariadb_admin:
