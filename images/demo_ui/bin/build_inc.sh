@@ -7,8 +7,9 @@ PROJ_ROOT="$(git rev-parse --show-toplevel)"
 touch ${PROJ_ROOT}/tmp/build.locked
 
 function extractExpr() {
-  # Extracts from an array ($1) elements matching a regular expression ($3)
-  # puts them in a destination array ($2) and removes them from the source array ($1)
+  # extractExpr {source: array var name} {dest: array var name} {regexp grep regexp}
+  # Extracts from an source elements into dest matching a regular expression regex.
+  # Updates source array with remaining elements.
 
   local name="$1"
   local dest="$2"
@@ -18,7 +19,7 @@ function extractExpr() {
   local tmp=/tmp/t.$$
 
   # Update destination array
-  grep "${expr}" <( for f in "${arr[@]}"; do echo "$f"; done) >$tmp
+  grep "${expr}" <(for f in "${arr[@]}"; do echo "$f"; done) >$tmp
   mapfile -t "${dest}" <$tmp
 
   # Update source array
