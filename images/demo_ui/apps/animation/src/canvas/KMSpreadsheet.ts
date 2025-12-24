@@ -17,37 +17,41 @@ class KMSpreadsheet extends KMCanvas {
     x = new KMAxis(true);
     y = new KMAxis(false);
     cellManager: KMCellManager | null = null;
-    hScroll;
-    vScroll;
-    hoverX: number = 0;
-    onXGrid: boolean = false;
-    hoverY: number = 0;
-    onYGrid: boolean = false;
+    hScroll!: KMScrollbar;
+    vScroll!: KMScrollbar;
 
-    constructor(canvas: HTMLCanvasElement,
-                hScrollCanvas: HTMLCanvasElement,
-                vScrollCanvas: HTMLCanvasElement,
-                dataSource: KMDataSource) {
-        super(canvas);
+    isDrawing = false;
+    lastPosition = {x: 0, y: 0};
+
+    constructor(dataSource: KMDataSource) {
+        super(null);
 
         this.setDataSource(dataSource);
+    }
+
+    setCanvases(canvas: HTMLCanvasElement, hScrollCanvas: HTMLCanvasElement, vScrollCanvas: HTMLCanvasElement) {
+        if (this.dataSource == null)
+            return;
 
         this.hScroll = new KMScrollbar(
             hScrollCanvas,
             true,
             this.handleHScroll,
             this.x.lockCount,
-            dataSource.getNumColumns(),
+            this.dataSource.getNumColumns(),
         );
         this.vScroll = new KMScrollbar(
             vScrollCanvas,
             false,
             this.handleVScroll,
             this.y.lockCount,
-            dataSource.getNumRows()
+            this.dataSource.getNumRows()
         );
+
+        super.setCanvas(canvas);
         this.canvas.addEventListener('mousedown', this.handleMouseDown);
         this.canvas.addEventListener('mouseup', this.handleMouseUp);
+        this.canvas.addEventListener('mouseout', this.handleMouseUp);
         this.canvas.addEventListener('click', this.handleMouseClick);
         this.canvas.addEventListener('mousemove', this.handleMouseMove);
         this.setPos(this.x.lockCount, this.y.lockCount);
@@ -75,38 +79,39 @@ class KMSpreadsheet extends KMCanvas {
         }
     }
 
+    getMousePos(event: MouseEvent) {
+        const rect = this.canvas.getBoundingClientRect();
+        return {
+            x: event.clientX - rect.left,
+            y: event.clientY - rect.top,
+        };
+    };
+
+
     handleMouseDown(event: MouseEvent) {
         this.mouseDownEvent = event;
         this.mouseUpEvent = null;
+
+        this.isDrawing = true;
+        this.lastPosition = this.getMousePos(event);
     }
 
     handleMouseUp(event: MouseEvent) {
         this.mouseUpEvent = event;
+        this.isDrawing = false;
     }
 
     handleMouseMove(event: MouseEvent) {
-        if (event.buttons !== 0)
-            return;
+        let ctx = this.canvas.getContext('2d');
+        if (!ctx || !this.isDrawing) return;
+        const currentPos = this.getMousePos(event);
 
-        let offsetDetails = this.getOffsetDetails(event.offsetX, event.offsetY);
+        ctx.beginPath();
+        ctx.moveTo(this.lastPosition.x, this.lastPosition.y);
+        ctx.lineTo(currentPos.x, currentPos.y);
+        ctx.stroke();
 
-        if (this.hoverX === offsetDetails.posX && this.hoverY === offsetDetails.posY && this.onXGrid === offsetDetails.onXGrid && this.onYGrid === offsetDetails.onYGrid)
-            return;
-
-        this.hoverX = offsetDetails.posX;
-        this.onXGrid = offsetDetails.onXGrid;
-        this.hoverY = offsetDetails.posY;
-        this.onYGrid = offsetDetails.onYGrid;
-
-        let details = {
-            isHover: true,
-            hoverX: this.hoverX,
-            onXGrid: this.onXGrid,
-            hoverY: this.hoverY,
-            onYGrid: this.onYGrid,
-        }
-        this.repaint(details);
-        // console.log(`mouse ${posX}(${onXGrid ? 'Grid' : ''}), ${posY}(${onYGrid ? 'Grid' : ''})`);
+        this.lastPosition = currentPos;
     }
 
     getOffsetDetails(offsetX: number, offsetY: number) {

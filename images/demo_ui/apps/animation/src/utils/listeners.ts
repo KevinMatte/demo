@@ -8,7 +8,7 @@ function bindHandlers(obj: any) : void {
                 if (name.substring(0, 6) === 'handle' && !aThis.hasOwnProperty(name)) {
                     if (typeof aThis[name] === 'function') {
                         aThis[name] = aThis[name].bind(aThis);
-                        console.log(name);
+                        // console.log(name);
                     }
                 }
         });

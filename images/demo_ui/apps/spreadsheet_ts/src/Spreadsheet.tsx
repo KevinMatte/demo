@@ -78,7 +78,7 @@ function Spreadsheet() {
             canvas.removeEventListener('mouseup', stopDrawing);
             canvas.removeEventListener('mouseout', stopDrawing);
         };
-    }, [isDrawing, lastPosition]); // Dependencies ensure redraw when drawing state changes
+    }, [isResized, isDrawing, lastPosition]); // Dependencies ensure redraw when drawing state changes
 
     // return (
     //     <canvas ref={canvasRef} width="800" height="600" style={{ border: '1px solid black' }}></canvas>

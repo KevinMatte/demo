@@ -2,19 +2,25 @@ import {bindHandlers} from '../utils/listeners.ts';
 
 class KMCanvas {
     events: Record<string, UIEvent> = {};
-    canvas: HTMLCanvasElement;
+    canvas!: HTMLCanvasElement;
     hasCapture = false
 
-    constructor(canvas: HTMLCanvasElement) {
-        this.canvas = canvas;
+    constructor(canvas: HTMLCanvasElement|null = null) {
         bindHandlers(this);
+        if (canvas)
+            this.setCanvas(canvas);
+    }
+
+    setCanvas(canvas: HTMLCanvasElement) {
+        this.canvas = canvas;
         this.canvas.addEventListener('mousedown', this.handleSaveMouseEvent);
         window.addEventListener('resize', this.handleResize);
         this.handleResize(new UIEvent('resize', {}));
     }
 
     destroy() {
-        this.canvas.removeEventListener('mousedown', this.handleSaveMouseEvent);
+        if (this.canvas)
+            this.canvas.removeEventListener('mousedown', this.handleSaveMouseEvent);
         window.removeEventListener('resize', this.handleResize);
         this.disableCapture();
     }

@@ -4,29 +4,16 @@
 import {useRef, useEffect, useState} from 'react';
 import './canvas/css/KMSpreadsheet.css'
 import {KMSpreadsheet} from "./canvas/KMSpreadsheet.ts";
-import {DataSource} from "./dataSource.ts";
 
-function Spreadsheet() {
+function Spreadsheet({kmSpreadSheet}: {kmSpreadSheet: KMSpreadsheet}) {
     const spreadSheetRef = useRef<HTMLCanvasElement>(null);
     const vscrollRef = useRef<HTMLCanvasElement>(null);
     const hscrollRef = useRef<HTMLCanvasElement>(null);
-    const [isDrawing, setIsDrawing] = useState(false);
-    const [lastPosition, setLastPosition] = useState({x: 0, y: 0});
     const [isResized, setIsResized] = useState(false);
     const [_kmSpreadsheet, setKMSpreadsheet] = useState<KMSpreadsheet|null>(null);
-    const dataSource = new DataSource(100, 200);
 
     useEffect(() => {
         const canvas: any = spreadSheetRef.current as HTMLCanvasElement;
-        const ctx = canvas.getContext('2d');
-
-        const getMousePos = (event: MouseEvent) => {
-            const rect = canvas.getBoundingClientRect();
-            return {
-                x: event.clientX - rect.left,
-                y: event.clientY - rect.top,
-            };
-        };
 
         const handleResize = () => {
             canvas.width = canvas.offsetWidth;
@@ -34,51 +21,20 @@ function Spreadsheet() {
         };
 
 
-        const startDrawing = (event: MouseEvent) => {
-            setIsDrawing(true);
-            setLastPosition(getMousePos(event));
-        };
-
-        const draw = (event: MouseEvent) => {
-            if (!ctx || !isDrawing) return;
-            const currentPos = getMousePos(event);
-
-            ctx.beginPath();
-            ctx.moveTo(lastPosition.x, lastPosition.y);
-            ctx.lineTo(currentPos.x, currentPos.y);
-            ctx.stroke();
-
-            setLastPosition(currentPos);
-        };
-
-        const stopDrawing = () => {
-            setIsDrawing(false);
-        };
-
-        canvas.addEventListener('mousedown', startDrawing);
-        canvas.addEventListener('mousemove', draw);
-        canvas.addEventListener('mouseup', stopDrawing);
-        canvas.addEventListener('mouseout', stopDrawing); // Stop drawing if mouse leaves canvas
         window.addEventListener('resize', handleResize);
         if (!isResized) {
             setIsResized(true);
             handleResize();
             if (spreadSheetRef.current && hscrollRef.current && vscrollRef.current) {
-                let ss = new KMSpreadsheet(spreadSheetRef.current,
+                kmSpreadSheet.setCanvases(spreadSheetRef.current,
                     hscrollRef.current,
-                    vscrollRef.current,
-                    dataSource);
-                setKMSpreadsheet(ss);
+                    vscrollRef.current);
+                setKMSpreadsheet(kmSpreadSheet);
             }
         }
 
-        return () => {
-            canvas.removeEventListener('mousedown', startDrawing);
-            canvas.removeEventListener('mousemove', draw);
-            canvas.removeEventListener('mouseup', stopDrawing);
-            canvas.removeEventListener('mouseout', stopDrawing);
-        };
-    }, [isDrawing, lastPosition]); // Dependencies ensure redraw when drawing state changes
+        return () => {};
+    }, [isResized]); // Dependencies ensure redraw when drawing state changes
 
     // return (
     //     <canvas ref={canvasRef} width="800" height="600" style={{ border: '1px solid black' }}></canvas>
