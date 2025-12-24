@@ -122,7 +122,7 @@ class KMScrollbar extends KMCanvas {
 
     handleResize(event : UIEvent){
         super.handleResize(event);
-        this.setCanvasDimenstions();
+        this.setCanvasDimensions();
         if (this.hasOwnProperty('onX')) {
             this._updateCanvasRange();
             this.redraw();

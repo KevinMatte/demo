@@ -1,5 +1,5 @@
 // TODO: Min scrollbar size
-// TODO: Zoom shouldn't impace scrollbar width
+// TODO: Zoom shouldn't impact scrollbar width
 import {KMCanvas} from "./KMParts.ts";
 
 class KMScrollbar extends KMCanvas {
@@ -122,7 +122,7 @@ class KMScrollbar extends KMCanvas {
 
     handleResize(event : UIEvent){
         super.handleResize(event);
-        this.setCanvasDimenstions();
+        this.setCanvasDimensions();
         if (this.hasOwnProperty('onX')) {
             this._updateCanvasRange();
             this.redraw();

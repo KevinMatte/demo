@@ -1,22 +1,8 @@
-.km_spd_col_label {
-    font-weight: bold;
-    background: beige;
-}
-.km_spd_row_label {
-    font-weight: bold;
-    background: azure;
-}
 .km_spd_cell {
     font: bold 16px serif;
     background: white;
     position:relative;
     overflow: hidden ;
-}
-.km_spd_col_label_height {
-    height: 60px;
-}
-.km_spd_row_label_width {
-    width: 90px;
 }
 .km_spd_scroll_width {
     position: absolute;

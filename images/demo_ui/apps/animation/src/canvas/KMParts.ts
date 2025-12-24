@@ -25,13 +25,13 @@ class KMCanvas {
         this.disableCapture();
     }
 
-    setCanvasDimenstions() {
+    setCanvasDimensions() {
         this.canvas.width = this.canvas.offsetWidth;
         this.canvas.height = this.canvas.offsetHeight;
     }
 
     handleResize(_ev: UIEvent) {
-        this.setCanvasDimenstions();
+        this.setCanvasDimensions();
     }
 
     handleClickEvent(_ev: MouseEvent) {
@@ -146,113 +146,4 @@ class KMDraw extends KMCanvas {
     }
 }
 
-class KMGridLine {
-    vertical: boolean;
-    lines: Record<string, any> = {};
-    gridSize: number;
-    nextStart: number;
-
-    constructor(vertical: boolean, lines: {}) {
-        this.vertical = vertical;
-        this.lines = lines;
-
-        this.gridSize = 0;
-        for (let lineSettingKey in this.lines) {
-            let lineSetting: any = this.lines[lineSettingKey];
-            if (typeof lineSetting === 'number')
-                this.gridSize += lineSetting;
-            else if (typeof lineSetting === 'object')
-                this.gridSize += lineSetting['lineWidth'];
-        }
-        this.nextStart = 0;
-    }
-
-    draw(ctx: CanvasRenderingContext2D, start: number, end: number) {
-        ctx.save();
-        for (let lineKey in this.lines) {
-            let line: any = this.lines[lineKey];
-            if (typeof line === 'number') {
-                start += line;
-            } else {
-                ctx.beginPath();
-                Object.assign(ctx, line);
-                let pos = start + (line.lineWidth + 1) / 2;
-                if (this.vertical) {
-                    ctx.moveTo(pos, 0);
-                    ctx.lineTo(pos, end);
-                } else {
-                    ctx.moveTo(0, pos);
-                    ctx.lineTo(end, pos);
-                }
-                ctx.stroke();
-                start += line.lineWidth;
-            }
-        }
-        ctx.restore();
-        this.nextStart = start;
-        return start;
-    }
-}
-
-class KMAxis {
-    isX: boolean = true;
-    lockCount: number;
-    viewPos: number;
-    viewMax: number;
-    scrollMax: number;
-    max: number;
-    gridLines0: KMGridLine;
-    gridLines: KMGridLine;
-    gridLinesLabel: KMGridLine;
-
-    constructor(isX: boolean) {
-        this.isX = isX;
-        this.lockCount = 1;
-        this.viewPos = 0;
-        this.viewMax = 0;
-        this.scrollMax = 0;
-        this.max = 0;
-        this.gridLines0 = new KMGridLine(this.isX,
-            [
-                {lineWidth: 1, strokeStyle: 'black'},
-            ]
-        );
-        this.gridLines = new KMGridLine(this.isX,
-            [
-                {lineWidth: 1, strokeStyle: 'black'},
-            ]
-        );
-        this.gridLinesLabel = new KMGridLine(
-            this.isX,
-            [
-                {lineWidth: 2, strokeStyle: 'grey'},
-                {lineWidth: 2, strokeStyle: 'black'},
-                {lineWidth: 2, strokeStyle: 'grey'},
-            ]
-        );
-    }
-
-    getNextPos(pos: number) {
-        if (pos === -1)
-            pos = 0;
-        else if (pos === this.lockCount - 1 && pos < this.viewPos)
-            pos = this.viewPos;
-        else
-            pos++;
-        return pos;
-    }
-
-    getGridLines(pos: number) {
-        let gridLines;
-        if (pos === 0)
-            gridLines = this.gridLines0;
-        else if (pos === this.viewPos)
-            gridLines = this.gridLinesLabel;
-        else
-            gridLines = this.gridLines;
-        return gridLines;
-    }
-
-}
-
-export {KMDraw, KMCanvas, KMGridLine, KMAxis};
+export {KMDraw, KMCanvas};

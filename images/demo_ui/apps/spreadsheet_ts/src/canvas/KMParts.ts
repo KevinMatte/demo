@@ -19,13 +19,13 @@ class KMCanvas {
         this.disableCapture();
     }
 
-    setCanvasDimenstions() {
+    setCanvasDimensions() {
         this.canvas.width = this.canvas.offsetWidth;
         this.canvas.height = this.canvas.offsetHeight;
     }
 
     handleResize(_ev: UIEvent) {
-        this.setCanvasDimenstions();
+        this.setCanvasDimensions();
     }
 
     handleClickEvent(_ev: MouseEvent) {
