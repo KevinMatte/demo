@@ -23,3 +23,10 @@
   padding: 0;
   display: inline;
 }
+
+.menuBar {
+  background-color: #f1eeee;
+  border-style: double none solid none;
+  border-width: 6px 0 1px 0;
+  border-color: black;
+}

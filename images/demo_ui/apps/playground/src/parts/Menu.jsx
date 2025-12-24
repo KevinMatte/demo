@@ -28,7 +28,7 @@ export default function Menu(props) {
     }
 
     return (
-        <div>
+        <div className={menuCss.menuBar}>
             <div className={menuCss.menu}>
                 {Object.keys(menu).map(name => {
                         return getItemRenderer(menu, name, {handler, ...menuProps, isSelected: name === pageName});
