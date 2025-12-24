@@ -21,7 +21,7 @@ function TabPages({tabMenu, key: _key}) {
     let pageDefn = tabMenu[pageName];
     return (
         <div className={appCSS.app}>
-            <Menu handler={menuHandler} menu={tabMenu} selectedMenuName={pageName} style={{margin: "10px 0 10px 10px"}}/>
+            <Menu handler={menuHandler} menu={tabMenu} selectedMenuName={pageName}/>
             {pageDefn.page}
         </div>
     )
