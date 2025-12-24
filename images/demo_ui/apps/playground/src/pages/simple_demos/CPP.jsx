@@ -36,7 +36,7 @@ const toolDocs =
 ;
 export const toolDefn = {
     "title": "Demo: C++ Microservices Example",
-    "description": <u><b>C++ Microservices Example</b></u>,
+    "description": <b>C++ Microservices Example</b>,
     "summary": <>JSX -&gt; Apache -&gt; Apache MOD_PROXY -&gt; Docker Container -&gt; CPP Microservice</>,
 };
 

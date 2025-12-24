@@ -23,7 +23,7 @@ export const toolDocs = (
 );
 export const toolDefn = {
     "title": "Demo: Apache PHP Example",
-    "description": <u><b>Apache PHP Example</b></u>,
+    "description": <b>Apache PHP Example2</b>,
     "summary": <>JSX -&gt; Apache -&gt; Apache PHP WSGI -&gt; Python Script</>,
 };
 

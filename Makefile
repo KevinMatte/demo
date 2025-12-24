@@ -88,6 +88,7 @@ local_mounted: generateDotEnv.sh
 	bin/publishVersion.sh
 	${MAKE} -C . build
 	docker compose up --remove-orphans --detach
+	docker exec demo_ui chmod -R go+w /var/www
 	rm -f tmp/build.locked
 	@echo "Open: http://localhost:8080/"
 

@@ -50,7 +50,7 @@ export default function Java() {
 
 export const toolDefn = {
     "title": "Demo: Java Servlet Example",
-    "description": <u><b>Java Servlet Example</b></u>,
+    "description": <b>Java Servlet Example</b>,
     "summary": <>JSX -&gt; Apache -&gt; MOD_PROXY -&gt; Docker Container -&gt; Tomcat  -&gt; Tomcat Servlet</>,
 };
 

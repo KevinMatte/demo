@@ -32,7 +32,7 @@ export const toolDocs = (
 );
 export const toolDefn = {
     "title": "Demo: WSGI Python Example",
-    "description": <b><u>WSGI Python Example</u></b>,
+    "description": <b>WSGI Python Example</b>,
     "summary": <>JSX -&gt; Apache -&gt; Apache MOD_WSGI -&gt; Python Script</>,
 };
 
