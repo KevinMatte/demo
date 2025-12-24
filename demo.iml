@@ -7,6 +7,7 @@
       <sourceFolder url="file://$MODULE_DIR$/images/demo_ui/apps/playground/src/static/var/www/html" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/images/demo_ui/apps/spreadsheet_ts" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/images/demo_ui/apps/animation" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/images/demo_ui/apps/playground/static/var/www/html/public" type="java-resource" />
       <excludeFolder url="file://$MODULE_DIR$/bin/venv" />
       <excludeFolder url="file://$MODULE_DIR$/images/demo_ui/build" />
       <excludeFolder url="file://$MODULE_DIR$/images/demo_mariadb/build" />
@@ -19,6 +20,7 @@
       <excludeFolder url="file://$MODULE_DIR$/images/demo_ui/apps/homepage/build" />
       <excludeFolder url="file://$MODULE_DIR$/images/demo_ui/apps/spreadsheet/build" />
       <excludeFolder url="file://$MODULE_DIR$/images/demo_ui/apps/spreadsheet_ts/build" />
+      <excludeFolder url="file://$MODULE_DIR$/images/demo_ui/apps/playground/static/var/www/html" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
