@@ -1,8 +1,8 @@
 import './App.css'
-import Spreadsheet from "./Spreadsheet.tsx";
-import {KMSpreadsheet} from "./canvas/KMSpreadsheet.ts";
+import Paint from "./Paint.tsx";
+import {KMPaint} from "./canvas/KMPaint.ts";
 
-function App({kmSpreadSheet}: {kmSpreadSheet: KMSpreadsheet}) {
+function App({kmPaint}: {kmPaint: KMPaint}) {
     const queryString = window.location.search;
     const queryParams = new URLSearchParams(queryString);
     const back = queryParams.get('back');
@@ -23,7 +23,7 @@ function App({kmSpreadSheet}: {kmSpreadSheet: KMSpreadsheet}) {
             <div className="flexfixed" style={{height: "20px"}}></div>
             <div className="flexhdisplay flexvfill">
                 <div className="flexfixed" style={{width: "20px"}}></div>
-                <Spreadsheet kmSpreadSheet={kmSpreadSheet}></Spreadsheet>
+                <Paint kmSpreadSheet={kmPaint}></Paint>
                 <div className="flexfixed" style={{width: "20px"}}></div>
             </div>
             <div className="flexfixed" style={{height: "20px"}}></div>

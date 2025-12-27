@@ -3,7 +3,7 @@
 import {KMCanvas} from "./KMParts.ts";
 import KMScrollbar from "./KMScrollbar.ts";
 
-class KMSpreadsheet extends KMCanvas {
+class KMPaint extends KMCanvas {
     mouseDownEvent: MouseEvent | null = null;
     mouseUpEvent: MouseEvent | null = null;
     hScroll!: KMScrollbar;
@@ -90,4 +90,4 @@ class KMSpreadsheet extends KMCanvas {
 
 }
 
-export {KMSpreadsheet};
+export {KMPaint};

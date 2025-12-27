@@ -2,12 +2,12 @@ import {StrictMode} from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
-import {KMSpreadsheet} from "./canvas/KMSpreadsheet.ts";
+import {KMPaint} from "./canvas/KMPaint.ts";
 
-let kmSpreadSheet = new KMSpreadsheet();
+let kmPaint = new KMPaint();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App kmSpreadSheet={kmSpreadSheet}/>
+    <App kmPaint={kmPaint}/>
   </StrictMode>,
 )
