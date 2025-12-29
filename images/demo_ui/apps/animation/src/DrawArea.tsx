@@ -20,6 +20,8 @@ export function DrawArea(
     }, []);
 
     return (
-        <canvas id={id} ref={drawPanelRef} {...props}>Support for HTML Canvas required.</canvas>
+        <div id="DrawAreaCanvas" className="fill">
+            <canvas id={id} ref={drawPanelRef} {...props}>Support for HTML Canvas required.</canvas>
+        </div>
     );
 }

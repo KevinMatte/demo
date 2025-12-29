@@ -10,20 +10,21 @@ function Paint() {
     const [y, _setY] = useState(0);
 
     return (
-        <>
+        <div className="fill flexVDisplay">
             <div className="flexHDisplay flexVFill">
-                <div className="km_spd_cell flexHFill" style={{background: 'blue'}}>
+                <div id="div4DrawArea" className="flexHFill" style={{overflow: 'hidden'}}>
                     <DrawArea className="fill" topX={x} topY={y}></DrawArea>
                 </div>
                 <div className="flexFixed">
-                    <canvas ref={vscrollRef} className="km_spd_row_scroll" style={{background: 'green'}}></canvas>
+                    <canvas ref={vscrollRef} className="km_spd_row_scroll"></canvas>
                 </div>
             </div>
             <div className="flexFixed flexHDisplay">
-                <canvas ref={hscrollRef} className="flexHFill km_spd_col_scroll" style={{background: 'yellow'}}></canvas>
+                <canvas ref={hscrollRef} className="flexHFill km_spd_col_scroll km_spd_scroll_thickness"></canvas>
+                {/*Bottom right space*/}
                 <div className="flexFixed km_spd_scroll_thickness"></div>
             </div>
-        </>
+        </div>
     )
 }
 
