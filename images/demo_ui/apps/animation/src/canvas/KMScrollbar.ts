@@ -1,6 +1,6 @@
 // TODO: Min scrollbar size
 // TODO: Zoom shouldn't impact scrollbar width
-import {KMCanvas} from "./KMParts.ts";
+import KMCanvas from "./KMCanvas.ts";
 
 class KMScrollbar extends KMCanvas {
     dragStart: number | null;

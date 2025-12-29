@@ -11,34 +11,35 @@
   }
 }
 
-.flexvdisplay {
+.flexVDisplay {
   display: flex;
   flex-wrap: nowrap;
   flex-direction: column;
 }
 
-.flexvfill {
+.flexVFill {
   flex: 1;
   align-items: stretch;
   overflow: auto;
 }
 
-.flexhdisplay {
+.flexHDisplay {
   display: flex;
   flex-wrap: nowrap;
 }
 
-.flexhdisplaywrap {
+.flexHDisplayWrap {
   display: flex;
   flex-wrap: wrap;
 }
 
-.flexhfill {
+.flexHFill {
   flex: 1;
   overflow: auto;
 }
 
-.flexfixed {
+.flexFixed {
+  overflow: hidden;
 }
 
 .fill {
@@ -56,5 +57,18 @@
   width: 100%;
   height: 100%;
   overflow: auto;
+}
+
+.km_spd_scroll_thickness {
+  width: 15px;
+  height: 100%;
+}
+.km_spd_row_scroll {
+  width: 15px;
+  height: 100%;
+}
+.km_spd_col_scroll {
+  width: 100%;
+  height: 15px;
 }
 

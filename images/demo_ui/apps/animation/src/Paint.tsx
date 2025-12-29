@@ -1,46 +1,27 @@
-// import './App.css'
-// import { useRef, useEffect, useState } from 'react';
-//
-import {useRef, useEffect, useState} from 'react';
+import './App.css'
+import {useRef, useState} from 'react';
 import './canvas/css/Paint.css'
-import {KMPaint} from "./canvas/KMPaint.ts";
+import {DrawArea} from "./DrawArea.tsx";
 
-function Paint({kmSpreadSheet}: {kmSpreadSheet: KMPaint}) {
-    const drawPanelRef = useRef<HTMLCanvasElement>(null);
+function Paint() {
     const vscrollRef = useRef<HTMLCanvasElement>(null);
     const hscrollRef = useRef<HTMLCanvasElement>(null);
-    const [isResized, setIsResized] = useState(false);
-
-    useEffect(() => {
-        const canvas: any = drawPanelRef.current as HTMLCanvasElement;
-
-        const handleResize = () => {
-            canvas.width = canvas.offsetWidth;
-            canvas.height = canvas.offsetHeight;
-        };
-
-        window.addEventListener('resize', handleResize);
-        if (!isResized) {
-            setIsResized(true);
-            handleResize();
-            if (drawPanelRef.current && hscrollRef.current && vscrollRef.current) {
-                kmSpreadSheet.setCanvases(drawPanelRef.current,
-                    hscrollRef.current,
-                    vscrollRef.current);
-            }
-        }
-
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, [isResized]); // Dependencies ensure redraw when drawing state changes
+    const [x, _setX] = useState(0);
+    const [y, _setY] = useState(0);
 
     return (
         <>
-            <div className="km_spd_cell flexhfill" style={{border: '1px solid black'}}>
-                <canvas ref={drawPanelRef} className="fill">Support for HTML Canvas required.</canvas>
-                <canvas ref={vscrollRef} className="km_spd_scroll_width"></canvas>
-                <canvas ref={hscrollRef} className="km_spd_scroll_height"></canvas>
+            <div className="flexHDisplay flexVFill">
+                <div className="km_spd_cell flexHFill" style={{background: 'blue'}}>
+                    <DrawArea className="fill" topX={x} topY={y}></DrawArea>
+                </div>
+                <div className="flexFixed">
+                    <canvas ref={vscrollRef} className="km_spd_row_scroll" style={{background: 'green'}}></canvas>
+                </div>
+            </div>
+            <div className="flexFixed flexHDisplay">
+                <canvas ref={hscrollRef} className="flexHFill km_spd_col_scroll" style={{background: 'yellow'}}></canvas>
+                <div className="flexFixed km_spd_scroll_thickness"></div>
             </div>
         </>
     )

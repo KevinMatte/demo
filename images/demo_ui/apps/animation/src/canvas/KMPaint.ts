@@ -1,13 +1,8 @@
-// TODO: JSON Configurable
-// TODO: Edit
-import {KMCanvas} from "./KMParts.ts";
-import KMScrollbar from "./KMScrollbar.ts";
+import KMCanvas from "./KMCanvas.ts";
 
 class KMPaint extends KMCanvas {
     mouseDownEvent: MouseEvent | null = null;
     mouseUpEvent: MouseEvent | null = null;
-    hScroll!: KMScrollbar;
-    vScroll!: KMScrollbar;
 
     isDrawing = false;
     lastPosition = {x: 0, y: 0};
@@ -16,18 +11,7 @@ class KMPaint extends KMCanvas {
         super(null);
     }
 
-    setCanvases(canvas: HTMLCanvasElement, hScrollCanvas: HTMLCanvasElement, vScrollCanvas: HTMLCanvasElement) {
-        this.hScroll = new KMScrollbar(
-            hScrollCanvas,
-            true,
-            this.handleHScroll,
-        );
-        this.vScroll = new KMScrollbar(
-            vScrollCanvas,
-            false,
-            this.handleVScroll,
-        );
-
+    setProps(canvas: HTMLCanvasElement, _topX: number, _topY: number) {
         super.setCanvas(canvas);
         this.canvas.addEventListener('mousedown', this.handleMouseDown);
         this.canvas.addEventListener('mouseup', this.handleMouseUp);
@@ -40,15 +24,6 @@ class KMPaint extends KMCanvas {
         if (!this.mouseDownEvent)
             return;
     }
-
-    getMousePos(event: MouseEvent) {
-        const rect = this.canvas.getBoundingClientRect();
-        return {
-            x: event.clientX - rect.left,
-            y: event.clientY - rect.top,
-        };
-    };
-
 
     handleMouseDown(event: MouseEvent) {
         this.mouseDownEvent = event;
@@ -74,18 +49,6 @@ class KMPaint extends KMCanvas {
         ctx.stroke();
 
         this.lastPosition = currentPos;
-    }
-
-    handleResize(event: UIEvent) {
-        super.handleResize(event)
-    }
-
-    handleHScroll(_pos: number) {
-        return;
-    }
-
-    handleVScroll(_pos: number) {
-        return;
     }
 
 }

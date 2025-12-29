@@ -12,7 +12,7 @@ function Spreadsheet() {
     const hscrollRef = useRef<HTMLCanvasElement>(null);
     const [isDrawing, setIsDrawing] = useState(false);
     const [lastPosition, setLastPosition] = useState({x: 0, y: 0});
-    const [isResized, setIsResized] = useState(false);
+    const [isInitialized, setIsInitialized] = useState(false);
     const [_kmSpreadsheet, setKMSpreadsheet] = useState<KMSpreadsheet|null>(null);
     const dataSource = new DataSource(100, 200);
 
@@ -31,6 +31,7 @@ function Spreadsheet() {
         const handleResize = () => {
             canvas.width = canvas.offsetWidth;
             canvas.height = canvas.offsetHeight;
+            _kmSpreadsheet?.handleResize(new UIEvent('resize', {}));
         };
 
 
@@ -60,8 +61,8 @@ function Spreadsheet() {
         canvas.addEventListener('mouseup', stopDrawing);
         canvas.addEventListener('mouseout', stopDrawing); // Stop drawing if mouse leaves canvas
         window.addEventListener('resize', handleResize);
-        if (!isResized) {
-            setIsResized(true);
+        if (!isInitialized) {
+            setIsInitialized(true);
             handleResize();
             if (spreadSheetRef.current && hscrollRef.current && vscrollRef.current) {
                 let ss = new KMSpreadsheet(spreadSheetRef.current,
@@ -78,7 +79,7 @@ function Spreadsheet() {
             canvas.removeEventListener('mouseup', stopDrawing);
             canvas.removeEventListener('mouseout', stopDrawing);
         };
-    }, [isResized, isDrawing, lastPosition]); // Dependencies ensure redraw when drawing state changes
+    }, [isInitialized, isDrawing, lastPosition]); // Dependencies ensure redraw when drawing state changes
 
     // return (
     //     <canvas ref={canvasRef} width="800" height="600" style={{ border: '1px solid black' }}></canvas>
