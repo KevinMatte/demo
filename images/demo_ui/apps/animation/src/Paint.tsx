@@ -1,11 +1,11 @@
 import './App.css'
-import {useRef, useState} from 'react';
+import {useState} from 'react';
 import './canvas/css/Paint.css'
 import {DrawArea} from "./DrawArea.tsx";
+import ScrollBar from "./ScrollBar.tsx";
+import {Orientation} from "./ScrollBar.tsx";
 
 function Paint() {
-    const vscrollRef = useRef<HTMLCanvasElement>(null);
-    const hscrollRef = useRef<HTMLCanvasElement>(null);
     const [x, _setX] = useState(0);
     const [y, _setY] = useState(0);
 
@@ -15,12 +15,10 @@ function Paint() {
                 <div id="div4DrawArea" className="flexHFill" style={{overflow: 'hidden'}}>
                     <DrawArea className="fill" topX={x} topY={y}></DrawArea>
                 </div>
-                <div className="flexFixed">
-                    <canvas ref={vscrollRef} className="km_spd_row_scroll"></canvas>
-                </div>
+                <ScrollBar extraClassNames="flexFixed" orientation={Orientation.vertical}/>
             </div>
             <div className="flexFixed flexHDisplay">
-                <canvas ref={hscrollRef} className="flexHFill km_spd_col_scroll km_spd_scroll_thickness"></canvas>
+                <ScrollBar extraClassNames="flexHFill" orientation={Orientation.horizontal}/>
                 {/*Bottom right space*/}
                 <div className="flexFixed km_spd_scroll_thickness"></div>
             </div>

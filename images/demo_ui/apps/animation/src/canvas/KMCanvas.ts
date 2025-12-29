@@ -34,10 +34,8 @@ class KMCanvas {
     }
 
     setCanvasDimensions() {
-        setTimeout(() => {
-            this.canvas.width = this.canvas.offsetWidth;
-            this.canvas.height = this.canvas.offsetHeight;
-        });
+        this.canvas.width = this.canvas.offsetWidth;
+        this.canvas.height = this.canvas.offsetHeight;
     }
 
     handleResize(_ev: UIEvent) {

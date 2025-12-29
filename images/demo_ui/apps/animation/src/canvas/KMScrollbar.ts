@@ -21,7 +21,7 @@ class KMScrollbar extends KMCanvas {
     fromLineStart: number = 0;
     canvasRange: number = 0;
 
-    constructor(canvas: HTMLCanvasElement,
+    constructor(canvas: HTMLCanvasElement | null,
                 onX: boolean,
                 listener: (pos: number) => void,
                 minIndex = 0,
@@ -47,11 +47,6 @@ class KMScrollbar extends KMCanvas {
         this.trimY = this.onX ? 0 : this.trim;
 
         this._setRange(minIndex, maxIndex, visibleIndices, step);
-
-        this.canvas.addEventListener('mousemove', this.handleMouseMove);
-        this.canvas.addEventListener('mousedown', this.handleMouseDown);
-        this.canvas.addEventListener('click', this.handleClickEvent);
-        this.enableCapture();
     }
 
     setVisible(visible: number) {
@@ -130,8 +125,20 @@ class KMScrollbar extends KMCanvas {
     }
 
     _updateCanvasRange() {
-        this.canvasRange = (this.onX ? this.canvas.width : this.canvas.height) - this.trim - this.startDraw;
-        this.lineLength = this.visibleIndices / this.indexRange * this.canvasRange;
+        if (this.canvas) {
+            this.canvasRange = (this.onX ? this.canvas.width : this.canvas.height) - this.trim - this.startDraw;
+            this.lineLength = this.visibleIndices / this.indexRange * this.canvasRange;
+        }
+    }
+
+    setCanvas(canvasElement: HTMLCanvasElement) {
+        super.setCanvas(canvasElement);
+        this.canvas.addEventListener('mousemove', this.handleMouseMove);
+        this.canvas.addEventListener('mousedown', this.handleMouseDown);
+        this.canvas.addEventListener('click', this.handleClickEvent);
+        this.enableCapture();
+        this._updateCanvasRange();
+        this.redraw();
     }
 
     setIndex(index: number) {
