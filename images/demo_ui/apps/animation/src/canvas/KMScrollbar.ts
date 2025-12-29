@@ -2,6 +2,8 @@
 // TODO: Zoom shouldn't impact scrollbar width
 import KMCanvas from "./KMCanvas.ts";
 
+export type KMScrollbarListener = (pos: number) => void;
+
 class KMScrollbar extends KMCanvas {
     dragStart: number | null;
     onX: boolean;
@@ -9,21 +11,17 @@ class KMScrollbar extends KMCanvas {
     minIndex: number;
     maxIndex: number;
     visibleIndices: number;
-    startDraw: number;
     indexRange: number;
     indexStep: number;
     index: number;
     lineLength: number;
-    trim: number;
-    trimX: number;
-    trimY: number;
     lineStart: number = 0;
     fromLineStart: number = 0;
     canvasRange: number = 0;
 
     constructor(canvas: HTMLCanvasElement | null,
                 onX: boolean,
-                listener: (pos: number) => void,
+                listener: KMScrollbarListener,
                 minIndex = 0,
                 maxIndex = 100,
                 visibleIndices = 30,
@@ -36,15 +34,11 @@ class KMScrollbar extends KMCanvas {
         this.maxIndex = maxIndex;
         this.visibleIndices = visibleIndices;
 
-        this.startDraw = 0;
         this.indexRange = 0;
         this.indexStep = step;
 
         this.index = this.minIndex;
         this.lineLength = this.visibleIndices / this.indexRange * this.canvasRange;
-        this.trim = 20;
-        this.trimX = this.onX ? this.trim : 0;
-        this.trimY = this.onX ? 0 : this.trim;
 
         this._setRange(minIndex, maxIndex, visibleIndices, step);
     }
@@ -58,10 +52,9 @@ class KMScrollbar extends KMCanvas {
         this.setIndex(this.index);
     }
 
-    setRange(startDraw: number, minValue = 0, maxValue = 100, visible = 30, step = 1) {
+    setRange(minValue = 0, maxValue = 100, visible = 30, step = 1) {
         let hasChange = (this.maxIndex !== maxValue) || (this.minIndex !== minValue) ||
             (this.visibleIndices !== visible) || (this.indexStep !== step);
-        this.startDraw = startDraw;
         this._setRange(minValue, maxValue, visible, step);
         if (hasChange)
             this.redraw();
@@ -126,7 +119,7 @@ class KMScrollbar extends KMCanvas {
 
     _updateCanvasRange() {
         if (this.canvas) {
-            this.canvasRange = (this.onX ? this.canvas.width : this.canvas.height) - this.trim - this.startDraw;
+            this.canvasRange = (this.onX ? this.canvas.width : this.canvas.height);
             this.lineLength = this.visibleIndices / this.indexRange * this.canvasRange;
         }
     }
@@ -150,15 +143,13 @@ class KMScrollbar extends KMCanvas {
         let lineStart = (index - this.minIndex) * this.canvasRange / this.indexRange;
         if (lineStart + this.lineLength > this.canvasRange)
             lineStart = this.canvasRange - this.lineLength;
-        lineStart += this.startDraw;
-
 
         let ctx = this.canvas.getContext('2d');
         if (!ctx)
             return;
 
         ctx.fillStyle = "white";
-        ctx.fillRect(0, 0, this.canvas.width - (this.onX ? 0 : this.trimX), this.canvas.height - this.trimY);
+        ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         ctx.beginPath();
         let lineThickness = (this.onX ? this.canvas.height : this.canvas.width) / 2;
         ctx.lineWidth = lineThickness;
@@ -179,7 +170,7 @@ class KMScrollbar extends KMCanvas {
 
     convertLineStartToIndex(lineStart: number) {
         let index;
-        index = this.minIndex + (this.indexRange / this.canvasRange * (lineStart - this.startDraw));
+        index = this.minIndex + (this.indexRange / this.canvasRange * lineStart);
         if (index < this.minIndex)
             index = this.minIndex;
         else if (index > this.maxIndex)
