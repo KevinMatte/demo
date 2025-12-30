@@ -19,7 +19,7 @@ function ScrollBar(
     {
         orientation: OrientationType,
         extraClassNames: string,
-        [x:string]: any;
+        [_prop:string]: any;
     }
 ) {
     const classNames = `${extraClassNames} ${orientation}`;
