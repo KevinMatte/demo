@@ -4,7 +4,7 @@ import Canvas from "../canvas/Canvas.ts";
 
 export type CanvasScrollbarListener = (pos: number) => void;
 
-class CanvasScrollBar extends Canvas {
+class ScrollBarCanvas extends Canvas {
     dragStart: number | null;
     onX: boolean;
     listener: (pos: number) => void;
@@ -182,4 +182,4 @@ class CanvasScrollBar extends Canvas {
     }
 }
 
-export default CanvasScrollBar;
+export default ScrollBarCanvas;

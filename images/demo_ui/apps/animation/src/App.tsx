@@ -1,5 +1,5 @@
 import '@/App.css'
-import ScrollLineDrawer from "./ScrollLineDrawer.tsx";
+import PaintApp from "./PaintApp.tsx";
 
 function App() {
     const queryString = window.location.search;
@@ -22,7 +22,7 @@ function App() {
                     {backElement}
                 </div>
                 <div className="flexVFill">
-                    <ScrollLineDrawer/>
+                    <PaintApp/>
                 </div>
             </div>
         </>

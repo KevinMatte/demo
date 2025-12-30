@@ -1,6 +1,6 @@
 import Canvas from "../canvas/Canvas.ts";
 
-class CanvasLineDrawer extends Canvas {
+class LineDrawer extends Canvas {
     mouseDownEvent: MouseEvent | null = null;
     mouseUpEvent: MouseEvent | null = null;
 
@@ -18,6 +18,17 @@ class CanvasLineDrawer extends Canvas {
         this.canvas.addEventListener('mouseout', this.handleMouseUp);
         this.canvas.addEventListener('click', this.handleMouseClick);
         this.canvas.addEventListener('mousemove', this.handleMouseMove);
+    }
+
+    destroy() {
+        super.destroy();
+        if (this.canvas) {
+            this.canvas.removeEventListener('mousedown', this.handleMouseDown);
+            this.canvas.removeEventListener('mouseup', this.handleMouseUp);
+            this.canvas.removeEventListener('mouseout', this.handleMouseUp);
+            this.canvas.removeEventListener('click', this.handleMouseClick);
+            this.canvas.removeEventListener('mousemove', this.handleMouseMove);
+        }
     }
 
     handleMouseClick(_event: MouseEvent) {
@@ -53,4 +64,4 @@ class CanvasLineDrawer extends Canvas {
 
 }
 
-export {CanvasLineDrawer};
+export {LineDrawer};
