@@ -7,3 +7,5 @@ function say() {
    bin/say.py " $*" 2>/dev/null
 }
 
+
+

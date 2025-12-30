@@ -1,6 +1,10 @@
 -include .env
 export
 
+.PHONY: init
+init:
+	bin/initBuild.sh
+
 .PHONY: clean
 clean:
 	$(MAKE) -C images/demo_ui build_clean
@@ -30,7 +34,6 @@ git_good:
 
 .PHONY: pre_build
 pre_build: checkDocker
-	bin/initBuild.sh
 	bin/checkJSXReferences.sh
 
 tmp/venv.timestamp: bin/requirements.txt

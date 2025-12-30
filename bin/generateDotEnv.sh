@@ -7,12 +7,6 @@ cd $(dirname $0)/..
 #
 # Note: this script is monitored by `monitorBuild.sh` and re-run when changes found here
 
-# Example ./.secrets.env
-# MARIADB_ROOT_PASSWORD="...password..."
-# DEMO_JAVA_TOMCAT_MANAGER_PASSWORD="...password..."
-# DEMO_JAVA_TOMCAT_MANAGER="...password..."
-# DEMO_JAVA_TOMCAT_ADMIN="...password..."
-
 DEMO_UI_APPS="homepage playground spreadsheet_ts animation"
 
 cat <<EOF >${1:-.env}
@@ -29,16 +23,10 @@ DEMO_CPP_USER_ID=2000
 DEMO_CPP_GROUP_NAME=demo_user
 DEMO_CPP_GROUP_ID=2000
 
-MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
 MARIADB_ADMINER_VERSION=5.4.1
 MARIADB_BACKUP_PATH=$(pwd)/images/demo_mariadb/backup
 
 $(cat ./.secrets.env)
-
-DEMO_JAVA_TOMCAT_ADMIN=admin
-DEMO_JAVA_TOMCAT_MANAGER=manager
-DEMO_JAVA_TOMCAT_MANAGER_PASSWORD=${DEMO_JAVA_TOMCAT_MANAGER_PASSWORD}
-
 
 $(cat src/docker/image_versions.ish | sed -e 's/ #.*//')
 EOF

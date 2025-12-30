@@ -20,7 +20,6 @@
       <excludeFolder url="file://$MODULE_DIR$/images/demo_ui/apps/homepage/build" />
       <excludeFolder url="file://$MODULE_DIR$/images/demo_ui/apps/spreadsheet/build" />
       <excludeFolder url="file://$MODULE_DIR$/images/demo_ui/apps/spreadsheet_ts/build" />
-      <excludeFolder url="file://$MODULE_DIR$/images/demo_ui/apps/playground/static/var/www/html" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

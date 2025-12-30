@@ -51,12 +51,12 @@ available frameworks. I started with an empty project, and incrementally added t
 
 ### Initial Setup
 
-* TODO: Test this...
 * Install packages: [installPackages.sh](bin/installPackages.sh)
+* Run `make init`
 * Set passwords in .secrets.env
 * Prevent .secrets.env from being committed: \
   `git update-index --assume-unchanged .secrets.env`
-* Optional: Setup demo_prod in /etc/hosts
+* Optional: Setup `demo_prod` in /etc/hosts or some alias host
 
 ### New session for development/testing
 

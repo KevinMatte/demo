@@ -14,7 +14,7 @@ sudo apt update
 # For Framework
 #  For 'play' used by say.py
 # -------------
-sudo apt install -y make sox libsox-fmt-mp3
+sudo apt install -y make sox libsox-fmt-mp3 pwgen
 
 # =======================
 # For demo_ui
