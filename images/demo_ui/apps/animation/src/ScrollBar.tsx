@@ -1,6 +1,5 @@
-import './canvas/css/Paint.css'
 import {useEffect, useId, useRef, useState} from "react";
-import KMScrollbar from "./canvas/KMScrollbar.ts";
+import CanvasScrollBar from "./canvas/CanvasScrollBar.ts";
 
 // 1. Define the constant values using an object literal and 'as const'
 export const Orientation = {
@@ -26,8 +25,8 @@ function ScrollBar(
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const id = useId()
 
-    function createKMScrollbar() {
-            return new KMScrollbar(
+    function createCanvasScrollbar() {
+            return new CanvasScrollBar(
                 null,
                 orientation === Orientation.horizontal,
                 (pos) => {
@@ -38,11 +37,11 @@ function ScrollBar(
             );
     }
 
-    const [kmScrollbar, _setKMScrollbar] = useState(createKMScrollbar);
+    const [canvasScrollbar, _setCanvasScrollbar] = useState(createCanvasScrollbar);
 
     useEffect(() => {
         if (canvasRef.current) {
-            kmScrollbar.setCanvas(canvasRef.current);
+            canvasScrollbar.setCanvas(canvasRef.current);
         }
     }, []);
 

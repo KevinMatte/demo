@@ -1,10 +1,10 @@
 // TODO: Min scrollbar size
 // TODO: Zoom shouldn't impact scrollbar width
-import KMCanvas from "./KMCanvas.ts";
+import Canvas from "../canvas/Canvas.ts";
 
-export type KMScrollbarListener = (pos: number) => void;
+export type CanvasScrollbarListener = (pos: number) => void;
 
-class KMScrollbar extends KMCanvas {
+class CanvasScrollBar extends Canvas {
     dragStart: number | null;
     onX: boolean;
     listener: (pos: number) => void;
@@ -21,7 +21,7 @@ class KMScrollbar extends KMCanvas {
 
     constructor(canvas: HTMLCanvasElement | null,
                 onX: boolean,
-                listener: KMScrollbarListener,
+                listener: CanvasScrollbarListener,
                 minIndex = 0,
                 maxIndex = 100,
                 visibleIndices = 30,
@@ -72,7 +72,7 @@ class KMScrollbar extends KMCanvas {
 
     handleClickEvent(event: MouseEvent) {
         let offset = this.onX ? event.offsetX : event.offsetY;
-        let mouseDownEvent = this.takeEvent();
+        let mouseDownEvent = this.takeEvent('mousedown');
 
         // Save starting position using event.
         if (mouseDownEvent !== null) {
@@ -100,7 +100,7 @@ class KMScrollbar extends KMCanvas {
             return;
 
         if (event.type !== 'mousedown')
-            this.takeEvent();
+            this.takeEvent('mousedown');
 
         let lineStartDelta = (this.onX ? event.offsetX : event.offsetY) - this.dragStart;
         let index = this.convertLineStartToIndex(this.fromLineStart + lineStartDelta);
@@ -180,4 +180,4 @@ class KMScrollbar extends KMCanvas {
     }
 }
 
-export default KMScrollbar;
+export default CanvasScrollBar;

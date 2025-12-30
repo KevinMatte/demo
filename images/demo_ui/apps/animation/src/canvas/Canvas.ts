@@ -1,6 +1,6 @@
 import {bindHandlers} from '../utils/listeners.ts';
 
-class KMCanvas {
+class Canvas {
     events: Record<string, UIEvent> = {};
     canvas!: HTMLCanvasElement;
     hasCapture = false
@@ -81,11 +81,11 @@ class KMCanvas {
         }
     }
 
-    takeEvent(): MouseEvent | null {
+    takeEvent(eventName: string): MouseEvent | null {
         let event = null;
-        if (this.events.hasOwnProperty('mousedown')) {
-            event = this.events['mousedown'];
-            delete this.events['mousedown'];
+        if (this.events.hasOwnProperty(eventName)) {
+            event = this.events[eventName];
+            delete this.events[eventName];
         }
         if (event instanceof MouseEvent)
             return event;
@@ -94,4 +94,4 @@ class KMCanvas {
     }
 }
 
-export default KMCanvas;
+export default Canvas;

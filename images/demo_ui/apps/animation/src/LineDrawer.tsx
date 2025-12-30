@@ -1,21 +1,21 @@
 import {useEffect, useId, useRef, useState} from "react";
-import {KMPaint} from "./canvas/KMPaint.ts";
+import {CanvasLineDrawer} from "./canvas/CanvasLineDrawer.ts";
 
-export function DrawArea(
+export function LineDrawer(
     {topX, topY, ...props}: { className: string, topX: number, topY: number }
 ) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const id = useId()
 
-    function createKMPaint() {
-        return new KMPaint();
+    function createLineDrawer() {
+        return new CanvasLineDrawer();
     }
 
-    const [kmPaint, _setKMPaint] = useState(createKMPaint);
+    const [lineDrawer, _setLineDrawer] = useState(createLineDrawer);
 
     useEffect(() => {
         if (canvasRef.current) {
-            kmPaint.setProps(canvasRef.current, topX, topY);
+            lineDrawer.setProps(canvasRef.current, topX, topY);
         }
     }, []);
 

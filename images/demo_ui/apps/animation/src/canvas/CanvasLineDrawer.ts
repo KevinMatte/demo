@@ -1,6 +1,6 @@
-import KMCanvas from "./KMCanvas.ts";
+import Canvas from "../canvas/Canvas.ts";
 
-class KMPaint extends KMCanvas {
+class CanvasLineDrawer extends Canvas {
     mouseDownEvent: MouseEvent | null = null;
     mouseUpEvent: MouseEvent | null = null;
 
@@ -53,4 +53,4 @@ class KMPaint extends KMCanvas {
 
 }
 
-export {KMPaint};
+export {CanvasLineDrawer};
