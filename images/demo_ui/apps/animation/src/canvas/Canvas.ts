@@ -1,17 +1,19 @@
 import {bindHandlers} from '../utils/listeners.ts';
+import ImageHolder from './ImageHolder';
 
 class Canvas {
-    canvas!: HTMLCanvasElement;
+    canvas?: HTMLCanvasElement;
+    imageHolder?: ImageHolder;
     hasCapture = false
 
-    constructor(canvas: HTMLCanvasElement|null = null) {
+
+    constructor() {
         bindHandlers(this);
-        if (canvas)
-            this.setCanvas(canvas);
     }
 
-    setCanvas(canvasElement: HTMLCanvasElement) {
+    setup(canvasElement: HTMLCanvasElement, imageHolder: ImageHolder|null = null) {
         this.canvas = canvasElement;
+        this.imageHolder = imageHolder;
         window.addEventListener('resize', this.handleResize);
         this.handleResize(new UIEvent('resize', {}));
     }

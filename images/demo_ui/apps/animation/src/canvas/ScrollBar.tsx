@@ -43,7 +43,7 @@ function ScrollBar(
 
     useEffect(() => {
         if (canvasRef.current) {
-            canvasScrollbar.setCanvas(canvasRef.current);
+            canvasScrollbar.setup(canvasRef.current);
         }
     }, []);
 

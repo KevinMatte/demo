@@ -1,4 +1,5 @@
 import Canvas from "../canvas/Canvas.ts";
+import ImageHolder from "./ImageHolder.ts";
 
 class LineDrawer extends Canvas {
     mouseDownEvent: MouseEvent | null = null;
@@ -11,8 +12,8 @@ class LineDrawer extends Canvas {
         super(null);
     }
 
-    setProps(canvas: HTMLCanvasElement, _topX: number, _topY: number) {
-        super.setCanvas(canvas);
+    setProps(imageHolder: ImageHolder, canvas: HTMLCanvasElement, _topX: number, _topY: number) {
+        super.setup(canvas, imageHolder);
         this.canvas.addEventListener('mousedown', this.handleMouseDown);
         this.canvas.addEventListener('mouseup', this.handleMouseUp);
         this.canvas.addEventListener('mouseout', this.handleMouseUp);

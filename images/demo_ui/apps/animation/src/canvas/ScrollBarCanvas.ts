@@ -126,8 +126,8 @@ class ScrollBarCanvas extends Canvas {
         }
     }
 
-    setCanvas(canvasElement: HTMLCanvasElement) {
-        super.setCanvas(canvasElement);
+    setup(canvasElement: HTMLCanvasElement) {
+        super.setup(canvasElement);
         this.canvas.addEventListener('mousemove', this.handleMouseMove);
         this.canvas.addEventListener('mousedown', this.handleMouseDown);
         this.canvas.addEventListener('click', this.handleClickEvent);
