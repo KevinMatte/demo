@@ -8,10 +8,8 @@ export const DrawEnum = {
 export type DrawType = typeof DrawEnum[keyof typeof DrawEnum];
 
 
-export function PaintArea({imageHolder, topX, topY, drawType, ...props}:
+export function PaintArea({topX, topY, drawType, ...props}:
                           {
-                              imageHolder: any,
-                              className: string,
                               drawType: DrawType,
                               topX: number,
                               topY: number,
@@ -41,8 +39,7 @@ export function PaintArea({imageHolder, topX, topY, drawType, ...props}:
 
     useEffect(() => {
         if (canvasRef.current) {
-            drawer.setProps(imageHolder, canvasRef.current, topX, topY);
-            drawer.setListener()
+            drawer.setProps(canvasRef.current, topX, topY);
         }
         return () => {
             drawer.destroy();

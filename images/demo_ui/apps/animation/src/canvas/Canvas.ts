@@ -1,9 +1,7 @@
 import {bindHandlers} from '../utils/listeners.ts';
-import ImageHolder from './ImageHolder';
 
 class Canvas {
     canvas?: HTMLCanvasElement;
-    imageHolder?: ImageHolder;
     hasCapture = false
 
 
@@ -11,14 +9,16 @@ class Canvas {
         bindHandlers(this);
     }
 
-    setup(canvasElement: HTMLCanvasElement, imageHolder: ImageHolder|null = null) {
+    setup(canvasElement: HTMLCanvasElement) {
         this.canvas = canvasElement;
-        this.imageHolder = imageHolder;
         window.addEventListener('resize', this.handleResize);
         this.handleResize(new UIEvent('resize', {}));
     }
 
     getMousePos(event: MouseEvent) {
+        if (!this.canvas)
+            return {x: 0, y: 0};
+
         const rect = this.canvas.getBoundingClientRect();
         return {
             x: event.clientX - rect.left,
@@ -32,6 +32,9 @@ class Canvas {
     }
 
     setCanvasDimensions() {
+        if (!this.canvas)
+            return;
+
         this.canvas.width = this.canvas.offsetWidth;
         this.canvas.height = this.canvas.offsetHeight;
     }
@@ -45,13 +48,14 @@ class Canvas {
     }
 
     enableCapture() {
+        if (!this.canvas) return;
         this.hasCapture = true;
         this.canvas.addEventListener('pointerdown', this.handlePointerCapture);
         this.canvas.addEventListener('pointerup', this.handlePointerRelease);
     }
 
     disableCapture() {
-        if (this.hasCapture) {
+        if (this.canvas && this.hasCapture) {
             this.canvas.removeEventListener('pointerdown', this.handlePointerCapture);
             this.canvas.removeEventListener('pointerup', this.handlePointerRelease);
             this.hasCapture = false;
@@ -59,6 +63,7 @@ class Canvas {
     }
 
     handlePointerCapture(event: PointerEvent) {
+        if (!this.canvas) return;
         if (event.buttons === 1) {
             this.canvas.setPointerCapture(event.pointerId);
             this.hasCapture = true;
@@ -69,6 +74,7 @@ class Canvas {
     }
 
     handlePointerRelease(event: PointerEvent) {
+        if (!this.canvas) return;
         if (this.hasCapture) {
             this.canvas.releasePointerCapture(event.pointerId);
             this.hasCapture = false;

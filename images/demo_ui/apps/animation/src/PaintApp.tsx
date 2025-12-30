@@ -1,8 +1,9 @@
 import '@/App.css'
-import {useState} from 'react';
+import {createContext, useState} from 'react';
 import {PaintArea, DrawEnum} from "./canvas/PaintArea.tsx";
 import ScrollBar from "./canvas/ScrollBar.tsx";
 import {Orientation} from "./canvas/ScrollBar.tsx";
+import ImageHolder from "./canvas/ImageHolder.ts";
 
 function PaintApp() {
     const [x, _setX] = useState(0);
@@ -15,8 +16,15 @@ function PaintApp() {
         borderStyle: "solid",
         borderWidth: "0 0 0 1px",
     }
+    function createImageHolder() {
+        return new ImageHolder();
+    }
+
+    const [imageHolder, _setImageHolder] = useState<ImageHolder>(createImageHolder);
+    const ImageContext = createContext<ImageHolder>(imageHolder);
 
     return (
+        <ImageContext value={imageHolder}>
         <div className="fill flexVDisplay">
             <div className="flexHDisplay flexVFill">
                 <div id="div4DrawArea" className="flexHFill" style={{overflow: 'hidden'}}>
@@ -30,6 +38,7 @@ function PaintApp() {
                 <div className="flexFixed km_spd_scroll_thickness" style={{background: 'grey'}}></div>
             </div>
         </div>
+        </ImageContext>
     )
 }
 
