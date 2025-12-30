@@ -18,6 +18,7 @@ class CanvasScrollBar extends Canvas {
     lineStart: number = 0;
     fromLineStart: number = 0;
     canvasRange: number = 0;
+    mouseDownEvent: MouseEvent | null = null;
 
     constructor(canvas: HTMLCanvasElement | null,
                 onX: boolean,
@@ -72,10 +73,11 @@ class CanvasScrollBar extends Canvas {
 
     handleClickEvent(event: MouseEvent) {
         let offset = this.onX ? event.offsetX : event.offsetY;
-        let mouseDownEvent = this.takeEvent('mousedown');
+        let mouseDownEvent = this.mouseDownEvent;
 
         // Save starting position using event.
         if (mouseDownEvent !== null) {
+            this.mouseDownEvent = null;
             if (event.offsetX >= 0 && event.offsetY >= 0 &&
                 event.offsetX <= this.canvas.offsetWidth && event.offsetY <= this.canvas.offsetHeight) {
                 let index = this.convertLineStartToIndex(offset - this.lineLength / 2);
@@ -87,6 +89,7 @@ class CanvasScrollBar extends Canvas {
     }
 
     handleMouseDown(event: MouseEvent) {
+        this.mouseDownEvent = event;
         let dragStart = this.onX ? event.offsetX : event.offsetY;
         if (dragStart >= this.lineStart && dragStart <= this.lineStart + this.lineLength) {
             this.dragStart = dragStart;
@@ -99,8 +102,7 @@ class CanvasScrollBar extends Canvas {
         if (event.buttons !== 1 || this.dragStart === null)
             return;
 
-        if (event.type !== 'mousedown')
-            this.takeEvent('mousedown');
+        this.mouseDownEvent = null;
 
         let lineStartDelta = (this.onX ? event.offsetX : event.offsetY) - this.dragStart;
         let index = this.convertLineStartToIndex(this.fromLineStart + lineStartDelta);

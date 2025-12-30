@@ -1,7 +1,6 @@
 import {bindHandlers} from '../utils/listeners.ts';
 
 class Canvas {
-    events: Record<string, UIEvent> = {};
     canvas!: HTMLCanvasElement;
     hasCapture = false
 
@@ -13,7 +12,6 @@ class Canvas {
 
     setCanvas(canvasElement: HTMLCanvasElement) {
         this.canvas = canvasElement;
-        this.canvas.addEventListener('mousedown', this.handleSaveMouseEvent);
         window.addEventListener('resize', this.handleResize);
         this.handleResize(new UIEvent('resize', {}));
     }
@@ -27,8 +25,6 @@ class Canvas {
     };
 
     destroy() {
-        if (this.canvas)
-            this.canvas.removeEventListener('mousedown', this.handleSaveMouseEvent);
         window.removeEventListener('resize', this.handleResize);
         this.disableCapture();
     }
@@ -44,10 +40,6 @@ class Canvas {
 
     handleClickEvent(_ev: MouseEvent) {
 
-    }
-
-    handleSaveMouseEvent(event: MouseEvent) {
-        this.events[event.type] = event;
     }
 
     enableCapture() {
@@ -79,18 +71,6 @@ class Canvas {
             this.canvas.releasePointerCapture(event.pointerId);
             this.hasCapture = false;
         }
-    }
-
-    takeEvent(eventName: string): MouseEvent | null {
-        let event = null;
-        if (this.events.hasOwnProperty(eventName)) {
-            event = this.events[eventName];
-            delete this.events[eventName];
-        }
-        if (event instanceof MouseEvent)
-            return event;
-        else
-            return null;
     }
 }
 
