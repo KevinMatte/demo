@@ -2,12 +2,12 @@
 // TODO: Zoom shouldn't impact scrollbar width
 import Canvas from "../canvas/Canvas.ts";
 
-export type CanvasScrollbarListener = (pos: number) => void;
+export type CanvasScrollbarListener = (onX: boolean, pos: number) => void;
 
 class ScrollBarCanvas extends Canvas {
     dragStart: number | null;
     onX: boolean;
-    listener: (pos: number) => void;
+    listener: CanvasScrollbarListener;
     minIndex: number;
     maxIndex: number;
     visibleIndices: number;
@@ -20,14 +20,13 @@ class ScrollBarCanvas extends Canvas {
     canvasRange: number = 0;
     mouseDownEvent: MouseEvent | null = null;
 
-    constructor(canvas: HTMLCanvasElement | null,
-                onX: boolean,
+    constructor(onX: boolean,
                 listener: CanvasScrollbarListener,
                 minIndex = 0,
                 maxIndex = 100,
                 visibleIndices = 30,
                 step = 1) {
-        super(canvas);
+        super();
         this.dragStart = null;
         this.onX = onX;
         this.listener = listener;
@@ -72,6 +71,8 @@ class ScrollBarCanvas extends Canvas {
     }
 
     handleClickEvent(event: MouseEvent) {
+        if (!this.canvas) return;
+
         let offset = this.onX ? event.offsetX : event.offsetY;
         let mouseDownEvent = this.mouseDownEvent;
 
@@ -82,7 +83,7 @@ class ScrollBarCanvas extends Canvas {
                 event.offsetX <= this.canvas.offsetWidth && event.offsetY <= this.canvas.offsetHeight) {
                 let index = this.convertLineStartToIndex(offset - this.lineLength / 2);
                 if (this.setIndex(index))
-                    this.listener(index);
+                    this.listener(this.onX, index);
             }
         } else
             this.dragStart = null;
@@ -107,7 +108,7 @@ class ScrollBarCanvas extends Canvas {
         let lineStartDelta = (this.onX ? event.offsetX : event.offsetY) - this.dragStart;
         let index = this.convertLineStartToIndex(this.fromLineStart + lineStartDelta);
         if (this.setIndex(index))
-            this.listener(index);
+            this.listener(this.onX, index);
     }
 
     handleResize(event : UIEvent){
@@ -128,9 +129,9 @@ class ScrollBarCanvas extends Canvas {
 
     setup(canvasElement: HTMLCanvasElement) {
         super.setup(canvasElement);
-        this.canvas.addEventListener('mousemove', this.handleMouseMove);
-        this.canvas.addEventListener('mousedown', this.handleMouseDown);
-        this.canvas.addEventListener('click', this.handleClickEvent);
+        canvasElement.addEventListener('mousemove', this.handleMouseMove);
+        canvasElement.addEventListener('mousedown', this.handleMouseDown);
+        canvasElement.addEventListener('click', this.handleClickEvent);
         this.enableCapture();
         this._updateCanvasRange();
         this.redraw();
@@ -146,6 +147,7 @@ class ScrollBarCanvas extends Canvas {
         if (lineStart + this.lineLength > this.canvasRange)
             lineStart = this.canvasRange - this.lineLength;
 
+        if (!this.canvas) return;
         let ctx = this.canvas.getContext('2d');
         if (!ctx)
             return;

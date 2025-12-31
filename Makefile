@@ -1,6 +1,9 @@
 -include .env
 export
 
+.PHONY: local_mounted_scratch
+local_scratch: init local_mounted
+
 .PHONY: init
 init:
 	bin/initBuild.sh

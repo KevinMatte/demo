@@ -1,5 +1,7 @@
 import {useEffect, useId, useRef, useState} from "react";
 import {LineDrawer} from "./LineDrawer.ts";
+import {useContext} from "react";
+import ImageContext from "./ImageContext.ts";
 
 export const DrawEnum = {
     line: "line",
@@ -18,18 +20,19 @@ export function PaintArea({topX, topY, drawType, ...props}:
 ) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const id = useId()
+    const imageHolder = useContext(ImageContext);
 
     function createDrawer() {
-        let drawer: LineDrawer;
+        if (!imageHolder)
+            return null;
+
+        let drawer: LineDrawer|null = null;
         switch (drawType) {
             case "line":
-                drawer = new LineDrawer();
-                break;
-            case "circle":
-                drawer = new LineDrawer();
+                drawer = new LineDrawer(imageHolder);
                 break;
             default:
-                drawer = new LineDrawer();
+                drawer = null;
                 break;
         }
         return drawer;
@@ -38,11 +41,12 @@ export function PaintArea({topX, topY, drawType, ...props}:
     const [drawer, _setDrawer] = useState(createDrawer);
 
     useEffect(() => {
-        if (canvasRef.current) {
+        if (canvasRef.current && drawer) {
             drawer.setProps(canvasRef.current, topX, topY);
         }
         return () => {
-            drawer.destroy();
+            if (drawer)
+                drawer.destroy();
         }
     }, []);
 

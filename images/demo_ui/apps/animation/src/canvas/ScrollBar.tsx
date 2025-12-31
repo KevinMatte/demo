@@ -1,5 +1,5 @@
 import {useEffect, useId, useRef, useState} from "react";
-import ScrollBarCanvas from "./ScrollBarCanvas.ts";
+import ScrollBarCanvas, {type CanvasScrollbarListener} from "./ScrollBarCanvas.ts";
 
 // 1. Define the constant values using an object literal and 'as const'
 export const Orientation = {
@@ -14,11 +14,13 @@ function ScrollBar(
     {
         orientation,
         extraClassNames,
+        listener,
         ...props
     }:
     {
         orientation: OrientationType,
         extraClassNames: string,
+        listener: CanvasScrollbarListener,
         [_prop:string]: any;
     }
 ) {
@@ -29,11 +31,8 @@ function ScrollBar(
 
     function createCanvasScrollbar() {
             return new ScrollBarCanvas(
-                null,
                 orientation === Orientation.horizontal,
-                (pos) => {
-                    console.log(`${orientation}: ${pos}`);
-                },
+                listener,
                 0,
                 100,
             );

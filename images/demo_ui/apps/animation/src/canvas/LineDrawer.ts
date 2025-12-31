@@ -1,4 +1,5 @@
 import Canvas from "../canvas/Canvas.ts";
+import ImageHolder from "./ImageHolder.ts";
 
 class LineDrawer extends Canvas {
     mouseDownEvent: MouseEvent | null = null;
@@ -6,6 +7,22 @@ class LineDrawer extends Canvas {
 
     isDrawing = false;
     lastPosition = {x: 0, y: 0};
+    imageHolder: ImageHolder;
+    points: [number, number][] = [];
+
+    constructor(imageHolder: ImageHolder) {
+        super();
+        this.imageHolder = imageHolder;
+    }
+
+    static paint(imageHolder: ImageHolder, data:any): void {
+        let ctx = imageHolder.getContext2D();
+        if (ctx) {
+            let points = data as [x:number, y:number][];
+            for (let i=0; i<points.length - 1; i++)
+                ImageHolder.drawLine(ctx, points[i+0][1], points[i+0][0], points[i+1][0], points[i+1][1]);
+        }
+    }
 
     setProps(canvas: HTMLCanvasElement, _topX: number, _topY: number) {
         super.setup(canvas);
@@ -40,26 +57,31 @@ class LineDrawer extends Canvas {
 
         this.isDrawing = true;
         this.lastPosition = this.getMousePos(event);
+        this.points = [[this.lastPosition.x, this.lastPosition.y]];
     }
 
     handleMouseUp(event: MouseEvent) {
         this.mouseUpEvent = event;
         this.isDrawing = false;
+        if (this.points.length > 1)
+            this.imageHolder.addImage(LineDrawer, this.points);
+        this.points = [];
     }
 
     handleMouseMove(event: MouseEvent) {
         let ctx = this.canvas?.getContext('2d');
         if (!ctx || !this.isDrawing) return;
         const currentPos = this.getMousePos(event);
+        this.points.push([currentPos.x, currentPos.y]);
 
-        ctx.beginPath();
-        ctx.moveTo(this.lastPosition.x, this.lastPosition.y);
-        ctx.lineTo(currentPos.x, currentPos.y);
-        ctx.stroke();
+        let fromX = this.lastPosition.x;
+        let fromY = this.lastPosition.y;
+        let toX = currentPos.x;
+        let toY = currentPos.y;
+        ImageHolder.drawLine(ctx, fromX, fromY, toX, toY);
 
         this.lastPosition = currentPos;
     }
-
 }
 
 export {LineDrawer};
