@@ -1,7 +1,7 @@
 import Canvas from "../canvas/Canvas.ts";
 import ImageHolder from "./ImageHolder.ts";
 
-class LineDrawer extends Canvas {
+class PenDrawer extends Canvas {
     mouseDownEvent: MouseEvent | null = null;
     mouseUpEvent: MouseEvent | null = null;
 
@@ -20,7 +20,7 @@ class LineDrawer extends Canvas {
         if (ctx) {
             let points = data as [x:number, y:number][];
             for (let i=0; i<points.length - 1; i++)
-                ImageHolder.drawLine(ctx, points[i+0][1], points[i+0][0], points[i+1][0], points[i+1][1]);
+                ImageHolder.drawLine(ctx, points[i][1], points[i][0], points[i+1][0], points[i+1][1]);
         }
     }
 
@@ -64,7 +64,7 @@ class LineDrawer extends Canvas {
         this.mouseUpEvent = event;
         this.isDrawing = false;
         if (this.points.length > 1)
-            this.imageHolder.addImage(LineDrawer, this.points);
+            this.imageHolder.addImage(PenDrawer, this.points);
         this.points = [];
     }
 
@@ -84,4 +84,4 @@ class LineDrawer extends Canvas {
     }
 }
 
-export {LineDrawer};
+export {PenDrawer};

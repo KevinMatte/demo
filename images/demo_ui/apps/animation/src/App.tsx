@@ -19,7 +19,7 @@ function App() {
         <>
             <div className="flexVDisplay fill">
                 <div className="flexFixed">
-                    {backElement}
+                    {backElement}: This is WIP. Nothing here to see. :-)
                 </div>
                 <div className="flexVFill">
                     <PaintApp/>

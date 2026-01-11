@@ -21,7 +21,7 @@ if [ -f .secrets.env ]; then
   . .secrets.env
   echo "Generating .secrets.env"
 else
-  echo "Generating .secrets.env"
+  echo "Updating .secrets.env"
 fi
 echo "-------------------------------"
 
@@ -34,8 +34,14 @@ function readPassword() {
   local invalidCharacters="1"
 
   while [ -n "${invalidCharacters}" ]; do
-    eval [ -z "\${$1}" ] && message="Enter" || message="Replace"
-    read -s -p "${message} ${1}: " new_password
+    if eval [ -z "\${$1}" ]; then
+      message="Enter"
+      default=""
+    else
+      message="Replace"
+      default=" (*{hidden})"
+    fi
+    read -s -p "${message} ${1}${default}: " new_password
     echo
     eval new_password=\${new_password:-\${${1}}}
     [ -z "${new_password}" ] && eval new_password=\${${1}}

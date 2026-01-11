@@ -33,6 +33,10 @@ sudo apt install -y libasio-dev
 # For demo_java
 sudo apt install openjdk-17-jdk/noble-updates
 
+# for demo_nodejs
+sudo apt install nodejs npm -y
+
+
 # =======================
 # For Video recording
 # -------------

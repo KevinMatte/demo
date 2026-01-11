@@ -65,6 +65,22 @@ services:
       - frontend
       - backend
 
+  demo_nodejs:
+# #if mounted or local
+    image: demo_nodejs:latest
+# #else
+#    image: localhost:5000/demo_nodejs:${DEMO_NODEJS_VERSION}
+# #endif
+    container_name: demo_nodejs
+    restart: always
+    ports:
+      - '3000:3000'
+    volumes:
+      - "version_data:/mnt/version_data"
+    networks:
+      - frontend
+      - backend
+
   demo_cpp:
 # #if mounted or local
     image: ${DEMO_CPP_IMAGE}:latest

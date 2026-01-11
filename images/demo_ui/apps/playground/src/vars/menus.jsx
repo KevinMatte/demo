@@ -4,12 +4,14 @@ import CPP, {toolDefn as cppToolDefn} from '@/pages/simple_demos/CPP.jsx';
 import Python, {toolDefn as pythonToolDefn} from '@/pages/simple_demos/Python.jsx';
 import PHP, {toolDefn as phpToolDefn} from '@/pages/simple_demos/PHP.jsx';
 import Java, {toolDefn as javaToolDefn} from '@/pages/simple_demos/Java.jsx';
+import NodeJS, {toolDefn as nodejsToolDefn} from '@/pages/simple_demos/NodeJS.jsx';
 
 const menus_wirings = {
     "cpp_hello": {"label": "C++", 'toolDefn': cppToolDefn, 'page': (<CPP/>)},
     "python_hello": {"label": "Python", 'toolDefn': pythonToolDefn, 'page': (<Python/>)},
     "php_hello": {"label": "PHP", 'toolDefn': phpToolDefn, 'page': (<PHP/>)},
     "java_hello": {"label": "Java", 'toolDefn': javaToolDefn, 'page': (<Java/>)},
+    "nodejs_hello": {"label": "NodeJS", 'toolDefn': nodejsToolDefn, 'page': (<NodeJS/>)},
 };
 
 let isDevVite = window.location.host === 'localhost:5173';

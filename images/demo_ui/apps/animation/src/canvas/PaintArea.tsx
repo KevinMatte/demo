@@ -1,5 +1,5 @@
 import {useEffect, useId, useRef, useState} from "react";
-import {LineDrawer} from "./LineDrawer.ts";
+import {PenDrawer} from "./PenDrawer.ts";
 import {useContext} from "react";
 import ImageContext from "./ImageContext.ts";
 
@@ -26,10 +26,10 @@ export function PaintArea({topX, topY, drawType, ...props}:
         if (!imageHolder)
             return null;
 
-        let drawer: LineDrawer|null = null;
+        let drawer: PenDrawer|null;
         switch (drawType) {
             case "line":
-                drawer = new LineDrawer(imageHolder);
+                drawer = new PenDrawer(imageHolder);
                 break;
             default:
                 drawer = null;

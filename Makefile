@@ -63,6 +63,7 @@ build: pre_build tmp/venv.timestamp
 	$(MAKE) -C images/demo_cpp build
 	$(MAKE) -C images/demo_mariadb build
 	$(MAKE) -C images/demo_java build
+	$(MAKE) -C images/demo_nodejs build
 
 # Finalizes/cleans up build.
 .PHONY: build_done
@@ -70,6 +71,7 @@ build_done:
 	$(MAKE) -C images/demo_cpp build_done
 	$(MAKE) -C images/demo_mariadb build_done
 	$(MAKE) -C images/demo_java build_done
+	$(MAKE) -C images/demo_nodejs build_done
 
 # ---------------------------
 # Development targets
@@ -127,10 +129,12 @@ publish_push:
 	docker tag demo_cpp:latest localhost:5000/demo_cpp:$${DEMO_CPP_VERSION};
 	docker tag demo_mariadb:latest localhost:5000/demo_mariadb:$${DEMO_MARIADB_VERSION};
 	docker tag demo_java:latest localhost:5000/demo_java:$${DEMO_JAVA_VERSION};
+	docker tag demo_nodejs:latest localhost:5000/demo_nodejs:$${DEMO_NODEJS_VERSION};
 	docker push localhost:5000/demo_ui:$${DEMO_UI_VERSION};
 	docker push localhost:5000/demo_cpp:$${DEMO_CPP_VERSION};
 	docker push localhost:5000/demo_mariadb:$${DEMO_MARIADB_VERSION};
 	docker push localhost:5000/demo_java:$${DEMO_JAVA_VERSION};
+	docker push localhost:5000/demo_nodejs:$${DEMO_NODEJS_VERSION};
 
 	ssh demo_prod "cd dev/demo.prod && ./publishVersion.sh version_data.tar && docker compose up  --remove-orphans --detach"
 	rm -f tmp/build.locked

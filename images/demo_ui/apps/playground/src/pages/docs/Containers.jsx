@@ -66,6 +66,7 @@ function Containers() {
                     <li><b>Source Code</b></li>
                     <ul>
                         <li><DemoAnchor title="Java Client" path="images/demo_ui/apps/playground/src/pages/simple_demos/Java.jsx"/></li>
+                        <li><DemoAnchor title="Java Client" path="images/demo_ui/apps/playground/src/pages/simple_demos/NodeJS.jsx"/></li>
                         <li><DemoAnchor title="CPP Client" path="images/demo_ui/apps/playground/src/pages/simple_demos/CPP.jsx"/></li>
                     </ul>
                 </ul>
@@ -84,6 +85,21 @@ function Containers() {
                         <li><DemoAnchor title="Server" path="images/demo_java/src/MyApp/HelloWorld.java">
                             Hello World copied example from Tomcat
                         </DemoAnchor>
+                        </li>
+                    </ul>
+                </ul>
+            </div>
+
+
+            <h3>Docker NodeJS Container</h3>
+            <div>
+                <p>Version: {data && data['DEMO_NODEJS_VERSION']} Built: {data && data['DEMO_NODEJS_DATE']}</p>
+                <ul>
+                    <li><DemoAnchor title="Build" path="images/demo_nodejs/Dockerfile"/></li>
+                    <li><b>Source Code</b></li>
+                    <ul>
+                        <li>
+                            None.
                         </li>
                     </ul>
                 </ul>

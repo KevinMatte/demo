@@ -13,7 +13,7 @@ build_static:
 
 .PHONY: build_src
 build_src:
-	[ -d static ] && tar cf - -C static . | (cd build; tar xvf -)
+	if [ -d static ]; then tar cf - -C static . | (cd build; tar xvf -); fi
 	pnpm build --outDir build/var/www/html/animation
 
 .PHONY: build
