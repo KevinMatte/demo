@@ -8,5 +8,7 @@ fi
 PROJ_ROOT="$(git rev-parse --show-toplevel)"
 . "${PROJ_ROOT}/.env"
 
-rm -fr build
+rm -fr dist node_modules
+pnpm install
+pnpm run build
 

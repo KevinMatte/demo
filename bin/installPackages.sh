@@ -33,9 +33,6 @@ sudo apt install -y libasio-dev
 # For demo_java
 sudo apt install openjdk-17-jdk/noble-updates
 
-# for demo_nodejs
-sudo apt install nodejs npm -y
-
 
 # =======================
 # For Video recording
@@ -57,6 +54,10 @@ sudo apt install nodejs npm -y
 #sudo apt install -y libwebsocketpp-dev openssl libssl-dev
 #sudo apt install libssl-dev libcrypto++-dev
 #sydo apt install libboost-all-dev
+
+# for demo_nodejs
+sudo apt install nodejs -y
+
 
 echo "Install pnpm"
 curl -fsSL https://get.pnpm.io/install.sh | sh -

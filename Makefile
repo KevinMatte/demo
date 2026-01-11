@@ -90,6 +90,7 @@ local: generateDotEnv.sh
 
 # Local run with mounted volume:
 .PHONY: local_mounted
+mounted: local_mounted
 local_mounted: generateDotEnv.sh
 	-docker compose kill 2>/dev/null || echo "Pass: services not running"
 	bin/preprocessDockerCompose.py src/docker-compose.yaml docker-compose.yaml mounted

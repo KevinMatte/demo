@@ -6,8 +6,6 @@ cd $(dirname "$0")/..
 
 ./bin/initBuild.sh
 
-bin/dockerSetup.sh
-
 # Start monitoring files for build.
 bin/monitorBuild.sh
 
