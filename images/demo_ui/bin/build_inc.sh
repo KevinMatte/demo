@@ -19,11 +19,11 @@ function extractExpr() {
   local tmp=/tmp/t.$$
 
   # Update destination array
-  grep "${expr}" <(for f in "${arr[@]}"; do echo "$f"; done) >$tmp
+  grep "${expr}" <(for f in "${arr[@]}"; do echo "$f"; done) >$tmp || :
   mapfile -t "${dest}" <$tmp
 
   # Update source array
-  grep -v "${expr}" <(for f in "${arr[@]}"; do echo "$f"; done) >$tmp
+  grep -v "${expr}" <(for f in "${arr[@]}"; do echo "$f"; done) >$tmp || :
   mapfile -t "${name}" <$tmp
 
   # Cleanup
@@ -47,7 +47,7 @@ for app in $apps; do
   extractExpr app_files file_set /apps/${app}/src/
   [ -n "${file_set}" ] && make -C apps/${app} build_src;
 
-  tar cf - -C apps/${app}/build . | (cd build; tar xf -);
+  tar cf - -C apps/${app}/build . | tar xf - -C build;
 
   [ -n "${app_files}" ] && echo "${app}: No build for ${app_files[@]}" >&2
 done

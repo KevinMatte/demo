@@ -14,6 +14,12 @@ const toolDocs =
             <li><b>Configuration</b></li>
             <ul>
                 <li>
+                    <DemoAnchor title="update_build.sh"
+                                path="images/demo_ui/apps/playground/bin/update_build.sh"
+                    />
+                    : See line with &lt;Location "/api/demo_java/"&gt;
+                </li>
+                <li>
                     <Anchor title="/api/demo_java/ URL Proxy"
                             path="https://httpd.apache.org/docs/current/mod/mod_proxy.html">MOD
                         PROXY</Anchor>
