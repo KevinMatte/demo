@@ -2,17 +2,20 @@
 
 PROJ_ROOT="$$(git rev-parse --show-toplevel)"
 
-.PHONY: build_clean
-build_clean:
+.PHONY: clean
+clean:
 	rm -fr node_modules dist
-	pnpm install
 	rm -fr build
-	mkdir build
 
+node_modules:
+	pnpm install
+
+.PHONY: build_static
 build_static:
 
 .PHONY: build_src
-build_src:
+build_src: node_modules
+	echo "make build_src"
 	if [ -d static ]; then tar cf - -C static . | (cd build; tar xvf -); fi
 	pnpm build --outDir build/var/www/html/animation
 
@@ -20,5 +23,5 @@ build_src:
 build: build_static build_src
 
 .PHONY: animation_dev
-animation_dev:
+animation_dev: node_modules
 	pnpm run dev --port 5173

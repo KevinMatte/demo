@@ -10,8 +10,11 @@ init:
 
 .PHONY: clean
 clean:
-	$(MAKE) -C images/demo_ui build_clean
-	$(MAKE) -C images/demo_cpp build_clean
+	set -e; \
+	for image in $$(find images \( -name 'images' \) -o -type d -prune -print); do \
+	    echo $(MAKE) -C $${image} clean; \
+	    $(MAKE) -C $${image} clean; \
+	done
 
 .PHONY: checkDocker
 checkDocker:

@@ -1,12 +1,15 @@
 -include .env
 
-.PHONY: build_clean build build_static build_src
+.PHONY: clean
+clean:
+	rm -fr build
 
-build_clean:
+.PHONY: build_static
+build_static:
+	@echo "make build_static"
 	rm -fr build
 	mkdir build
+	if [ -d static ]; then tar cf - -C static . | (cd build; tar xvf -); fi
 
-build_static:
-	tar cf - -C static . | (cd build; tar xf -)
-
+.PHONY: build
 build: build_static

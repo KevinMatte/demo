@@ -28,6 +28,8 @@
     - name: 'src'
       paths:
         - "images/demo_ui"
+      excludes:
+        - '.*/build/.*'
       patterns:
         - '.*\.js$'
         - '.*\.jsx$'

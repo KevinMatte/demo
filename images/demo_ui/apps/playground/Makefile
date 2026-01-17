@@ -1,20 +1,25 @@
 -include .env
 
-.PHONY: build_clean build build_static build_src spreadsheet_js_dev
-
-build_clean:
+.PHONY: clean
+clean:
 	rm -fr node_modules dist
-	pnpm install
 	rm -fr build
-	mkdir build
 
+node_modules:
+	pnpm install
+
+.PHONY: build_static
 build_static:
-	tar cf - -C static . | (cd build; tar xf -)
+	@echo "make build_static"
+	if [ -d static ]; then tar cf - -C static . | (cd build; tar xvf -); fi
 
-build_src:
+.PHONY: build_src
+build_src: node_modules
 	pnpm build --outDir build/var/www/html/playground
 
+.PHONY: build
 build: build_static build_src
 
-playground_dev:
+.PHONY: playground_dev
+playground_dev: node_modules
 	pnpm run dev --port 5173

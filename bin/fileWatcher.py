@@ -179,6 +179,11 @@ class MonitorAnyFileChange(FileSystemEventHandler):
         If a matching any file extension or no extensions given for the target,
         records the event's filepath reference.
         """
+        if 'excludes' in self._monitor:
+            for file_extension in self._monitor['excludes']:
+                if re.match(file_extension, event.src_path):
+                    return
+
         if 'patterns' in self._monitor:
             for file_extension in self._monitor['patterns']:
                 if re.match(file_extension, event.src_path):
@@ -327,6 +332,7 @@ class FilesWatcher:
             else:
                 # Run 'commands'
                 print(f"Executing {monitor_key}")
+                print(f"Files: {" ".join(file_set)}")
                 self._run_commands(monitor_defn, 'started', file_set)
                 res = self._run_commands(monitor_defn, 'commands', file_set)
                 self._run_commands(monitor_defn, 'completed' if res == 0 else 'error', file_set)
@@ -334,6 +340,7 @@ class FilesWatcher:
 
     def _run_commands(self, monitor_defn, commands_key, file_set):
         files_str = " ".join(file_set)
+
         # If there is a list of commands to run
         if commands_key in monitor_defn:
 

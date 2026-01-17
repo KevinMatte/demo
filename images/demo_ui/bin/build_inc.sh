@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 echo "===================================="
 echo "Building: ${@}"
@@ -58,7 +58,7 @@ bin/update_build.sh
 # Run all app's update_build.sh
 for app in $apps; do
   if [ -e apps/${app}/bin/update_build.sh ]; then
-      echo "${app}";
+      echo "apps/${app}/bin/update_build.sh;"
       apps/${app}/bin/update_build.sh;
   fi
 done
