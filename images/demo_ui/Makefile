@@ -20,7 +20,7 @@ retrieve_builds:
 	rm -fr build; mkdir build; \
 	for app in $$(echo ${DEMO_UI_APPS}); do \
   		$(MAKE) -C apps/$${app} build; \
-		tar cf - -C apps/$${app}/build . | (cd build; tar xf -); \
+		tar cf - -C apps/$${app}/build . | tar xf - -C build; \
   	done
 
 .PHONY: update_image_build

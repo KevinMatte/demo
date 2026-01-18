@@ -7,17 +7,19 @@ clean:
 	rm -fr node_modules dist
 	rm -fr build
 
-.PHONY: build_static
+node_modules:
+	pnpm install
 
 .PHONY: build_src
-	@echo "make build_static"
-	if [ -d static ]; then tar cf - -C static . | (cd build; tar xvf -); fi
+build_src: node_modules
+	mkdir -p build
+	@echo "make build_src"
+	if [ -d static ]; then tar cf - -C static . | tar xvf - -C build; fi
 	pnpm build --outDir build/var/www/html/spreadsheet_ts
 
 .PHONY: build
-build:
-	pnpm install
-	mkdir build
+build: build_src
 
 .PHONY: spreadsheet_js_dev
+spreadsheet_js_dev:
 	pnpm run dev --port 5173

@@ -10,11 +10,13 @@ node_modules:
 
 .PHONY: build_static
 build_static:
+	mkdir -p build
 	@echo "make build_static"
-	if [ -d static ]; then tar cf - -C static . | (cd build; tar xvf -); fi
+	if [ -d static ]; then tar cf - -C static . | tar xvf - -C build; fi
 
 .PHONY: build_src
 build_src: node_modules
+	mkdir -p build
 	pnpm build --outDir build/var/www/html/playground
 
 .PHONY: build

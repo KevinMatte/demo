@@ -15,8 +15,9 @@ build_static:
 
 .PHONY: build_src
 build_src: node_modules
+	mkdir -p build
 	echo "make build_src"
-	if [ -d static ]; then tar cf - -C static . | (cd build; tar xvf -); fi
+	if [ -d static ]; then tar cf - -C static . | tar xvf - -C build; fi
 	pnpm build --outDir build/var/www/html/animation
 
 .PHONY: build

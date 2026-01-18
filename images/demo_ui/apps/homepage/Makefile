@@ -9,7 +9,7 @@ build_static:
 	@echo "make build_static"
 	rm -fr build
 	mkdir build
-	if [ -d static ]; then tar cf - -C static . | (cd build; tar xvf -); fi
+	if [ -d static ]; then tar cf - -C static . | tar xvf - -C build; fi
 
 .PHONY: build
 build: build_static

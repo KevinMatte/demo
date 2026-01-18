@@ -1,12 +1,13 @@
 -include .env
 export
 
-.PHONY: local_mounted_scratch
+.PHONY: local_scratch
 local_scratch: init local_mounted
 
 .PHONY: init
 init:
 	bin/initBuild.sh
+	bin/generateDotEnv.sh
 
 .PHONY: clean
 clean:
@@ -93,7 +94,6 @@ local: generateDotEnv.sh
 
 # Local run with mounted volume:
 .PHONY: local_mounted
-mounted: local_mounted
 local_mounted: generateDotEnv.sh
 	-docker compose kill 2>/dev/null || echo "Pass: services not running"
 	bin/preprocessDockerCompose.py src/docker-compose.yaml docker-compose.yaml mounted
@@ -104,6 +104,9 @@ local_mounted: generateDotEnv.sh
 	docker exec demo_ui chmod -R go+w /var/www
 	rm -f tmp/build.locked
 	@echo "Open: http://localhost:8080/"
+
+.PHONY: mounted
+mounted: local_mounted
 
 # ---------------------------
 # Publish to public target

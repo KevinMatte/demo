@@ -4,7 +4,12 @@ cd $(dirname "$0")/..
 
 . bin/funcs.ish
 
-./bin/initBuild.sh
+if [ ! -f .secrets.env ]; then
+  ./bin/initBuild.sh
+  ./bin/generateDotEnv.sh
+elif [ ! -f .env ]; then
+  ./bin/generateDotEnv.sh
+fi
 
 # Start monitoring files for build.
 bin/monitorBuild.sh

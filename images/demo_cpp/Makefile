@@ -1,5 +1,3 @@
-.PHONY:
-
 PROJ_ROOT="$$(git rev-parse --show-toplevel)"
 
 .PHONY: build_init
