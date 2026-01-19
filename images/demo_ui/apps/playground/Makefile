@@ -22,6 +22,6 @@ build_src: node_modules
 .PHONY: build
 build: build_static build_src
 
-.PHONY: playground_dev
-playground_dev: node_modules
+.PHONY: dev
+dev: node_modules
 	pnpm run dev --port 5173

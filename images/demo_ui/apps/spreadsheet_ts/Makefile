@@ -20,6 +20,6 @@ build_src: node_modules
 .PHONY: build
 build: build_src
 
-.PHONY: spreadsheet_js_dev
-spreadsheet_js_dev:
+.PHONY: dev
+dev: node_modules
 	pnpm run dev --port 5173
