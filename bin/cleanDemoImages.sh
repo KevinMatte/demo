@@ -1,6 +1,12 @@
 #!/bin/bash -ex
 
 #
+docker container prune -f
+docker image prune -af
+docker volume prune -af
+docker network prune -f
+
+exit
 
 # Kill all processes
 ids="$(docker ps -a --format '{{.Image}},{{.ID}}' | grep ^demo_ | sed -e 's/.*,//')"
@@ -24,9 +30,9 @@ for image in $(cd images && ls); do
   fi
 done
 
-docker container prune -a
-docker image prune -a
-docker volume prune -a
+docker container prune -f
+docker image prune -f
+docker volume prune -f
 
 if [ -n "$(docker network ls --format '{{.Name}}' | grep demo_)" ]; then
   docker network rm $(docker network ls --format '{{.Name}}' | grep demo_)
