@@ -26,6 +26,7 @@
 .flexHDisplay {
   display: flex;
   flex-wrap: nowrap;
+  flex-direction: row;
 }
 
 .flexHDisplayWrap {

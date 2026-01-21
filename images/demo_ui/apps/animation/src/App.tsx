@@ -1,5 +1,7 @@
 import '@/App.css'
 import PaintApp from "./PaintApp.tsx";
+import {Button} from '@mui/material';
+import Stretch from "./utils/Stretch.tsx";
 
 function App() {
     const queryString = window.location.search;
@@ -8,23 +10,27 @@ function App() {
     let backElement = <></>;
     if (back) {
         backElement = (
-            <input type="button"
-                   onClick={() => window.location.assign(back)} value="Back to playground"
-                   style={{background: "yellow"}}
-            />
+            <Button
+                onClick={() => window.location.assign(back)} value=""
+                style={{background: "yellow"}}
+            >
+                Back to playground
+            </Button>
         );
     }
 
     return (
         <>
-            <div className="flexVDisplay fill">
-                <div className="flexFixed">
+            <Stretch id='kevin' direction="column" className="fill">
+                {/*<div className="flexVDisplay fill">*/}
+                <Stretch>
                     {backElement}: This is WIP. Nothing here to see. :-)
-                </div>
-                <div className="flexVFill">
+                </Stretch>
+                <Stretch flex="1">
                     <PaintApp/>
-                </div>
-            </div>
+                </Stretch>
+                {/*</div>*/}
+            </Stretch>
         </>
     );
 }

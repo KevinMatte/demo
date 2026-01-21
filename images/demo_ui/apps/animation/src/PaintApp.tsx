@@ -5,6 +5,7 @@ import ScrollBar from "./canvas/ScrollBar.tsx";
 import {Orientation} from "./canvas/ScrollBar.tsx";
 import ImageHolder from "./canvas/ImageHolder.ts";
 import ImageContext from "./canvas/ImageContext.ts";
+import Stretch from "./utils/Stretch.tsx";
 
 function PaintApp() {
     const [x, setX] = useState(0);
@@ -33,21 +34,20 @@ function PaintApp() {
 
     return (
         <ImageContext value={imageHolder}>
-            <div className="fill flexVDisplay">
-                <div className="flexHDisplay flexVFill">
-                    <div id="div4DrawArea" className="flexHFill" style={{overflow: 'hidden'}}>
+            <Stretch direction="column" className="fill">
+                <Stretch direction="row" flex="1">
+                    <Stretch id="div4DrawArea" direction="column" style={{overflow: 'hidden'}}>
                         <PaintArea className="fill" drawType={DrawEnum.line} topX={x} topY={y}></PaintArea>
-                    </div>
+                    </Stretch>
                     <ScrollBar extraClassNames="flexFixed" orientation={Orientation.vertical}
                                listener={scrollBarListener} style={leftLineStyle}/>
-                </div>
-                <div className="flexFixed flexHDisplay" style={topLineStyle}>
+                </Stretch>
+                <Stretch direction="row" style={topLineStyle}>
                     <ScrollBar extraClassNames="flexHFill" orientation={Orientation.horizontal}
                                listener={scrollBarListener}/>
-                    {/*Bottom right space*/}
-                    <div className="flexFixed km_spd_scroll_thickness" style={{background: 'grey'}}></div>
-                </div>
-            </div>
+                    <Stretch className="km_spd_scroll_thickness" style={{background: 'grey'}}></Stretch>
+                </Stretch>
+            </Stretch>
         </ImageContext>
     )
 }
