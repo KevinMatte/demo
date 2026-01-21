@@ -1,7 +1,7 @@
 import '@/App.css'
 import PaintApp from "./PaintApp.tsx";
 import {Button} from '@mui/material';
-import Stretch from "./utils/Stretch.tsx";
+import Shelf from "./utils/Shelf.tsx";
 
 function App() {
     const queryString = window.location.search;
@@ -21,16 +21,16 @@ function App() {
 
     return (
         <>
-            <Stretch id='kevin' direction="column" className="fill">
+            <Shelf id='kevin' direction="column" className="fill">
                 {/*<div className="flexVDisplay fill">*/}
-                <Stretch>
+                <Shelf>
                     {backElement}: This is WIP. Nothing here to see. :-)
-                </Stretch>
-                <Stretch flex="1">
+                </Shelf>
+                <Shelf flex="1">
                     <PaintApp/>
-                </Stretch>
+                </Shelf>
                 {/*</div>*/}
-            </Stretch>
+            </Shelf>
         </>
     );
 }

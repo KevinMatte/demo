@@ -1,6 +1,6 @@
 import type {ReactNode} from "react";
 
-export default function Stretch({direction, flex, style, children, ...props}:
+export default function Shelf({direction, flex, style, children, ...props}:
                                 {
                                     direction?: string,
                                     flex?: string,
