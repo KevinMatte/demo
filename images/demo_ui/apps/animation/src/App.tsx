@@ -2,6 +2,7 @@ import '@/App.css'
 import PaintApp from "./PaintApp.tsx";
 import {Button} from '@mui/material';
 import Shelf from "./utils/Shelf.tsx";
+// import CssBaseline from '@mui/material/CssBaseline';
 
 function App() {
     const queryString = window.location.search;
@@ -21,7 +22,8 @@ function App() {
 
     return (
         <>
-            <Shelf id='kevin' direction="column" className="fill">
+            {/*<CssBaseline />*/}
+            <Shelf direction="column" fill>
                 {/*<div className="flexVDisplay fill">*/}
                 <Shelf>
                     {backElement}: This is WIP. Nothing here to see. :-)

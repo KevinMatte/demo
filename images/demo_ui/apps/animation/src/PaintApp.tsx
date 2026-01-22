@@ -34,9 +34,11 @@ function PaintApp() {
 
     return (
         <ImageContext value={imageHolder}>
-            <Shelf direction="column" className="fill">
+            <Shelf direction="column" fill>
                 <Shelf direction="row" flex="1">
-                    <Shelf id="div4DrawArea" direction="column" style={{overflow: 'hidden'}}>
+                    <Shelf id="kevin" direction="column" fill
+                           style={{overflow: 'hidden'}}
+                    >
                         <PaintArea className="fill" drawType={DrawEnum.line} topX={x} topY={y}></PaintArea>
                     </Shelf>
                     <ScrollBar extraClassNames="flexFixed" orientation={Orientation.vertical}

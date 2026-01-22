@@ -35,8 +35,11 @@ class Canvas {
         if (!this.canvas)
             return;
 
-        this.canvas.width = this.canvas.offsetWidth;
-        this.canvas.height = this.canvas.offsetHeight;
+        const compStyles = window.getComputedStyle(this.canvas);
+        this.canvas.width = parseInt(compStyles.width.substr(0, compStyles.width.length - 2), 10);
+        this.canvas.height = parseInt(compStyles.height.substr(0, compStyles.height.length - 2), 10);
+        // this.canvas.width = Math.floor(this.canvas.offsetWidth);
+        // this.canvas.height = Math.floor(this.canvas.offsetHeight);
     }
 
     handleResize(_ev: UIEvent) {
