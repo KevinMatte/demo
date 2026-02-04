@@ -6,6 +6,8 @@ local_scratch: init local_mounted
 
 .PHONY: init
 init:
+	git submodule init
+	git submodule update
 	bin/initBuild.sh
 	bin/generateDotEnv.sh
 
