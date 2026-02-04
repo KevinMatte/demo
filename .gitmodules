@@ -1,0 +1,3 @@
+[submodule "images/demo_ui/apps/animation"]
+	path = images/demo_ui/apps/animation
+	url = git@github.com:KevinMatte/animation.git
