@@ -8,6 +8,7 @@ local_scratch: init local_mounted
 init:
 	git submodule init
 	git submodule update
+	(cd images/demo_ui/apps/animation; git pull)
 	bin/initBuild.sh
 	bin/generateDotEnv.sh
 
